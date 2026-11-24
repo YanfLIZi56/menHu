@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+	<title>数据管理中心</title>
+
+
+	<!-- Bootstrap  -->
+	<link rel="stylesheet" href="https://api.bcwhkj.cn/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://api.bcwhkj.cn/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css">
+	<script type="text/javascript" src="https://api.bcwhkj.cn/Js/jquery1.11.3.min.js"></script>
+	<script src="https://api.bcwhkj.cn/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+
+	<link href="https://api.bcwhkj.cn/Css/animate.min.css" rel="stylesheet">
+
+	<link rel="stylesheet" type="text/css" href="https://api.bcwhkj.cn/swiper/swiper.css"/>
+	<script src="https://api.bcwhkj.cn/swiper/swiper.js"></script>
+
+
+	<link rel="stylesheet" href="https://api.bcwhkj.cn/layui2/dist/css/layui.css">
+	<script src="https://api.bcwhkj.cn/layui2/dist/layui.js"></script>
+
+	<script src="https://api.bcwhkj.cn/Js/vue.min.v2.6.14.js"></script>
+	<script src="https://api.bcwhkj.cn/Js/axios.min.js"></script>
+	<script src="https://api.bcwhkj.cn/Js/moment.min.js"></script>
+	<script src="https://api.bcwhkj.cn/Js/qs.min.js"></script>
+	<script src="https://api.bcwhkj.cn/Js/wow.min.js"></script>
+	<script src="https://api.bcwhkj.cn/Js/lodash.min.js"></script>
+
+	<script src="header.js"></script>
+	<script src="footer.js"></script>
+	<script src="/js/pubjs.js"></script>
+	<script src="js/admin.js"></script>
+	<script src="js/publicFcuntion.js"></script>
+	<link rel="stylesheet" href="css/admin.css">
+
+<!--	&lt;!&ndash;百度编辑器&ndash;&gt;-->
+<!--	<script type="text/javascript" src="/static/baidu/ueditor.config.js"></script>-->
+<!--	<script type="text/javascript" src="/static/baidu/ueditor.all.js"></script>-->
+
+
+</head>
+<body>
+<public-header class="public-header     "></public-header>
+<div id="app">
+
+	<div  v-show="showList">
+		<div class="DaoHan ">
+			<ul class="breadcrumb">
+				<li>
+					<a href="#"><h5> 评分记录列表 </h5></a>
+				</li>
+			</ul>
+			<form action="?">
+				<input type="button"  name="" @click="history.go(0)" value="刷新页面" style="display: inline;">
+				<select  v-model="search.cxsortid" style="display: none;">
+					<option value="">搜索类别</option>
+					<option :value="item.cxid" v-for="item,key in sortList"  >
+						{{sortl(item.cxSort)+item.cxsortcn}}
+					</option>
+				</select>
+				<label  v-for="item,key in allNewList" v-if="item.cxsortid==398" @click="setTimeout(()=>{getList()},1)">
+					<input type="radio" v-model="search.cxzuId" :value="item.cxid" >{{item.cxtitlecn}}
+				</label>
+				<select  v-model="search.cxuserid">
+					<option value="">搜索评委 / 组长</option>
+					<option :value="item.cxid" v-for="item,key in userList"  v-if="item.cxsortid==9 || item.cxsortid==6" >
+						{{item.cxid}} - {{item.cxfullname}}
+					</option>
+				</select>
+				<input type="text" name="keyword" style="display: none;" v-model="search.keyword"  placeholder="" @keyup.enter="getList();">
+
+				<input  type="button" @click="getList()" value="查询"    style="display: inline;">
+				<input type="button"  name="" @click="showSearchMore=!showSearchMore" value="更多查询" style="display: inline;">
+				<button type="button" @click="ExcelOut()"  class="layui-btn  layui-btn-normal">按组导出Excel</button>
+				<button type="button" @click="location.href='print.html?cxzuId='+search.cxzuId+'&cxuserid='+search.cxuserid"  class="layui-btn  layui-btn-normal" >打印</button>
+
+
+
+				<br>
+
+				<blockquote v-if="ExcelUrl" class="layui-elem-quote animated fadeIn" style="; margin-top: 20px; color: #f00">
+					<a :href="ExcelUrl" >【{{sortId_to_sortName(search.cxzuId,allNewList).cxtitlecn}}】Excel生成成功，点击下载</a>
+				</blockquote>
+				<blockquote v-if="showSearchMore" class="layui-elem-quote animated fadeIn" style="; margin-top: 20px;">
+					<table  class="layui-table lay  " lay-skin="line" >
+						<tr>
+							<td colspan="2">
+								<select  v-model="search.cxpassed">
+									<option value="">搜索状态</option>
+									<option :value="key" v-for="item,key in passedArr"  >
+										{{item}}
+									</option>
+								</select>
+
+								<select  v-model="search.cxisRead">
+									<option value="">已读/未读</option>
+									<option :value="key" v-for="item,key in readArr" >
+										{{item}}
+									</option>
+								</select>
+								<select  v-model="search.cxganWei">
+									<option value="">搜索岗位</option>
+									<option :value="item.cxtitlecn" v-for="item,key in allNewList"  v-if="item.cxsortid==399" >
+										{{item.cxtitlecn}}
+									</option>
+								</select>
+								<select  v-model="search.order">
+									<option value="cxupdatetime desc,cxid desc">按录入日期排序</option>
+									<option value="cxfenCount desc">按总分从高到低</option>
+									<option value="cxfenCount asc">按总分从低到高</option>
+								</select>
+								<select  v-model="search.cxToUserId">
+									<option value="">搜索面试人员</option>
+									<option :value="item.cxid" v-for="item,key in userList"  v-if="item.cxsortid==8" >
+										{{item.cxid}} - {{item.cxusername}}
+									</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>更新时间</td>
+							<td>
+								<input type="date" v-model="search.updateDate1" placeholder="开始时间">
+								-
+								<input type="date" v-model="search.updateDate2" placeholder="结束时间">
+							</td>
+						</tr>
+						<tr>
+							<td colspan="22">
+
+								<a @click="getList()" class="layui-btn" >提交搜索</a>
+								<a @click="showSearchMore=!showSearchMore" class="layui-btn"  >隐藏搜索</a>
+								<a @click="location.href=location.href" class="layui-btn">刷新页面</a>
+							</td>
+						</tr>
+					</table>
+				</blockquote>
+
+				<div style="float:none; clear: both;"></div>
+			</form>
+			<div class="clearfix"></div>
+		</div>
+
+		<table class="layui-table " lay-even>
+			<tr>
+				<td>ID</td>
+				<td>状态</td>
+				<td>所在组</td>
+				<td>状态</td>
+				<td>岗位</td>
+				<td>面试人员</td>
+				<td>评委</td>
+				<td>总分</td>
+				<td>时间</td>
+				<td>编辑</td>
+				<td >勾选</td>
+			</tr>
+			<tr v-for="item,key in List" :class="'tr'+item.cxid">
+				<td>{{item.cxid}}</td>
+				<td>{{passedArr[item.cxpassed]}}</td>
+				<td>{{sortId_to_sortName(item.cxzuId,allNewList).cxtitlecn}}</td>
+				<td>
+
+					<a @click="aid=item.cxid;upAttr(biaoMing,'cxisRead',item.cxisRead==0?1:0)"
+					   :class="item.cxisRead==0?'colorRed':''"
+					   :title="'点击设置为'+readArr[item.cxisRead==0?1:0]">
+						{{readArr[item.cxisRead]}}</a>
+				</td>
+				<td>{{item.cxganWei}}</td>
+				<td :title="item.cxToUserId">{{sortId_to_sortName(item.cxToUserId,userList).cxusername}}</td>
+				<td :title="item.cxuserid">{{sortId_to_sortName(item.cxuserid,userList).cxfullname}}</td>
+				<td>{{item.cxfenCountAll}}</td>
+				<td>{{item.cxupdatetime}}</td>
+				<td >&nbsp;
+					<a @click="editInit(item.cxid)">编辑</a>   &nbsp;&nbsp;&nbsp;
+				</td>
+				<td><label for=""><input type="checkbox" v-model="aid" :value="item.cxid"></label></td>
+			</tr>
+		</table>
+
+
+		<br><br><br>
+
+		<div class="BottomBanner ">
+
+			<div id="page1" class="cen Page" ></div>
+			<div style="line-height: 50px; padding-right: 15px; position: absolute; right: 10px;
+		bottom: 0px;" >
+
+				<a class="layui-btn layui-btn-xs" @click="upTime(biaoMing)" v-if="aid.length>0" >更新</a>
+				<a class="layui-btn layui-btn-xs" @click="del(biaoMing)"  v-if="aid.length>0">删除</a>
+
+				<select @change="upAttr(biaoMing,'cxisRead',cxisRead)" v-model="cxisRead" v-if="aid.length>0">
+					<option value="">切换 已读/未读</option>
+					<option :value="key" v-for="item,key in readArr" >
+						{{item}}
+					</option>
+				</select>
+				<select @change="changeZt(biaoMing,cxpassed)" v-model="cxpassed" v-if="aid.length>0">
+					<option value="">切换状态</option>
+					<option :value="key" v-for="item,key in passedArr" >
+						{{item}}
+					</option>
+				</select>
+				<label >
+				<input type="checkbox" v-model="checkAll"  @click="SelectAll(List)" >
+					全选
+				</label>
+			</div>
+		</div>
+
+	</div>
+
+
+
+	<div v-show="showEdit || showAdd">
+
+		<h3 v-show="showEdit">修改信息</h3>
+		<h3 v-show="showAdd">添加信息</h3>
+		<form method="post" action="">
+
+			<table class="layui-table" lay-even>
+
+				<tr >
+					<td>评委：</td>
+					<td>
+						<select class="form-control" v-model="Info.cxuserid">
+							<option :value="item.cxid" v-for="item,key in userList" v-if="item.cxsortid==9 || item.cxsortid==6">
+								[{{item.cxid}}]  [{{item.cxsortid==9?'评委':'组长'}}] {{item.cxfullname}}
+							</option>
+						</select>
+
+					</td>
+				</tr>
+				<tr >
+					<td>被评人员：</td>
+					<td>
+						<select class="form-control" v-model="Info.cxToUserId">
+							<option :value="item.cxid" v-for="item,key in userList" v-if="item.cxsortid==8">
+								[{{item.cxid}}] {{item.cxusername}} {{item.cxpassed==1?'【锁定】':''}}
+							</option>
+						</select>
+
+					</td>
+				</tr>
+
+				<tr>
+					<td>状态：</td>
+					<td>
+						<label v-for="item,key in passedArr" style="margin-right: 20px;">
+							<input type="radio" :value="key" v-model="Info.cxpassed" :checked="key==Info.cxpassed?'checked':''">
+							{{item}}
+						</label>
+					</td>
+				</tr>
+				<tr>
+					<td>是否已读：</td>
+					<td>
+						<label  v-for="item,key in readArr" style="margin-right: 20px;">
+							<input type="radio" :value="key" v-model="Info.cxisRead" >
+							{{item}}
+						</label>
+					</td>
+				</tr>
+				<tr>
+					<td>总分</td>
+					<td><input type="text" class="form-control " v-model="Info['cxfenCountAll']"/>全部分数加起来的总分</td>
+				</tr>
+				<tr>
+					<td>岗位</td>
+					<td><input type="text" class="form-control " v-model="Info['cxganWei']"/></td>
+				</tr>
+				<tr>
+					<td>备注</td>
+					<td><input type="text" class="form-control " v-model="Info['cxBeiZhu']"/></td>
+				</tr>
+
+				<tr>
+					<td>所在组</td>
+					<td>{{zuInfo.cxtitlecn}}</td>
+				</tr>
+				<tr v-for="item in 20" v-if="zuInfo.cxjson[(item-1)]">
+					<td>评分项{{item}} - {{zuInfo.cxjson[(item-1)].title}}：</td>
+					<td><input type="text" class="form-control " v-model="Info['cxfen'+item]"/></td>
+				</tr>
+
+
+			</table>
+
+			<div class="h110"></div>
+			<div class="BottomBanner" v-show="showEdit">
+				<a @click="submits('edit')" class="layui-btn layui-btn-normal">保存修改</a>
+				<a @click="showEdit=false;showList=true;" class="layui-btn layui-btn-warm">返回</a>
+			</div>
+			<div class="BottomBanner" v-show="showAdd">
+				<a @click="submits('add')" class="layui-btn layui-btn-normal">添加</a>
+				<a @click="showAdd=false;showList=true;" class="layui-btn layui-btn-warm">返回</a>
+			</div>
+		</form>
+	</div>
+
+
+
+
+</div>
+
+<public-footer class="public-footer    "></public-footer>
+</body>
+</html>
+
+
+
+
+<script>
+
+	new Vue({el: ".public-header",});
+	new Vue({el: ".public-footer",});
+
+
+	var that;
+	var biaoMing="cxpingfen";
+    var app = new Vue({
+        el: '#app',
+        data:{
+            msg: '这里是文字滚动公告这里是文字滚动公告这里是文字滚动公告......',
+            List:[
+            		{ShowMore:false}
+            ],
+            pageCount:'',
+            count:'',
+			ShowMore:[],
+			showEdit:false,
+			showAdd:false,
+			showList:true,
+			showSearchMore:false,
+			sortList:[],
+			zuList:[],
+			userlevelList:'',
+			qhFl:'',
+			aid:[],
+			checkAll:false,
+			cxisRead:'',
+			cxpassed:'',
+			passedArr:['待审','正常'],
+			readArr:['未读','已读'],
+            search:{
+				page:1,
+				limit:20,
+            	CheckBoxId:[],
+				cxsortid:'',
+                keyword:'',
+				cxpassed:'',
+				cxuserid:'',
+				cxToUserId:'',
+				updateDate1:'',
+				updateDate2:'',
+				cxzuId:704,
+				cxisRead:'',
+                order:'cxupdatetime desc,cxid desc',
+				cxganWei:'',
+				table:biaoMing,
+            },
+			userList:'',
+			allNewList:'',
+			mdata: [],
+			Info:{},
+			zuInfo:{
+				cxBeiZhu:'',
+            	cxjson:[
+					{title:'',content:''},
+					{title:'',content:''},
+					{title:'',content:''},
+					{title:'',content:''},
+					{title:'',content:''},
+
+					{title:'',content:''},
+					{title:'',content:''},
+					{title:'',content:''},
+					{title:'',content:''},
+					{title:'',content:''},
+
+					{title:'',content:''},
+					{title:'',content:''},
+					{title:'',content:''},
+					{title:'',content:''},
+					{title:'',content:''},
+
+					{title:'',content:''},
+					{title:'',content:''},
+					{title:'',content:''},
+					{title:'',content:''},
+					{title:'',content:''},
+					{title:'',content:''},
+				]
+			},
+			ExcelUrl:'',
+
+        },
+        mounted () {
+            that = this;
+            if(getQV('page')){that.search.page=getQV('page');}
+			if(getQV('cxsortid')){that.search.cxsortid=getQV('cxsortid');}
+			if(getQV('cxuserid')){that.search.cxuserid=getQV('cxuserid');}
+			if(getQV('cxToUserId')){that.search.cxToUserId=getQV('cxToUserId');}
+			if(getQV('cxganWei')){that.search.cxganWei=getQV('cxganWei');}
+			if(getQV('cxzuId')){that.search.cxzuId=getQV('cxzuId');}
+
+            if(getQV('keyword')){
+            	that.search.keyword=getQV('keyword');
+            }
+			adminCheckToken(function () {
+				that.getList();
+				getAllSort();
+				getAllUser();
+				getAllUserLevel();
+
+				PostUrl('/bc.Wanneng/getList',{table:'cxnews',cxsortid:398},function(e){
+					that.zuList=e.data.rows;
+				},'摘取所有组');
+
+
+				PostUrl('/bc.Wanneng/getList',{table:'cxnews'},function(e){
+					that.allNewList=e.data.rows;
+				},'摘取所有文章');
+
+			});
+
+        },
+        methods:{
+        	addInit(){
+				that.mdata=[{
+						"title": "",
+						"content": ""
+					}];
+				that.Info={
+					cxuserid:'',
+					cxToUserId:'',
+					cxsortid:'',
+					cxtitlecn:'',
+					cxpassed:1,
+					cxaddtime:Now(),
+					cxupdatetime:Now(),
+					cxfen1:0,
+					cxfen2:0,
+					cxfen3:0,
+					cxfen4:0,
+					cxfen5:0,
+					cxfen6:0,
+					cxfen7:0,
+					cxfen8:0,
+					cxfen9:0,
+					cxfen10:0,
+					cxfen11:0,
+					cxfen12:0,
+					cxfen13:0,
+					cxfen14:0,
+					cxfen15:0,
+					cxfen16:0,
+					cxfen17:0,
+					cxfen18:0,
+					cxfen19:0,
+					cxfen20:0,
+					cxfenCount:0,
+					cxfenCountAll:0,
+					cxavg:0,
+					cxganWei:'',
+					cxzuId:0,
+					cxisRead:0,
+					cxBeiZhu:'',
+
+				};
+				that.showList=false;
+				that.showAdd=true;
+			},
+        	editInit(cid){
+				that.showList=false;
+				PostUrl('/bc.Wanneng/info', {table:biaoMing,cxid: cid}, function (e) {
+					that.Info = e.data;
+					that.showEdit=true;
+
+
+					PostUrl('/bc.Wanneng/info', {table:'cxnews',cxid: that.Info.cxzuId}, function (e) {
+						that.zuInfo = e.data;
+						that.zuInfo.cxjson=JSON.parse(that.zuInfo.cxjson);
+						console.log('--------------------',that.zuInfo.cxjson[0].title);
+						// that.zuInfo.cxjson.forEach((v,k)=>{
+						// 	v=JSON.parse(v);
+						// })
+					});
+				});
+			},
+
+			submits(act='add'){
+				//layer.confirm('确定保存当前修改的内容么', function (index) {
+				layer.load();
+				let postD= {table:biaoMing};
+				Object.assign(postD, that.Info);
+
+				PostUrl('/bc.Wanneng/'+act, postD, function (e) {
+					console.log(e.mess);
+					layer.msg(e.mess, {time: 1000});
+					setTimeout(function () {
+						that.getList();
+						if(e.codes==0){
+
+							that.showAdd=false;
+							that.showEdit=false;
+							that.showList=true;
+						}
+					},1000);
+
+				});
+
+				//});
+			},
+
+			ExcelOut(){
+
+				layer.load();
+
+				PostUrl('/bc.Pingfen/excelexport2',{cxzuId:that.search.cxzuId},function(e){
+					layer.closeAll();
+					if(e.codes==200){
+						that.ExcelUrl=e.data.url;
+					}
+					// that.count=e.count;
+					// that.page=e.page;
+					// that.pageCount=e.pageCount;
+					// fenye();
+
+
+				},'本页 - Excel导出');
+			},
+        	// changeS(key){
+        	// 	console.log(key);
+        	// 	console.log(that.ShowMore[key]);
+        	// 	that.$set(that.ShowMore,key,!that.ShowMore[key]);
+        	// 	console.log(that.ShowMore[key]);
+			// },
+			getList(){
+        		that.ExcelUrl='';
+        		layer.load();
+
+				PostUrl('/bc.Wanneng/getList',that.search,function(e){
+					layer.closeAll();
+				 	that.List=e.data.rows;
+					that.count=e.data.count;
+					that.page=e.data.pageCur;
+					that.pageCount=e.data.pageCount;
+					fenye();
+
+
+					console.log('评分列表拉取结束 ')
+
+				},'评分列表拉取结束');
+
+			}
+        }
+	});
+</script>

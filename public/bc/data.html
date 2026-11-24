@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+	<title>数据管理中心</title>
+
+
+	<!-- Bootstrap  -->
+	<link rel="stylesheet" href="https://api.bcwhkj.cn/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://api.bcwhkj.cn/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css">
+	<script type="text/javascript" src="https://api.bcwhkj.cn/Js/jquery1.11.3.min.js"></script>
+	<script src="https://api.bcwhkj.cn/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+
+	<link href="https://api.bcwhkj.cn/Css/animate.min.css" rel="stylesheet">
+
+	<link rel="stylesheet" type="text/css" href="https://api.bcwhkj.cn/swiper/swiper.css"/>
+	<script src="https://api.bcwhkj.cn/swiper/swiper.js"></script>
+
+
+	<link rel="stylesheet" href="../js/layui/dist/css/layui.css">
+	<script src="../js/layui/dist/layui.js"></script>
+
+	<script src="https://api.bcwhkj.cn/Js/vue.min.v2.6.14.js"></script>
+	<script src="https://api.bcwhkj.cn/Js/axios.min.js"></script>
+	<script src="https://api.bcwhkj.cn/Js/moment.min.js"></script>
+	<script src="https://api.bcwhkj.cn/Js/qs.min.js"></script>
+	<script src="https://api.bcwhkj.cn/Js/wow.min.js"></script>
+
+	<script src="header.js"></script>
+	<script src="footer.js"></script>
+	<script src="/js/pubjs.js"></script>
+	<script src="js/admin.js"></script>
+	<script src="js/publicFcuntion.js"></script>
+	<link rel="stylesheet" href="css/admin.css">
+
+	<!--百度编辑器-->
+	<script type="text/javascript" src="/static/baidu/ueditor.config.js"></script>
+	<script type="text/javascript" src="/static/baidu/ueditor.all.js"></script>
+
+
+</head>
+<body>
+<public-header class="public-header"></public-header>
+<div id="app">
+
+	<div  v-show="showList">
+		<div class="DaoHan">
+			<ul class="breadcrumb">
+				<li>
+					<a href="#"><h5>数据库表列表 </h5></a>
+				</li>
+			</ul>
+			<div class="clearfix"></div>
+			<form action="" style="width: 100%; text-align: right;">
+				<input type="button"  name="" @click="getList()" value="刷新" style="display: inline;">
+				<select  v-model="search.cxpassed">
+					<option value="">全部状态</option>
+					<option :value="key" v-for="item,key in passedArr"  >
+						{{item}}
+					</option>
+				</select>
+
+				<select  v-model="search.cxIsBuy">
+					<option value="">是否售出</option>
+					<option :value="key" v-for="item,key in buyArr"  >
+						{{buyArr[key]}}
+					</option>
+				</select>
+
+
+				<input type="text"   style="display: inline;" v-model="search.keywordValue" placeholder="卡号模糊搜索">
+
+				<input  type="button" @click="getList()" value="查询"    style="display: inline;">
+				<input type="button"  name="" @click="addBiao()" value="添加表" style="display: inline;">
+
+
+				<div style="float:none; clear: both;"></div>
+			</form>
+			<div class="clearfix"></div>
+		</div>
+
+		<table class="layui-table" lay-even>
+			<tr>
+				<th>ID</th>
+				<th>表名</th>
+				<th>注释</th>
+				<th>数据量</th>
+				<th>数据大小</th>
+				<th>最后修改时间</th>
+				<td>操作</td>
+			</tr>
+			<tr v-for="item,key in List" :class="'tr'+item.cxid">
+				<td>{{(key+1)}}</td>
+				<td>{{item.Name}}</td>
+				<td>{{item.Comment}}</td>
+				<td>{{item.Rows}}</td>
+				<td>{{item.Data_length/1024}} kb</td>
+				<td :title="'添加时间 ：'+item.Create_time+',修改时间 ：'+item.Update_time">{{item.Update_time}}</td>
+
+				<td >
+					<a @click="location.href='biao.html?biaoMing='+item.Name">查看表数据</a>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<a @click="editInit(item.Name)">编辑/查看表字段</a>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<a @click="if(confirm('确认要清空该表所有内容吗？表名：'+item.Name)){clearBiao(item.Name);}">清空表</a>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<a @click="if(confirm('确认要删除表：'+item.Name)){delBiao(item.Name);}">删除表</a>
+				</td>
+			</tr>
+		</table>
+		<br><br><br>
+
+		<div class="BottomBanner">
+
+			<div id="page1" class="cen Page" ></div>
+			<div style="line-height: 50px; padding-right: 15px; position: absolute; right: 10px;
+		bottom: 0px;" >
+
+				<a class="layui-btn layui-btn-xs" @click="upTime(biaoMing)" v-if="aid.length>0">更新</a>
+				<a class="layui-btn layui-btn-xs" @click="del(biaoMing)"  v-if="aid.length>0">删除</a>
+				<select @change="changeSort(biaoMing,qhFl)" v-model="qhFl">
+					<option value="">切换分类</option>
+					<option :value="item.cxid" v-for="item,key in allKaSortList" >
+						{{sortl(item.cxSort)+item.cxsortcn}}
+					</option>
+				</select>
+
+				<select @change="changeZt(bioaMing,cxpassed)" v-model="cxpassed" v-if="aid.length>0">
+					<option value="">切换状态</option>
+					<option :value="key" v-for="item,key in passedArr" >
+						{{item}}
+					</option>
+				</select>
+				<label >
+				<input type="checkbox" v-model="checkAll"  @click="SelectAll(List)" >
+					全选
+				</label>
+			</div>
+		</div>
+
+	</div>
+
+
+
+	<div v-if="showEdit || showAdd" >
+
+		<h3 v-show="showEdit">查看表 {{curBiaoMing}} 信息 (主键:{{Info.pk}})</h3>
+		<h3 v-show="showAdd">添加信息</h3>
+
+
+		<table class="layui-table" lay-even>
+			<tr>
+				<th>字段名</th>
+				<th>字段类型</th>
+				<th>长度</th>
+				<th>是否为空</th>
+				<th>默认值</th>
+			</tr>
+			<tr v-for="item,key in Info.fields">
+				<td >{{item}}：</td>
+				<td>{{Info.type[item]}}</td>
+				<td>
+					<a @click="addFiled(item,Info.type[item])">添加同类型字段</a>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<a @click="editField(item,Info.type[item])">修改字段</a>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<a @click="delField(item)">删除字段</a>
+				</td>
+			</tr>
+		</table>
+
+
+
+		<div class="h110"></div>
+		<div class="BottomBanner" v-show="showAdd">
+			<a @click="submits('add')" class="layui-btn layui-btn-normal">添加</a>
+			<a @click="showAdd=false;showList=true;" class="layui-btn layui-btn-warm">返回</a>
+		</div>
+		<div class="BottomBanner" v-show="showEdit">
+			<a @click="submits('edit')" class="layui-btn layui-btn-normal">保存修改</a>
+			<a @click="showEdit=false;showList=true;" class="layui-btn layui-btn-warm">返回</a>
+		</div>
+
+	</div>
+
+
+
+</div>
+
+<public-footer class="public-footer"></public-footer>
+</body>
+</html>
+
+
+
+
+<script>
+
+	new Vue({el: ".public-header",});
+	new Vue({el: ".public-footer",});
+
+
+	var that;
+	var biaoMing="";
+    var app = new Vue({
+        el: '#app',
+        data:{
+            msg: '这里是文字滚动公告这里是文字滚动公告这里是文字滚动公告......',
+			curBiaoMing:'',
+            List:[
+            		{ShowMore:false}
+            ],
+			allKaSortList:[],
+            pageCount:'',
+            count:'',
+			ShowMore:[],
+			showEdit:false,
+			showAdd:false,
+			showList:true,
+			sortList:[],
+			userList:'',
+			heZuoList:[],
+			qhFl:'',
+			aid:[],
+			checkAll:false,
+			cxpassed:'',
+			passedArr:['关闭','正常'],
+			jiHuoArr:['未激活','已经激活'],
+			buyArr:['未售','已售出'],
+            search:{
+				keywordValue:'',
+				cxsortid:'',
+				cxHeZuoId: '',
+				page:1,
+				limit:20,
+            	CheckBoxId:[],
+                keyword:'',
+				cxpassed:'',
+                cxbz:'',
+				cxJiHuo:'',
+				cxka1:'',
+				cxka2:'',
+				cxIsBuy:'',
+            },
+
+			Info:{
+			},
+
+        },
+        mounted () {
+            that = this;
+            adminCheckToken(function () {
+				that.getList();
+			});
+
+        },
+        methods:{
+			addFiled(fieldName,fieldType){
+				//alter table dept Add column name varchar(20) not null default 0
+				let s='alter table '+that.curBiaoMing + ' add column `'+fieldName+'` '+fieldType;
+				if(fieldType.indexOf('int')>0){ s=s+'default 0';}
+				let sqls=prompt('',s);
+				if(!sqls){return false;}
+				PostUrl('/bc.Data/fieldAdd', {biaoMing:that.curBiaoMing,sqls:sqls}, function (e) {
+					layer.msg(e.mess);
+					if(e.codes==200){
+						that.editInit(that.curBiaoMing);
+					}
+				},'当前页 - 添加字段');
+
+			},
+			editField(fieldName,fieldType){
+
+				let newName=prompt('要将字段名：'+fieldName+' 修改为什么',fieldName);
+				if(!newName){return false;}
+				//alter table 表名 change 原字段 要修改的字段名 字段类型
+				let s='alter table '+that.curBiaoMing + ' change `'+fieldName+'` `'+newName+'` '+fieldType;
+				if(fieldType.indexOf('int')>0){ s=s+'default 0';}
+				let sqls=prompt('',s);
+				if(!sqls){return false;}
+				PostUrl('/bc.Data/fieldEdit', {biaoMing:that.curBiaoMing,sqls:sqls}, function (e) {
+					layer.msg(e.mess);
+					if(e.codes==200){
+						that.editInit(that.curBiaoMing);
+					}
+				},'当前页 - 修改字段');
+			},
+			delField(fieldName){
+				if(confirm('确认删除字段：'+fieldName)){
+					PostUrl('/bc.Data/fieldDel', {biaoMing:that.curBiaoMing,fieldName:fieldName}, function (e) {
+						layer.msg(e.mess);
+						if(e.codes==200){
+							that.editInit(that.curBiaoMing);
+						}
+					},'当前页 - 删除字段');
+				}
+			},
+        	editInit(bm){
+        		that.curBiaoMing=bm;
+				that.showList=false;
+				PostUrl('/bc.Data/fieldList', {biaoMing:bm}, function (e) {
+					that.Info = e.data;
+					that.showEdit=true;
+				});
+			},
+			submits(act='add'){
+				layer.confirm('确定保存当前修改的内容么', function (index) {
+					layer.load();
+					let postD = {bm: biaoMing}
+					Object.assign(postD, that.Info);
+					PostUrl('/bc.Home/'+act, postD, function (e) {
+						that.getList();
+						layer.msg(e.mess, {time: 2000});
+
+					});
+
+					layer.closeAll();
+				});
+			},
+			getList(){
+				PostUrl('/bc.Data/allBiao',{},function(e){
+					that.List=e.data;
+				},'本页 - 所有表');
+
+			},
+			/**
+			 * @return 删除表
+			 */
+			delBiao(bm){
+				PostUrl('/bc.Data/biaoDel',{biaoMing:bm},function(e){
+					layer.msg(e.mess);
+					if(e.codes==200){
+						that.getList();
+					}
+				},'本页 - 删除表');
+			},
+
+			/**
+			 * @return 清空表
+			 */
+			clearBiao(bm){
+				PostUrl('/bc.Data/clearBiao',{biaoMing:bm},function(e){
+					layer.msg(e.mess);
+					if(e.codes==200){
+						that.getList();
+					}
+				},'本页 - 清空表');
+			},
+			/**
+			 * @return 添加表
+			 */
+			addBiao(){
+				let bm=prompt('请输入要添加的表名（同名无法添加）','');
+				if(!bm) {return false;}
+				let bz=prompt('请输入表的备注名','');
+				if(!bz) {return false;}
+				PostUrl('/bc.Data/biaoAdd',{biaoMing:bm,bz:bz},function(e){
+					layer.msg(e.mess);
+					if(e.codes==200){
+						that.getList();
+					}
+				},'本页 - 添加表');
+			},
+        }
+	});
+</script>

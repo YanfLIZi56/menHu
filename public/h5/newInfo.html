@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="all"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="renderer" content="webkit"/>
+    <meta name="viewport" content="width=device-width,initial-scale=0.8,maximum-scale=2.0,minimum-scale=0.1,user-scalable=1"/>
+    <link rel="icon" href="favicon.ico"/>
+    <title>汕头市红十字会 官方网站 www.stredcross.org.cn</title>
+
+    <script type="text/javascript" src="../js/jquery/dist/jquery.js"></script>
+
+    <link href="https://api.bcwhkj.cn/Css/animate.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://api.bcwhkj.cn/swiper/swiper.css"/>
+    <script src="https://api.bcwhkj.cn/swiper/swiper.js"></script>
+
+
+    <link rel="stylesheet" href="../js/layui/dist/css/layui.css">
+    <script src="../js/layui/dist/layui.js"></script>
+
+    <script src="https://api.bcwhkj.cn/Js/vue.min.v2.6.14.js"></script>
+    <script src="https://api.bcwhkj.cn/Js/axios.min.js"></script>
+    <script src="https://api.bcwhkj.cn/Js/moment.min.js"></script>
+    <script src="https://api.bcwhkj.cn/Js/qs.min.js"></script>
+    <script src="https://api.bcwhkj.cn/Js/wow.min.js"></script>
+    <script src="//game.gtimg.cn/images/js/tgtypefiles/js/tgDetail-v4.js" charset="utf-8"></script>
+
+
+
+    <link href="../css/style.css?v=1" rel="stylesheet">
+    <link href="../css/icon/iconfont.css" rel="stylesheet">
+    <script src="../js/pubjs.js"></script>
+    <script src="../js/index.js"></script>
+    <script src="header.js"></script>
+    <script src="footer.js"></script>
+<body >
+
+<div id="app">
+    <public-header  v-bind:menu="menu"></public-header>
+
+    <div style="background: url(https://vkceyugu.cdn.bspapp.com/VKCEYUGU-908027cd-0849-4303-ae20-d3bed9830e3a/0e3b462b-48b3-4924-8038-e7ff2168220d.gif) repeat-x top; padding-top:11px;">
+        <div class="w1200 ">
+            <!--面包屑-->
+            <div>
+                <span class="layui-breadcrumb">
+                  <a href="/h5/"><i class="iconfont icon-dingwei"></i>首页</a>
+                  <a href="">信息详情</a>
+                </span>
+            </div>
+
+            <!--主内容-->
+            <div class="newInfoContent  mt" style=" background: #fff; min-height: 810px;">
+                <div class="title">{{Info.cxtitlecn}} <div class="more">时间：{{moment(Info.cxupdatetime).format('YYYY-MM-DD')}}</div></div>
+                <div v-if="Info.cxlink && Info.cxlink.indexOf('.mp4')" class="cen">
+                    <video :src="Info.cxlink" controls style="width: 80%; margin:50px auto; " autoplay></video>
+                </div>
+                <div class="contents newInfoContents" v-html="Info.cxcontentcn">
+
+                    内容加载中……，如一直未显示。<a @click="history.go(0)">【可点击此处刷新页面】</a>
+
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <public-footer class="public-footer" v-bind:menu="menu"></public-footer>
+
+</div>
+
+</body>
+</html>
+
+
+<script src="/h5/v.js?v=2"></script>

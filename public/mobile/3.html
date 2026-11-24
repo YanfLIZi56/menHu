@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="all"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="renderer" content="webkit"/>
+    <meta name="viewport" content="width=device-width,initial-scale=0.5,maximum-scale=1.0,minimum-scale=0.1,user-scalable=1"/>
+    <link rel="icon" href="favicon.ico"/>
+    <title>红十字会首页</title>
+
+    <script type="text/javascript" src="http://api.bcwhkj.cn/Js/jquery1.11.3.min.js"></script>
+
+    <link href="http://api.bcwhkj.cn/Css/animate.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="http://api.bcwhkj.cn/swiper/swiper.css"/>
+    <script src="http://api.bcwhkj.cn/swiper/swiper.js"></script>
+
+
+    <link rel="stylesheet" href="http://api.bcwhkj.cn/layui2/dist/css/layui.css">
+    <script src="http://api.bcwhkj.cn/layui2/dist/layui.js"></script>
+
+    <script src="http://api.bcwhkj.cn/Js/vue.min.v2.6.14.js"></script>
+    <script src="http://api.bcwhkj.cn/Js/axios.min.js"></script>
+    <script src="http://api.bcwhkj.cn/Js/moment.min.js"></script>
+    <script src="http://api.bcwhkj.cn/Js/qs.min.js"></script>
+    <script src="http://api.bcwhkj.cn/Js/wow.min.js"></script>
+
+
+
+    <script src="../js/pubjs.js"></script>
+    <script src="../js/index.js"></script>
+    <script src="header.js"></script>
+    <script src="footer.js"></script>
+<body >
+<!--<public-header class="public-header"></public-header>-->
+<!--https://vkceyugu.cdn.bspapp.com/VKCEYUGU-908027cd-0849-4303-ae20-d3bed9830e3a/736006b1-9d06-4c36-94fb-3e7d3fb250a4.gif-->
+<div id="app">
+    <img src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-908027cd-0849-4303-ae20-d3bed9830e3a/9a320387-564f-475b-bbab-d92c5257018c.jpg" style="width:100%;">
+    <!--    <public-footer class="public-footer"></public-footer>-->
+
+</div>
+
+</body>
+</html>
+
+
+<script>
+
+
+    var that;
+    var app = new Vue({
+        el: '#app',
+        data: {
+            msg: 'vue启动成功',
+            cxfullname:'',
+            cxshenFenZheng:'',
+            cxZu:'',
+            listZu:[],
+
+        },
+        mounted() {
+            that = this;
+            console.log(that.msg);
+            //窗口尺寸改变
+            window.onresize = () => {
+                return (() => {
+                    // this.$forceUpdate();//强制更新数据
+                    //this.$router.go(0);
+                })();
+            };
+        },
+        methods: {
+            getZuList(){
+                PostUrl('/api/v2.Home/getZu',{}, function (e) {
+                    that.listZu=e.data;
+                },'摘取组列表')
+            },
+            submits() {
+                if(!that.cxfullname){alert('姓名不能为空');return false;}
+                if(!that.cxshenFenZheng){alert('身份证号不能为空');return false;}
+                if(!that.cxZu){alert('请选择组别');return false;}
+
+
+                PostUrl('/api/v2.Login/xueXiaoLogin', {cxfullname: that.cxfullname, cxshenFenZheng: that.cxshenFenZheng}, function (e) {
+                    alert(e.mess);
+                    if(e.codes==200){
+                        localStorage.token=e.data.token;
+                        localStorage.level=e.data.level;
+                        localStorage.id=e.data.id;
+                        localStorage.name=e.data.name;
+                        localStorage.sfz=e.data.sfz;
+                        localStorage.img=e.data.img;
+                        localStorage.passed=e.data.passed;
+                        setTimeout(()=>{
+                            location.href='viewList.html?cxzuid='+that.cxZu;
+                        },1000)
+                    }else{
+                    }
+                },'登陆')
+
+            },
+
+        }
+    })
+
+
+    new Vue({el: ".public-header",});
+    new Vue({el: ".public-footer",});
+</script>

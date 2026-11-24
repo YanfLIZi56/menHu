@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="all"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="renderer" content="webkit"/>
+    <meta name="viewport" content="width=device-width,initial-scale=0.5,maximum-scale=4.0,minimum-scale=0.1,user-scalable=1"/>
+    <link rel="icon" href="favicon.ico"/>
+    <title>汕头市红十字会 官方网站 www.stredcross.org.cn</title>
+    <meta name="keywords" content="汕头市红十字会地址,汕头市红十字会联系方式,汕头市红十字会在哪儿,shantoushihongshizihui">
+    <meta name="description" content="汕头市红十字会是从事人道主义工作的社会救助团体。单位单独设置为副处级单位，列入群团机关管理，内设办公室、赈济救护科。2007年11月，市红十字会加挂中国造血干细胞捐献者资料库广东省管理中心汕头工作站牌子。">
+    <meta name="location" content="province=广东;city=汕头;coord=116.68376201682,23.360977516314">
+    <meta property="bytedance:updated_time" content="2023-02-02T21:08:57+08:00"/>
+    <meta property="bytedance:published_time" content="2023-02-02T19:52:00+08:00"/>
+
+    <script type="text/javascript" src="https://api.bcwhkj.cn/Js/jquery1.11.3.min.js"></script>
+
+    <link href="https://api.bcwhkj.cn/Css/animate.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://api.bcwhkj.cn/swiper/swiper.css"/>
+    <script src="https://api.bcwhkj.cn/swiper/swiper.js"></script>
+
+
+    <link rel="stylesheet" href="../js/layui/dist/css/layui.css">
+    <script src="../js/layui/dist/layui.js"></script>
+
+    <script src="https://api.bcwhkj.cn/Js/vue.min.v2.6.14.js"></script>
+    <script src="https://api.bcwhkj.cn/Js/axios.min.js"></script>
+    <script src="https://api.bcwhkj.cn/Js/moment.min.js"></script>
+    <script src="https://api.bcwhkj.cn/Js/qs.min.js"></script>
+    <script src="https://api.bcwhkj.cn/Js/wow.min.js"></script>
+
+
+
+    <link href="../css/mobile.css?v=2" rel="stylesheet">
+    <link href="../css/icon/iconfont.css" rel="stylesheet">
+    <script src="../js/pubjs.js?v=2"></script>
+    <script src="../js/index.js?v=1"></script>
+    <script src="header.js?v=6"></script>
+    <script src="footer.js"></script>
+<body >
+
+<div id="app">
+
+    <public-header v-bind:menu="menu"></public-header>
+    <div style="background: url(https://vkceyugu.cdn.bspapp.com/VKCEYUGU-908027cd-0849-4303-ae20-d3bed9830e3a/0e3b462b-48b3-4924-8038-e7ff2168220d.gif) repeat-x top; padding-top:11px; background-size:100% 9%;">
+        <div class="w96">
+
+            <div class="banner  wow fadeInUp" >
+                <div class="swiper ad1" style="overflow: hidden;">
+                    <div class="swiper-wrapper">
+                        <div v-for="item,key in adList" class="swiper-slide"><img :src="item.cximg0" ></div>
+                    </div>
+                    <!-- 如果需要分页器 -->
+                    <div class="swiper-pagination"></div>
+
+                    <!-- 如果需要导航按钮 -->
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
+
+                </div>
+            </div>
+
+            <div class="banShi  wow fadeInUp" style=" background: #fff;">
+                <div class="titles">网上办事</div>
+                <div class="cen">
+                    <ul>
+
+                        <li v-for="item,key in wangShangBanShiArr" @click="window.open(item.link)">
+                            <i :class="item.icon"></i>
+                            <div class="wenzi">{{item.name}} <br><span>{{item.name2}}</span></div>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="geKai"></div>
+        <div class="w96">
+
+            <div class="XinWen " style=" margin-left: 1%;">
+                <div class="titles"  style="margin-left: 0px;"><a href="newList.html?cxsortid=412">新闻资讯</a>
+                    <span  class="t2"><a href="newList.html?cxsortid=436">通知公告</a></span>
+                    <span class="more"><a href="newList.html?cxsortid=412">更多 <i class="layui-icon layui-icon-next"></i></a></span>
+                </div>
+                <div class="newList">
+                    <ul>
+                        <li v-for="item,key in tongZhiList">
+                            <div v-if="key==0">
+                                <a :href="'newInfo.html?cxsortid='+item.cxsortid+'&cxid='+item.cxid" class="yinying"    :title="item.cxtitlecn">
+                                    <div class="lefts" style="width: 33%; padding-top: 2%;"><img src="https://picsum.photos/seed/picsum/281/170" class="yinying"></div>
+                                    <div class="rights" style="width: 65%;">
+                                        <div class="title"> {{item.cxtitlecn}}</div>
+                                        <div class="contents">{{filterHTMLTag(item.cxcontentcn)}}</div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </a>
+                            </div>
+
+                            <div v-else>
+                                <a :href="'newInfo.html?cxsortid='+item.cxsortid+'&cxid='+item.cxid"     :title="item.cxtitlecn">
+                                        <span class="lefts title">
+                                        <i  class="layui-icon-right layui-icon" style="font-size: 11px; color: #ccc;"></i>
+                                        {{item.cxtitlecn}}
+                                        </span>
+                                    <span class="rights">[ {{moment(item.cxupdatetime).format('YYYY-MM-DD')}}     ]</span>
+                                    <div class="clearfix"></div>
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+
+
+            <div style="background: #fff;" class=" wow fadeInUp">
+                <div class="xinXiGongKai   " >
+                    <div style=" margin:13px 0 13px 13px;">
+
+                        <div class="titles">信息公开</div>
+                        <span>
+                            <ul>
+                                <a v-for="item,key in xinXiGongKaiArr" :href="item.link" class="lefts anim"><li>
+                                    <i :class="item.icon"></i><div>{{item.name}}</div>
+                                </li></a>
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="geKai"></div>
+
+            <div class="ztzl w96 mt wow fadeInUp" >
+                <div class="titles">专题专栏</div>
+                <div v-for="item,key in List4" class="mt">
+                    <a :href="item.cxlink">
+                    <img  :src="item.cximg0" class="yinying">
+                    </a>
+                </div>
+<!--                <div class="swiper ad2" style="margin:15px 0; overflow:hidden; padding-bottom:15px;" >-->
+<!--                    <div class="swiper-wrapper">-->
+<!--                        <div class="swiper-slide" v-for="item,key in List4">-->
+<!--                            <div>-->
+<!--                                <img  :src="item.cximg0" class="yinying">-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+<!--                    &lt;!&ndash; 如果需要导航按钮 &ndash;&gt;-->
+<!--&lt;!&ndash;                    <div class="swiper-button-prev"></div>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <div class="swiper-button-next"></div>&ndash;&gt;-->
+
+<!--                    &lt;!&ndash; 如果需要滚动条 &ndash;&gt;-->
+<!--&lt;!&ndash;                    <div class="swiper-scrollbar"></div>&ndash;&gt;-->
+<!--                </div>-->
+            </div>
+            <div class="geKai"></div>
+
+            <div class="w96 wow fadeInUp hhsy">
+                    <div class="titles">红会事业</div>
+                    <ul class="hongHuiShiYe">
+                        <a v-for="item,key in hongHuiShiYeArr" :href="item.link"><li class="anim">{{item.name}}</li></a>
+                    </ul>
+                    <div class="clearfix"></div>
+            </div>
+            <div class="geKai"></div>
+            <div class="gongYiXiangMu w96">
+                    <div class="titles">应急救护
+                        <span class="more"><a href="newList.html?cxsortid=426">更多 <i class="layui-icon layui-icon-next"></i></a></span>
+                    </div>
+                    <div>
+                            <div class="lefts" style="width:30%;"><img :src="List2[0].cximg0?List2[0].cximg0:nopic" style="width: 205px; height: 143px;"></div>
+                            <div  class="rights" style="width:69%;">
+                                <a :href="'newInfo.html?cxsortid='+item.cxsortid+'&cxid='+item.cxid"     v-for="item,key     in    List2"    :title="item.cxtitlecn">
+                                        <span class=" title">
+                                        <i  class="layui-icon-right layui-icon" style="font-size: 0.8rem; color: #ccc;"></i>
+                                        {{item.cxtitlecn}}
+                                        </span>
+                                    <div class="clearfix"></div>
+                                </a>
+
+                            </div>
+                            <div class="clearfix"></div>
+                    </div>
+            </div>
+
+            <div class="geKai"></div>
+            <div class="zhiYuanZhe w96">
+                <div class="titles">志愿服务
+                    <span class="more"><a href="newList.html?cxsortid=453   ">更多 <i class="layui-icon layui-icon-next"></i></a></span>
+                </div>
+                <ul>
+                    <li v-for="item,key in List3"  @click="location.href='newInfo.html?cxsortid='+item.cxsortid+'&cxid='+item.cxid"   >
+                        <img :src="item.cximg0?item.cximg0:nopic" style="width: 184px; height: 135px;" class="yinying">
+                        <div class="title">{{item.cxtitlecn}}</div>
+                    </li>
+                </ul>
+
+            </div>
+
+            <div class="geKai"></div>
+            <div class="w96 wow fadeInUp">
+                <div class="jkgs ">
+                    <div class="titles">捐赠公示
+                        <span class="more"><a href="newList.html?cxsortid=438">更多 <i class="layui-icon layui-icon-next"></i></a></span>
+                    </div>
+                    <div class="smallNav" style="display: none;">
+                        <a href="">资金捐助</a>
+                        &nbsp;&nbsp;&nbsp;
+                        <a href="">物资捐赠</a>
+                    </div>
+
+
+
+                    <ul  class="newList">
+                        <li style="display: none;">
+                            <span>捐赠人/单位</span>
+                            <span>捐赠金额</span>
+                            <span>捐赠时间</span>
+                        </li>
+                        <li v-for="item,key in List5" class="anim">
+                            <a :href="'newInfo.html?cxsortid='+item.cxsortid+'&cxid='+item.cxid"     :title="item.cxtitlecn">
+                                        <span class="lefts title">
+                                        <i  class="layui-icon-right layui-icon" style="font-size: 11px; color: #ccc;"></i>
+                                        {{item.cxtitlecn}}
+                                        </span>
+                                <span class="rights">[ {{moment(item.cxupdatetime).format('YYYY-MM-DD')}}     ]</span>
+                                <div class="clearfix"></div>
+                            </a>
+                        </li>
+                        <li v-for="item,key in List5" class="anim" style="display: none;">
+                            <span>{{item.cxtitlecn}}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+
+        </div>
+
+    <div class="geKai"></div>
+    <div class="w96" style="  background: url(https://mp-908027cd-0849-4303-ae20-d3bed9830e3a.cdn.bspapp.com/cloudstorage/eba07cfc-03a5-4cc1-bf1b-aa6db8906405.gif) no-repeat bottom right #fff; background-size:60%;">
+        <div class="titles">募捐账户</div>
+        <div style="padding: 10px 0 45px 15px; font-size:24px; line-height: 40px;">
+            户名：汕头市红十字会
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            开户行：中行汕头金园支行
+            <br>
+            账号：665257760303
+            <br>
+            <span style="color: #666">(备注：捐款请注明用途)</span>
+        </div>
+
+    </div>
+    <div class="geKai"></div>
+    <div class="smallBanner w96">
+        <a href="newInfo.html?cxsortid=433&cxid=1319">
+            <img src="https://mp-908027cd-0849-4303-ae20-d3bed9830e3a.cdn.bspapp.com/cloudstorage/75102966-1b2b-4cd8-a351-c535d45ea6aa.gif" style="width: 100%;">
+        </a>
+    </div>
+    <div class="geKai"></div>
+
+    <div class="w96 indexLinks">
+        <!--友情链接-->
+        <div  style="line-height: 67px;">
+            <span class="lefts" style="color: #f00;width: 20%; font-size: 18px;">友情链接：</span>
+            <ul class="lefts" style="width:80%;">
+
+                <li class="lefts" v-for="item,key in List6"><a :href="item.cxlink" target="_blank">{{item.cxtitlecn}}</a></li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+    <public-footer  v-bind:menu="menu"></public-footer>
+
+</div>
+
+</body>
+</html>
+
+
+<script src="/h5/v.js?v=2"></script>

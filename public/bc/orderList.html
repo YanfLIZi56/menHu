@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+	<title>数据管理中心</title>
+
+
+	<!-- Bootstrap  -->
+	<link rel="stylesheet" href="https://api.bcwhkj.cn/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://api.bcwhkj.cn/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css">
+	<script type="text/javascript" src="https://api.bcwhkj.cn/Js/jquery1.11.3.min.js"></script>
+	<script src="https://api.bcwhkj.cn/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+
+	<link href="https://api.bcwhkj.cn/Css/animate.min.css" rel="stylesheet">
+
+	<link rel="stylesheet" type="text/css" href="https://api.bcwhkj.cn/swiper/swiper.css"/>
+	<script src="https://api.bcwhkj.cn/swiper/swiper.js"></script>
+
+
+	<link rel="stylesheet" href="https://api.bcwhkj.cn/layui2/dist/css/layui.css">
+	<script src="https://api.bcwhkj.cn/layui2/dist/layui.js"></script>
+
+	<script src="https://api.bcwhkj.cn/Js/vue.min.v2.6.14.js"></script>
+	<script src="https://api.bcwhkj.cn/Js/axios.min.js"></script>
+	<script src="https://api.bcwhkj.cn/Js/moment.min.js"></script>
+	<script src="https://api.bcwhkj.cn/Js/qs.min.js"></script>
+	<script src="https://api.bcwhkj.cn/Js/wow.min.js"></script>
+
+	<script src="header.js"></script>
+	<script src="footer.js"></script>
+	<script src="/js/pubjs.js"></script>
+	<script src="js/admin.js"></script>
+	<script src="js/publicFcuntion.js"></script>
+	<link rel="stylesheet" href="css/admin.css">
+
+	<!--百度编辑器-->
+	<script type="text/javascript" src="/static/baidu/ueditor.config.js"></script>
+	<script type="text/javascript" src="/static/baidu/ueditor.all.js"></script>
+
+
+</head>
+<body>
+<public-header class="public-header"></public-header>
+<div id="app">
+
+	<div  v-show="showList">
+		<div class="DaoHan">
+			<ul class="breadcrumb">
+				<li>
+					<a href="#"><h5> 信息列表 </h5></a>
+				</li>
+			</ul>
+			<form action="">
+				<input type="button"  name="" @click="getList()" value="刷新" style="display: inline;">
+				<select  v-model="search.cxpassed">
+					<option value="">全部状态</option>
+					<option :value="key" v-for="item,key in orderPassedArr" >
+						{{item}}
+					</option>
+				</select>
+				<select  v-model="search.cxuserid">
+					<option value="">全部人员</option>
+					<option :value="item.cxid" v-for="item,key in userList" >
+						{{item.cxid}} - {{item.cxfullname}}
+					</option>
+				</select>
+				<input type="text"   style="display: inline;" v-model="search.keyword" placeholder="" @keyup.enter="getList(page,limit,search)">
+
+				<input  type="button" @click="getList()" value="查询"    style="display: inline;">
+				<input type="button"  name="" @click="addInit()" value="添加数据" style="display: none;">
+
+
+				<div style="float:none; clear: both;"></div>
+			</form>
+			<div class="clearfix"></div>
+		</div>
+
+		<table class="layui-table" lay-even>
+			<tr>
+				<th>ID</th>
+				<th>订单编号</th>
+				<th>状态</th>
+				<th>状态</th>
+				<th>订单金额</th>
+				<th>下单日期</th>
+				<th>下单人员</th>
+				<th>收货地址</th>
+				<th>操作</th>
+				<th >勾选</th>
+			</tr>
+			<tr v-for="item,key in List" :class="'tr'+item.cxid">
+				<td>{{item.cxid}}</td>
+				<td><a  @click="editInit(item.cxid)">{{item.cxpay_no}}</a></td>
+				<td>{{orderPassedArr[item.cxpassed]}}</td>
+				<td>
+					<a @click="aid=item.cxid;upAttr(biaoMing,'cxisRead',item.cxisRead==0?1:0)"
+					   :class="item.cxisRead==0?'colorRed':''"
+					:title="'点击设置为'+readArr[item.cxisRead==0?1:0]">
+					{{readArr[item.cxisRead]}}</a>
+				</td>
+				<td>{{item.cxprice}}</td>
+				<td>{{item.cxupdatetime}}</td>
+				<td>[{{item.cxuserid}}] {{sortId_to_sortName(item.cxuserid,userList).cxfullname}}</td>
+				<td>{{item.cxaddressName}} {{item.cxaddressPhone}} <br> {{item.cxaddress}}{{item.cxaddressMenPai}}</td>
+				<td >
+					<a @click="editInit(item.cxid)">编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;
+					<a @click="selectOrder(item.cxid)">查询订单状态</a>
+				</td>
+				<td><input type="checkbox" v-model="aid" :value="item.cxid"></td>
+			</tr>
+		</table>
+		<br><br><br>
+
+		<div class="BottomBanner">
+
+			<div id="page1" class="cen Page" ></div>
+			<div style="line-height: 50px; padding-right: 15px; position: absolute; right: 10px;
+		bottom: 0px;" >
+
+				<a class="layui-btn layui-btn-xs" @click="upTime(biaoMing)" v-if="aid.length>0">更新</a>
+				<a class="layui-btn layui-btn-xs" @click="del(biaoMing)"  v-if="aid.length>0">删除</a>
+				<select @change="changeSort(biaoMing,qhFl)" v-model="qhFl" style="display: none">
+					<option value="">切换分类</option>
+					<option :value="item.cxid" v-for="item,key in sortList" >
+						{{sortl(item.cxSort)+item.cxsortcn}}
+					</option>
+				</select>
+
+				<select @change="changeZt(biaoMing,cxpassed)" v-model="cxpassed" v-if="aid.length>0">
+					<option value="">切换状态</option>
+					<option :value="key" v-for="item,key in orderPassedArr" >
+						{{item}}
+					</option>
+				</select>
+				<select @change="upAttr(biaoMing,'cxisRead',cxisRead)" v-model="cxisRead" v-if="aid.length>0">
+					<option value="">切换 已读/未读</option>
+					<option :value="key" v-for="item,key in readArr" >
+						{{item}}
+					</option>
+				</select>
+				<label >
+					<input type="checkbox" v-model="checkAll"  @click="SelectAll(List)" >
+					全选
+				</label>
+			</div>
+		</div>
+
+	</div>
+
+
+
+	<div v-show="showEdit || showAdd"  style="width:98%; margin:0 auto;">
+
+
+		<blockquote class="layui-elem-quote" style="width: 98%;margin: 0 auto;">
+			<h3 >商品清单</h3>
+		</blockquote>
+		<table class="layui-table" lay-even>
+			<tr >
+				<th>商品图片</th>
+				<th>标题</th>
+				<th>规格</th>
+				<th>单价</th>
+				<th>数量</th>
+			</tr>
+			<tr v-for="item,key in Info.proList">
+				<td><a @click="openImg(item.cximg0)"><Img :src="item.cximg0" style="max-width:100px;"></a></td>
+				<td>{{item.cxtitlecn}}</td>
+				<td>{{item.cxSku}}</td>
+				<td>{{item.cxprice}}</td>
+				<td>{{item.cxproductCount}}</td>
+			</tr>
+		</table>
+		<br>
+
+		<blockquote class="layui-elem-quote" style="width: 98%;margin: 0 auto;">
+			<h3 v-show="showEdit">订单信息</h3>
+			<h3 v-show="showAdd">添加信息</h3>
+		</blockquote>
+
+
+		<table class="layui-table" lay-even>
+
+			<tr>
+				<th>信息编号：</th>
+				<td>{{Info.cxid}}</td>
+			</tr>
+			<tr>
+				<th :title="Info.payCallBack">所属用户编号：</th>
+				<td :title="'paySelect:'+Info.paySelect">{{Info.cxuserid}}</td>
+			</tr>
+			<tr>
+				<th>所属用户：</th>
+				<td>{{sortId_to_sortName(Info.cxuserid,userList).cxfullname}}</td>
+			</tr>
+			<tr>
+				<th>建行生活用户ID：</th>
+				<td>{{Info.cxJianHangUserid}}</td>
+			</tr>
+			<tr>
+				<th>状态：</th>
+				<td>
+					<label  v-for="item,key in orderPassedArr" style="margin-right: 20px;">
+						<input type="radio" :value="key" v-model="Info.cxpassed" :checked="key==Info.cxpassed?'checked':''">
+						{{item}}
+					</label>
+				</td>
+			</tr>
+			<tr>
+				<th>是否已读：</th>
+				<td>
+					<label  v-for="item,key in readArr" style="margin-right: 20px;">
+						<input type="radio" :value="key" v-model="Info.cxisRead" >
+						{{item}}
+					</label>
+				</td>
+			</tr>
+
+			<tr>
+				<th>支付订单号：</th><td><input type="text" class="form-control wauto"  v-model="Info.cxpay_no"/></td>
+			</tr>
+			<tr><th>订单总金额：</th><td>{{Info.cxprice}}</td></tr>
+			<tr><th>实际付款金额：</th><td>{{Info.realPayment}}</td></tr>
+			<tr><th>状态</th><td>{{orderPassedArr[Info.cxpassed]}}</td></tr>
+			<tr><th>类型</th><td>{{Info.cxpaytype}}</td></tr>
+			<tr><th>IP：</th><td>{{Info.cxip}}</td></tr>
+			<tr><th>备注</th><td>{{Info.cxnote}}</td></tr>
+			<tr><th>创建时间</th><td>{{Info.cxaddtime}}</td></tr>
+			<tr><th>更新时间</th><td>{{Info.cxupdatetime}}</td></tr>
+			<tr><th>支付时间</th><td>{{Info.cxpaytime}}</td></tr>
+			<tr><th>发货时间</th><td>{{Info.cxfhtime}}</td></tr>
+			<tr><th>完成时间</th><td>{{Info.cxwctime}}</td></tr>
+			<tr><th>收件人姓名</th><td><input type="text" class="form-control "  v-model="Info.cxaddressName"/></td></tr>
+			<tr><th>收件人电话</th><td><input type="text" class="form-control "  v-model="Info.cxaddressPhone"/></td></tr>
+			<tr><th>收件人地址</th><td><input type="text" class="form-control "  v-model="Info.cxaddress"/></td></tr>
+			<tr><th>收件人门牌号</th><td><input type="text" class="form-control "  v-model="Info.cxaddressMenPai"/></td></tr>
+			<tr><th>物流公司名：</th><td><input type="text" class="form-control "  v-model="Info.cx_wu_liu_company"/></td></tr>
+			<tr><th>物流运单号：</th><td><input type="text" class="form-control "  v-model="Info.cx_wu_liu_id"/></td></tr>
+			<tr @click="showCode=!showCode"><th>timeStamp：</th>				<td>{{Info.timeStamp}}</td></tr>
+			<tr v-show="showCode"><th>支付回调</th><td style="word-break: break-all">				<pre>{{formatJson(Info.payCallBack)}}</pre></td></tr>
+			<tr v-show="showCode"><th>订单查询回调</th><td style="word-break: break-all">				<pre>{{formatJson(Info.paySelect)}}</pre></td></tr>
+			<tr v-show="showCode"><th>订单推送回调</th><td style="word-break: break-all">				<pre>{{formatJson(Info.tuiSongCallBack)}}</pre></td></tr>
+
+		</table>
+
+
+
+
+
+
+		<div class="h110"></div>
+		<div class="BottomBanner" v-show="showAdd">
+			<a @click="submits('add')" class="layui-btn layui-btn-normal">添加</a>
+			<a @click="showAdd=false;showList=true;" class="layui-btn layui-btn-warm">返回</a>
+		</div>
+		<div class="BottomBanner" v-show="showEdit">
+			<a @click="submits('edit')" class="layui-btn layui-btn-normal">保存修改</a>
+			<a @click="showEdit=false;showList=true;" class="layui-btn layui-btn-warm">返回</a>
+		</div>
+
+	</div>
+
+
+
+</div>
+
+<public-footer class="public-footer"></public-footer>
+</body>
+</html>
+
+
+
+
+<script>
+
+	new Vue({el: ".public-header",});
+	new Vue({el: ".public-footer",});
+
+
+	var that;
+	var biaoMing="cxproductorders";
+	var app = new Vue({
+		el: '#app',
+		data:{
+			msg: '这里是文字滚动公告这里是文字滚动公告这里是文字滚动公告......',
+			List:[
+				{ShowMore:false}
+			],
+			allKaSortList:[],
+			pageCount:'',
+			count:'',
+			ShowMore:[],
+			showEdit:false,
+			showAdd:false,
+			showList:true,
+			showCode:false,
+			sortList:[],
+			userList:'',
+			qhFl:'',
+			aid:[],
+			checkAll:false,
+			cxpassed:'',
+			cxisRead:'',
+			jiHuoArr:['未激活','已经激活'],
+			readArr:['未读','已读'],
+			orderPassedArr:[],
+
+			search:{
+				page:1,
+				limit:20,
+				CheckBoxId:[],
+				keyword:'',
+				cxpassed:'',
+				cxuserid:'',
+				cxbz:'',
+				order:'cxupdatetime desc,cxid desc'
+			},
+
+			Info:{
+			},
+
+		},
+		mounted () {
+			that = this;
+			adminCheckToken(function () {
+
+				if(getQV('page')){that.page=getQV('page');}
+				if(getQV('cxsortid')){that.search.cxsortid=getQV('cxsortid');}
+				if(getQV('key')){
+					that.search.keywordName='cxsortcn|cxsorten'
+					that.search.keywordValue=getQV('key');
+				}
+				that.getList();
+				getAllKaSort();
+				getAllSort();
+				getAllUser();
+				getAllOrderPassed();
+
+			});
+
+		},
+		methods:{
+			addInit(){
+
+				that.Info={
+					cxpassed:1,
+					cxsortid:0,
+					cxKaHao:'',
+					cxKaMi:'',
+					cxJiHuo:0,
+				};
+				that.showList=false;
+				that.showAdd=true;
+			},
+			selectOrder(cid){
+				layer.load();
+				PostUrl('/api/v2.Pay/selectOrder', {cxid: cid}, function (e) {
+					console.log('拉取订单成功',e);
+					if(e=='找不到该订单'){
+						layer.alert('建行系统中找不到该订单，可能未支付成功', {
+							skin: 'layui-layer-molv' //样式类名
+							,closeBtn: 0
+						}, function(){
+							layer.closeAll()
+						});
+						return false;
+					}
+					//交易时间: "20221012170238"
+					// 交易状态: "00"
+					// 交易状态说明: "00-交易成功标志 01-交易失败 02-不确定 04-不确定 TO-交易超时"
+					// 结算金额: "0.01"
+					// 网银凭证号: "817934841231"
+					// 订单编号: "2022101248565249"
+					// 订单金额: "0.01"
+					// 银行流水号: "1010113841665565357325814"
+					layer.alert('交易时间: "'+e.交易时间+'"<br>' +
+							'交易状态: "'+e.交易状态+'"<br>' +
+							'交易状态说明: "'+e.交易状态说明+'"<br>' +
+							'结算金额: "'+e.结算金额+'"<br>' +
+							'网银凭证号: "'+e.网银凭证号+'"<br>' +
+							'订单编号: "'+e.订单编号+'"<br>' +
+							'订单金额: "'+e.订单金额+'"<br>' +
+							'银行流水号: "'+e.银行流水号+'"' +
+							'', {
+						skin: 'layui-layer-molv' //样式类名
+						,closeBtn: 0
+					}, function(){
+						layer.closeAll()
+					});
+				});
+			},
+			editInit(cid){
+				that.showList=false;
+				PostUrl('/bc.Shop/orderInfo', {bm:biaoMing,cxid: cid}, function (e) {
+					console.log('拉取订单详情成功');
+					that.Info = e.data;
+					that.showEdit=true;
+				});
+			},
+			submits(act='add'){
+				layer.confirm('确定保存当前修改的内容么', function (index) {
+					layer.load();
+					let postD = {bm: biaoMing}
+					Object.assign(postD, that.Info);
+					delete(postD.proList);
+					PostUrl('/bc.Home/'+act, postD, function (e) {
+						that.getList();
+						layer.msg(e.mess, {time: 2000});
+
+					});
+
+					layer.closeAll();
+				});
+			},
+			getList(){
+				PostUrl('/bc.Select?table='+biaoMing,that.search,function(e){
+					that.List=e.data;
+					that.count=e.count;
+					that.pageCount=e.pageCount;
+					fenye();
+
+
+					console.log('产品列表拉取结束 ')
+
+				});
+
+			},
+			/**c
+			 * @return json显示格式化
+			 * @param json 要传递的字符
+			 */
+			formatJson(e) {
+				if(e){
+					return JSON.stringify(JSON.parse(e), null, 2);
+				}
+				//return JSON.stringify(JSON.parse(e), null, '\t');
+			},
+		}
+	});
+</script>

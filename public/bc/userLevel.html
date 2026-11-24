@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+	<title>数据管理中心</title>
+
+
+	<!-- Bootstrap  -->
+	<link rel="stylesheet" href="https://api.bcwhkj.cn/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://api.bcwhkj.cn/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css">
+	<script type="text/javascript" src="https://api.bcwhkj.cn/Js/jquery1.11.3.min.js"></script>
+	<script src="https://api.bcwhkj.cn/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+
+	<link href="https://api.bcwhkj.cn/Css/animate.min.css" rel="stylesheet">
+
+	<link rel="stylesheet" type="text/css" href="https://api.bcwhkj.cn/swiper/swiper.css"/>
+	<script src="https://api.bcwhkj.cn/swiper/swiper.js"></script>
+
+
+	<link rel="stylesheet" href="../js/layui/dist/css/layui.css">
+	<script src="../js/layui/dist/layui.js"></script>
+
+	<script src="https://api.bcwhkj.cn/Js/vue.min.v2.6.14.js"></script>
+	<script src="https://api.bcwhkj.cn/Js/axios.min.js"></script>
+	<script src="https://api.bcwhkj.cn/Js/moment.min.js"></script>
+	<script src="https://api.bcwhkj.cn/Js/qs.min.js"></script>
+	<script src="https://api.bcwhkj.cn/Js/wow.min.js"></script>
+
+	<script src="header.js"></script>
+	<script src="footer.js"></script>
+	<script src="/js/pubjs.js"></script>
+	<script src="js/admin.js"></script>
+	<script src="js/publicFcuntion.js"></script>
+	<link rel="stylesheet" href="css/admin.css">
+
+	<!--百度编辑器-->
+	<script type="text/javascript" src="/static/baidu/ueditor.config.js"></script>
+	<script type="text/javascript" src="/static/baidu/ueditor.all.js"></script>
+
+
+</head>
+<body>
+<public-header class="public-header"></public-header>
+<div id="app">
+
+	<div  v-show="showList">
+		<div class="DaoHan">
+			<ul class="breadcrumb">
+				<li>
+					<a href="#"><h5> 产品分类管理列表 </h5></a>
+				</li>
+			</ul>
+			<form action="">
+				<input type="button"  name="" @click="getList()" value="刷新" style="display: inline;">
+				<select  v-model="search.cxsortid" style="display: none;">
+					<option value="">搜索类别</option>
+					<option :value="item.cxid" v-for="item,key in sortList" :selected="item.cxid==getQV('cxsortid')?'selected':''" >
+						{{sortl(item.cxSort)+item.cxsortcn}}
+					</option>
+				</select>
+				<select  v-model="search.cxpassed">
+					<option value="">全部状态</option>
+					<option :value="key" v-for="item,key in passedArr" :selected="item.cxpassed==getQV('cxpassed')?'selected':''" >
+						{{item}}
+					</option>
+				</select>
+				<input type="text"   style="display: inline;" v-model="search.keyword" placeholder="" @keyup.enter="getList()">
+
+				<input  type="button" @click="getList()" value="查询"    style="display: inline;">
+				<input type="button"  name="" @click="addInit()" value="添加数据" style="display: inline;">
+
+
+				<div style="float:none; clear: both;"></div>
+			</form>
+			<div class="clearfix"></div>
+		</div>
+
+		<table class="layui-table" lay-even>
+			<tr>
+				<td>ID</td>
+				<td>状态</td>
+				<td>类名</td>
+				<td style="display:none;">英文类别</td>
+				<td style="display:none;">图片</td>
+				<td style="display:none;">路径</td>
+				<td>操作</td>
+				<td >勾选</td>
+			</tr>
+			<tr v-for="item,key in List" :class="'tr'+item.cxid">
+				<td>{{item.cxid}}</td>
+				<td v-if="item.cxpassed==0" class="colorRed">{{passedArr[item.cxpassed]}}</td>
+				<td v-if="item.cxpassed==1" >{{passedArr[item.cxpassed]}}</td>
+				<td v-if="item.cxpassed==2"  style="color:#0881D8">{{passedArr[item.cxpassed]}}</td>
+				<td>{{item.cxuserlevel}}</td>
+				<td style="display:none;">{{item.cxsorten}}</td>
+				<td style="display:none;">
+					<a :href="item.cximg0" target="_blank" v-if="item.cximg0" title="图1">
+						<img :src="item.cximg0" alt="" style="max-width: 80px; max-height:40px; "></a>
+					<a :href="item.cximg1" target="_blank" v-if="item.cximg1" title="图2">
+						<img :src="item.cximg1" alt="" style="max-width: 80px; max-height:40px; "></a>
+				</td>
+				<td style="display:none;">{{item.cxurl}}</td>
+				<td>
+					<a @click="editInit(item.cxid)">编辑</a>
+				</td>
+				<td><input type="checkbox" v-model="aid" :value="item.cxid"></td>
+			</tr>
+		</table>
+		<br><br><br>
+
+		<div class="BottomBanner">
+
+			<div id="page1" class="cen Page" ></div>
+			<div style="line-height: 50px; padding-right: 15px; position: absolute; right: 10px;
+		bottom: 0px;" >
+
+				<a class="layui-btn layui-btn-xs" @click="upTime(biaoMing)" v-if="aid.length>0">更新</a>
+				<a class="layui-btn layui-btn-xs" @click="del(biaoMing)" v-if="aid.length>0">删除</a>
+				<select @change="changeSort(biaoMing,qhFl)" v-model="qhFl" style="display: none;">
+					<option value="">切换分类</option>
+					<option :value="item.cxid" v-for="item,key in sortList" >
+						{{sortl(item.cxSort)+item.cxsortcn}}
+					</option>
+				</select>
+
+				<select @change="changeZt(biaoMing,cxpassed)" v-model="cxpassed" v-if="aid.length>0">
+					<option value="">切换状态</option>
+					<option :value="key" v-for="item,key in passedArr" >
+						{{item}}
+					</option>
+				</select>
+				<label >
+					<input type="checkbox" v-model="checkAll"  @click="SelectAll(List)" >
+					全选
+				</label>
+			</div>
+		</div>
+
+	</div>
+
+
+
+	<div v-show="showEdit || showAdd" >
+
+		<h3 v-show="showEdit">修改信息</h3>
+		<h3 v-show="showAdd">添加信息</h3>
+
+
+		<table class="layui-table" lay-even>
+
+			<tr>
+				<td>状态：</td>
+				<td>
+					<label  v-for="item,key in passedArr" style="margin-right: 20px;">
+						<input type="radio" :value="key" v-model="Info.cxpassed" :checked="key==Info.cxpassed?'checked':''">
+						{{item}}
+					</label>
+				</td>
+			</tr>
+			<tr>
+				<td>分类标题：</td>
+				<td><input type="text" class="form-control wauto"  v-model="Info.cxuserlevel"/></td>
+			</tr>
+			<tr>
+				<td>图片1：</td>
+				<td>
+					<img :src="Info.cximg0" style="max-height: 80px; max-width:100px;" v-show="Info.cximg0" @click="window.open(Info.cximg0)">
+					<input type="text" name="cximg0" v-model="Info.cximg0" placeholder="粘贴图片路径">
+					<input type="file" ref="cximg0" @change="uploadFile('cximg0','Info.cximg0')">
+				</td>
+			</tr>
+
+		</table>
+
+
+
+		<div class="h110"></div>
+		<div class="BottomBanner" v-show="showEdit">
+			<a @click="submits('edit')" class="layui-btn layui-btn-normal">保存修改</a>
+			<a @click="showEdit=false;showList=true;" class="layui-btn layui-btn-warm">返回</a>
+		</div>
+		<div class="BottomBanner" v-show="showAdd">
+			<a @click="submits('add')" class="layui-btn layui-btn-normal">添加</a>
+			<a @click="showAdd=false;showList=true;" class="layui-btn layui-btn-warm">返回</a>
+		</div>
+
+	</div>
+
+
+
+
+</div>
+
+<public-footer class="public-footer"></public-footer>
+</body>
+</html>
+
+
+
+
+<script>
+
+	new Vue({el: ".public-header",});
+	new Vue({el: ".public-footer",});
+
+
+	var that;
+	var biaoMing="cxuserlevel";
+	var app = new Vue({
+		el: '#app',
+		data:{
+			msg: '这里是文字滚动公告这里是文字滚动公告这里是文字滚动公告......',
+			List:[
+				{ShowMore:false}
+			],
+			pageCount:'',
+			count:'',
+			ShowMore:[],
+			showEdit:false,
+			showAdd:false,
+			showList:true,
+			sortList:[],
+			userList:[],
+			guiGeList:[],
+			qhFl:'',
+			aid:[],
+			checkAll:false,
+			cxpassed:'',
+			passedArr:['关闭','正常'],
+			search:{
+				page:1,
+				limit:20,
+				CheckBoxId:[],
+				keyword:'',
+				cxpassed:'',
+				table:'cxuserlevel',
+			},
+
+			Info:{
+
+			},
+
+		},
+		mounted () {
+			that = this;
+			adminCheckToken(function () {
+
+				if(getPage('page')){that.search.page=getPage('page');}
+				if(getQV('cxsortid')){that.search.cxsortid=getQV('cxsortid');}
+				if(getQV('key')){
+					that.search.keywordName='cxsortcn|cxsorten'
+					that.search.keywordValue=getQV('key');
+				}
+				that.getList();
+				getAllSort(that.sortList);
+				getAllUser(that.userList);
+
+			});
+
+		},
+		methods:{
+			addInit(pid){
+
+				that.Info={
+					cxuserlevel:'',
+					cxAuth:'',
+					cxaddtime:'',
+					cxupdatetime:'',
+					cxpassed:'',
+				};
+				that.showList=false;
+				that.showAdd=true;
+			},
+			editInit(cid){
+				that.showList=false;
+				PostUrl('/bc.Wanneng/info', {table:biaoMing,cxid: cid}, function (e) {
+					that.Info = e.data;
+					that.showEdit=true;
+
+
+				},'拉取客户详情成功');
+			},
+			submits(act='add'){
+				//layer.confirm('确定保存当前修改的内容么', function (index) {
+				layer.load();
+				let postD = {table: biaoMing}
+				// var ue1 = UE.getEditor('cxcontentcn');
+				// that.Info.cxcontentcn = ue1.getContent();
+				// var ue2 = UE.getEditor('cxcontenten');
+				// that.Info.cxcontenten = ue2.getContent();
+				// var ue3 = UE.getEditor('cxcontentWapcn');
+				// that.Info.cxcontentWapcn = ue3.getContent();
+				// var ue4 = UE.getEditor('cxcontentWapen');
+				// that.Info.cxcontentWapen = ue4.getContent();
+				Object.assign(postD, that.Info);
+				PostUrl('/bc.Wanneng/'+act, postD, function (e) {
+					that.getList();
+					layer.msg(e.mess, {time: 2000});
+
+				});
+
+				layer.closeAll();
+				//});
+			},
+			getList(){
+
+				PostUrl('/bc.Wanneng/getList',that.search,function(e){
+					that.List=e.data.rows;
+					that.count=e.data.Count;
+					that.pageCount=e.data.pageCount;
+					fenye();
+
+
+					console.log('产品列表拉取结束 ')
+
+				});
+
+			},
+		}
+	});
+</script>
