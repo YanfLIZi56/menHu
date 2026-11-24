@@ -1,0 +1,22 @@
+{
+  "name": "stredcross-portal",
+  "private": true,
+  "type": "module",
+  "description": "汕头市红十字会官方网站（Nuxt 3 重构版）",
+  "scripts": {
+    "dev": "nuxt dev",
+    "build": "nuxt build",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "nuxt": "^3.14.0",
+    "swiper": "^11.1.14",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3"
+  }
+}

@@ -1,0 +1,841 @@
+{
+ "banners": [
+  {
+   "id": 2255,
+   "title": "学习宣传贯彻党的二十届五中全会精神",
+   "image": "/images/demo/banner-1.jpg",
+   "resourceType": 3,
+   "resourceId": null,
+   "linkUrl": "https://www.stredcross.org.cn/",
+   "sort": 1,
+   "status": 1
+  },
+  {
+   "id": 2054,
+   "title": "红十字公益宣传",
+   "image": "/images/demo/banner-2.jpg",
+   "resourceType": 3,
+   "resourceId": null,
+   "linkUrl": "http://stredcross.org.cn/h5/newInfo.html?cxsortid=418&cxid=2084",
+   "sort": 2,
+   "status": 1
+  },
+  {
+   "id": 2053,
+   "title": "习近平会见红十字国际委员会主席斯波利亚里茨",
+   "image": "/images/demo/banner-3.jpg",
+   "resourceType": 3,
+   "resourceId": null,
+   "linkUrl": "http://stredcross.org.cn/h5/newInfo.html?cxsortid=418&cxid=2081",
+   "sort": 3,
+   "status": 1
+  },
+  {
+   "id": 2050,
+   "title": "红十字公益宣传",
+   "image": "/images/demo/banner-4.jpg",
+   "resourceType": 3,
+   "resourceId": null,
+   "linkUrl": "http://stredcross.org.cn/h5/newInfo.html?cxsortid=418&cxid=2080",
+   "sort": 4,
+   "status": 1
+  },
+  {
+   "id": 1520,
+   "title": "红十字公益宣传",
+   "image": "/images/demo/banner-5.jpg",
+   "resourceType": 3,
+   "resourceId": null,
+   "linkUrl": "http://stredcross.org.cn/h5/newInfo.html?cxsortid=426&cxid=1522",
+   "sort": 5,
+   "status": 1
+  },
+  {
+   "id": 1518,
+   "title": "红十字公益宣传",
+   "image": "/images/demo/banner-6.jpg",
+   "resourceType": 3,
+   "resourceId": null,
+   "linkUrl": "https://www.stredcross.org.cn/",
+   "sort": 6,
+   "status": 1
+  },
+  {
+   "id": 1521,
+   "title": "救在身边 公益同行",
+   "image": "/images/demo/banner-7.jpg",
+   "resourceType": 3,
+   "resourceId": null,
+   "linkUrl": "http://stredcross.org.cn/h5/newInfo.html?cxsortid=425&cxid=2067",
+   "sort": 7,
+   "status": 1
+  },
+  {
+   "id": 1477,
+   "title": "红十字志愿服务在行动",
+   "image": "/images/demo/banner-8.jpg",
+   "resourceType": 3,
+   "resourceId": null,
+   "linkUrl": "http://stredcross.org.cn/h5/newInfo.html?cxsortid=454&cxid=1673",
+   "sort": 8,
+   "status": 1
+  },
+  {
+   "id": 1267,
+   "title": "红十字公益宣传",
+   "image": "/images/demo/banner-9.jpg",
+   "resourceType": 3,
+   "resourceId": null,
+   "linkUrl": "https://www.stredcross.org.cn/",
+   "sort": 9,
+   "status": 1
+  }
+ ],
+ "categories": [
+  {
+   "id": 410,
+   "parentId": 0,
+   "name": "政策法规",
+   "sort": 1,
+   "visible": true
+  },
+  {
+   "id": 411,
+   "parentId": 0,
+   "name": "红会事业",
+   "sort": 2,
+   "visible": true
+  },
+  {
+   "id": 412,
+   "parentId": 0,
+   "name": "新闻资讯",
+   "sort": 3,
+   "visible": true
+  },
+  {
+   "id": 413,
+   "parentId": 0,
+   "name": "机构简介",
+   "sort": 4,
+   "visible": true
+  },
+  {
+   "id": 414,
+   "parentId": 0,
+   "name": "网上办事",
+   "sort": 5,
+   "visible": true
+  },
+  {
+   "id": 415,
+   "parentId": 0,
+   "name": "信息公开",
+   "sort": 6,
+   "visible": true
+  },
+  {
+   "id": 416,
+   "parentId": 0,
+   "name": "联系我们",
+   "sort": 7,
+   "visible": true
+  },
+  {
+   "id": 417,
+   "parentId": 0,
+   "name": "友情链接",
+   "sort": 8,
+   "visible": true
+  },
+  {
+   "id": 440,
+   "parentId": 0,
+   "name": "首页横幅海报",
+   "sort": 9,
+   "visible": true
+  },
+  {
+   "id": 441,
+   "parentId": 0,
+   "name": "首页专题专栏图片",
+   "sort": 10,
+   "visible": true
+  },
+  {
+   "id": 424,
+   "parentId": 421,
+   "name": "人道救助",
+   "sort": 11,
+   "visible": true
+  },
+  {
+   "id": 425,
+   "parentId": 421,
+   "name": "应急救援",
+   "sort": 12,
+   "visible": true
+  },
+  {
+   "id": 426,
+   "parentId": 421,
+   "name": "应急救护",
+   "sort": 13,
+   "visible": true
+  },
+  {
+   "id": 427,
+   "parentId": 421,
+   "name": "无偿献血",
+   "sort": 14,
+   "visible": true
+  },
+  {
+   "id": 428,
+   "parentId": 421,
+   "name": "造血干细胞捐献",
+   "sort": 15,
+   "visible": true
+  },
+  {
+   "id": 429,
+   "parentId": 421,
+   "name": "遗体和人体器官捐献",
+   "sort": 16,
+   "visible": true
+  },
+  {
+   "id": 453,
+   "parentId": 411,
+   "name": "红十字志愿服务与青少年工作",
+   "sort": 17,
+   "visible": true
+  },
+  {
+   "id": 423,
+   "parentId": 411,
+   "name": "红十字青少年",
+   "sort": 18,
+   "visible": true
+  },
+  {
+   "id": 454,
+   "parentId": 411,
+   "name": "红十字会员",
+   "sort": 19,
+   "visible": true
+  },
+  {
+   "id": 418,
+   "parentId": 412,
+   "name": "媒体报道",
+   "sort": 20,
+   "visible": true
+  },
+  {
+   "id": 419,
+   "parentId": 412,
+   "name": "红会动态",
+   "sort": 21,
+   "visible": true
+  },
+  {
+   "id": 420,
+   "parentId": 412,
+   "name": "交流合作",
+   "sort": 22,
+   "visible": true
+  },
+  {
+   "id": 452,
+   "parentId": 412,
+   "name": "党建专栏",
+   "sort": 23,
+   "visible": true
+  },
+  {
+   "id": 459,
+   "parentId": 412,
+   "name": "党史专栏",
+   "sort": 24,
+   "visible": true
+  },
+  {
+   "id": 446,
+   "parentId": 413,
+   "name": "机构简介",
+   "sort": 25,
+   "visible": true
+  },
+  {
+   "id": 444,
+   "parentId": 413,
+   "name": "领导机构",
+   "sort": 26,
+   "visible": true
+  },
+  {
+   "id": 445,
+   "parentId": 413,
+   "name": "内设机构",
+   "sort": 27,
+   "visible": true
+  },
+  {
+   "id": 432,
+   "parentId": 414,
+   "name": "我要求助",
+   "sort": 28,
+   "visible": true
+  },
+  {
+   "id": 433,
+   "parentId": 414,
+   "name": "我要捐款",
+   "sort": 29,
+   "visible": true
+  },
+  {
+   "id": 436,
+   "parentId": 415,
+   "name": "通知公告",
+   "sort": 30,
+   "visible": true
+  },
+  {
+   "id": 437,
+   "parentId": 415,
+   "name": "预决算公开",
+   "sort": 31,
+   "visible": true
+  },
+  {
+   "id": 438,
+   "parentId": 415,
+   "name": "捐赠公开",
+   "sort": 32,
+   "visible": true
+  },
+  {
+   "id": 460,
+   "parentId": 415,
+   "name": "志愿服务队",
+   "sort": 33,
+   "visible": true
+  },
+  {
+   "id": 456,
+   "parentId": 415,
+   "name": "活动公告",
+   "sort": 34,
+   "visible": true
+  },
+  {
+   "id": 421,
+   "parentId": 411,
+   "name": "三救三献",
+   "sort": 35,
+   "visible": true
+  },
+  {
+   "id": 422,
+   "parentId": 0,
+   "name": "红十字志愿服务与青少年工作",
+   "sort": 36,
+   "visible": true
+  },
+  {
+   "id": 453,
+   "parentId": 422,
+   "name": "红十字志愿服务与青少年工作",
+   "sort": 37,
+   "visible": true
+  }
+ ],
+ "articles": [
+  {
+   "id": 2252,
+   "categoryId": 419,
+   "title": "入库更简单！我市新增口腔黏膜拭子采样入库方式",
+   "summary": "点击查看详情，了解更多红十字工作动态。",
+   "cover": "/images/demo/news-1.jpg",
+   "content": "<p><br/></p><p><img src=\"/images/demo/article-1.jpg\"/></p><p><img src=\"/images/demo/article-2.jpg\"/></p><p><img src=\"/images/demo/article-3.jpg\"/></p><p><br/></p>",
+   "publishTime": "2026-11-16",
+   "views": 0,
+   "link": ""
+  },
+  {
+   "id": 2250,
+   "categoryId": 419,
+   "title": "一等奖2项、二等奖1项、三等奖3项！汕头市红十字会在全省红十字系统无偿献血主题演讲及征文比赛中喜获佳绩",
+   "summary": "10月29日  ，广东省红十字系统“红心向党守人道 热血奉献建新功”无偿献血主题演讲比赛决赛暨征文比赛颁奖仪式在广州举办。汕头市选送选手和作品表现亮眼，荣获演讲比赛  三等奖  3项、征文比赛  一等奖  2项、  二等奖  1项，汕头市红十字会获  优秀组织奖  。          近期，省红十字会举办无偿献血主题…",
+   "cover": "/images/demo/news-2.jpg",
+   "content": "<p>10月29日  ，广东省红十字系统“红心向党守人道 热血奉献建新功”无偿献血主题演讲比赛决赛暨征文比赛颁奖仪式在广州举办。汕头市选送选手和作品表现亮眼，荣获演讲比赛  三等奖  3项、征文比赛  一等奖  2项、  二等奖  1项，汕头市红十字会获  优秀组织奖  。          近期，省红十字会举办无偿献血主题…</p><p>近日，汕头市红十字会围绕“人道、博爱、奉献”的红十字精神开展相关工作，持续推进应急救护、志愿服务、人道救助等业务，切实把温暖送到群众身边。</p><p>（示例内容，正式环境由后台文章管理模块维护。）</p>",
+   "publishTime": "2026-11-13",
+   "views": 0,
+   "link": ""
+  },
+  {
+   "id": 2243,
+   "categoryId": 419,
+   "title": "协力青春 致力人道 | 解锁硬核技能，这堂红十字急救课在华侨中学、东厦中学持续升温",
+   "summary": "为弘扬“人道、博爱、奉献”的红十字精神，近期，围绕红十字青少年活动月“  协力青春 致力人道  ”主题，市红十字会积极联动各学校红十字组织开展生命教育。其中，  广东汕头华侨中学  与  汕头市东厦中学  将红十字急救知识深度融入校本课程，引进红十字专业师资授课与实操演练，让急救课堂在校园内持续火热开展。       …",
+   "cover": "/images/demo/news-3.jpg",
+   "content": "<p>为弘扬“人道、博爱、奉献”的红十字精神，近期，围绕红十字青少年活动月“  协力青春 致力人道  ”主题，市红十字会积极联动各学校红十字组织开展生命教育。其中，  广东汕头华侨中学  与  汕头市东厦中学  将红十字急救知识深度融入校本课程，引进红十字专业师资授课与实操演练，让急救课堂在校园内持续火热开展。       …</p><p>近日，汕头市红十字会围绕“人道、博爱、奉献”的红十字精神开展相关工作，持续推进应急救护、志愿服务、人道救助等业务，切实把温暖送到群众身边。</p><p>（示例内容，正式环境由后台文章管理模块维护。）</p>",
+   "publishTime": "2026-11-13",
+   "views": 0,
+   "link": ""
+  },
+  {
+   "id": 2222,
+   "categoryId": 419,
+   "title": "祝贺！红十字情景剧《公园里的“小英雄”》获奖，童心诠释大担当！",
+   "summary": "近日，由市教育局组织开展的 “我眼中的‘百千万工程’”   系列活动之   “剧绘‘百千万’”情景剧作品征集活动 评审结果揭晓。该活动面向全市中小学校师生，以情景剧为纽带，引导青少年讲述家乡发展故事、描绘乡村振兴图景。经评审， 汕头市达濠民生学校   精心打造的以红十字主题公园为背景的原创情景剧   《公园里的“小英雄…",
+   "cover": "/images/demo/news-4.jpg",
+   "content": "<p>近日，由市教育局组织开展的 “我眼中的‘百千万工程’”   系列活动之   “剧绘‘百千万’”情景剧作品征集活动 评审结果揭晓。该活动面向全市中小学校师生，以情景剧为纽带，引导青少年讲述家乡发展故事、描绘乡村振兴图景。经评审， 汕头市达濠民生学校   精心打造的以红十字主题公园为背景的原创情景剧   《公园里的“小英雄…</p><p>近日，汕头市红十字会围绕“人道、博爱、奉献”的红十字精神开展相关工作，持续推进应急救护、志愿服务、人道救助等业务，切实把温暖送到群众身边。</p><p>（示例内容，正式环境由后台文章管理模块维护。）</p>",
+   "publishTime": "2026-11-09",
+   "views": 0,
+   "link": ""
+  },
+  {
+   "id": 2253,
+   "categoryId": 419,
+   "title": "每14天“报告”一次！全市首位三百次献血者产生",
+   "summary": "一腔热血传大爱，廿载挽袖暖鮀城。最近，汕头市中心血站迎来暖心时刻，市民林晓庆顺利完成个人第300次无偿献血，正式成为汕头市首位累计无偿献血300次的爱心市民。二十余载风雨无阻，林晓庆以“每14天准时报到”的坚持，用一次次温暖的挽袖，为无数生命点亮希望之光。     林晓庆是大华路第二小学的一名教师，20多年前一次偶然的…",
+   "cover": "/images/demo/news-5.jpg",
+   "content": "<p>一腔热血传大爱，廿载挽袖暖鮀城。最近，汕头市中心血站迎来暖心时刻，市民林晓庆顺利完成个人第300次无偿献血，正式成为汕头市首位累计无偿献血300次的爱心市民。二十余载风雨无阻，林晓庆以“每14天准时报到”的坚持，用一次次温暖的挽袖，为无数生命点亮希望之光。     林晓庆是大华路第二小学的一名教师，20多年前一次偶然的…</p><p>近日，汕头市红十字会围绕“人道、博爱、奉献”的红十字精神开展相关工作，持续推进应急救护、志愿服务、人道救助等业务，切实把温暖送到群众身边。</p><p>（示例内容，正式环境由后台文章管理模块维护。）</p>",
+   "publishTime": "2026-11-09",
+   "views": 0,
+   "link": ""
+  },
+  {
+   "id": 2208,
+   "categoryId": 452,
+   "title": "【学习总书记重要论述感悟伟大长征精神】系列之三 让遵义会议精神永放光芒",
+   "summary": "【学习进行时】“坚持独立自主、实事求是，一切从实际出发的精神”，2016年10月，习近平总书记在纪念红军长征胜利80周年大会上阐明伟大长征精神丰富的内涵，这是其中重要一条。    这一重要论述，与遵义会议密不可分。    1935年1月召开的遵义会议是我们党历史上一次具有伟大转折意义的重要会议。这次会议在红军第五次反“…",
+   "cover": "",
+   "content": "<p>【学习进行时】“坚持独立自主、实事求是，一切从实际出发的精神”，2016年10月，习近平总书记在纪念红军长征胜利80周年大会上阐明伟大长征精神丰富的内涵，这是其中重要一条。    这一重要论述，与遵义会议密不可分。    1935年1月召开的遵义会议是我们党历史上一次具有伟大转折意义的重要会议。这次会议在红军第五次反“…</p><p>近日，汕头市红十字会围绕“人道、博爱、奉献”的红十字精神开展相关工作，持续推进应急救护、志愿服务、人道救助等业务，切实把温暖送到群众身边。</p><p>（示例内容，正式环境由后台文章管理模块维护。）</p>",
+   "publishTime": "2026-10-15",
+   "views": 0,
+   "link": ""
+  },
+  {
+   "id": 2245,
+   "categoryId": 426,
+   "title": "协力青春 致力人道 | 解锁硬核技能，这堂红十字急救课在华侨中学、东厦中学持续升温",
+   "summary": "为弘扬“人道、博爱、奉献”的红十字精神，近期，围绕红十字青少年活动月“  协力青春 致力人道  ”主题，市红十字会积极联动各学校红十字组织开展生命教育。其中，  广东汕头华侨中学  与  汕头市东厦中学  将红十字急救知识深度融入校本课程，引进红十字专业师资授课与实操演练，让急救课堂在校园内持续火热开展。       …",
+   "cover": "/images/demo/jijiu-1.jpg",
+   "content": "<p><br/></p><p><br/></p><p><span style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); margin: 0px; padding: 0px; outline: 0px; max-width: 100%; color: rgba(0, 0, 0, 0.9); font-family: &quot;PingFang SC NEW&quot;, system-ui, -apple-system, MacSystemFont, &quot;Helvetica Neue&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; letter-spacing: 0.544px; text-wrap-mode: wrap; background-color: rgb(255, 255, 255); font-size: 15px; visibility: visible; box-sizing: border-box !important; overflow-wrap: break-word !important;\">为弘扬“人道、博爱、奉献”的红十字精神，近期，围绕红十字青少年活动月“</span><span style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); margin: 0px; padding: 0px; outline: 0px; max-width: 100%; font-family: &quot;PingFang SC NEW&quot;, system-ui, -apple-system, MacSystemFont, &quot;Helvetica Neue&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; letter-spacing: 0.544px; text-wrap-mode: wrap; background-color: rgb(255, 255, 255); font-size: 15px; color: rgb(217, 33, 66); font-weight: bold; visibility: visible; box-sizing: border-box !important; overflow-wrap: break-word !important;\">协力青春 致力人道</span><span style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); margin: 0px; padding: 0px; outline: 0px; max-width: 100%; color: rgba(0, 0, 0, 0.9); font-family: &quot;PingFang SC NEW&quot;, system-ui, -apple-system, MacSystemFont, &quot;Helvetica Neue&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; letter-spacing: 0.544px; text-wrap-mode: wrap; background-color: rgb(255, 255, 255); font-size: 15px; visibility: visible; box-sizing: border-box !important; overflow-wrap: break-word !important;\">”主题，市红十字会积极联动各学校红十字组织开展生命教育。其中，</span><span style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); margin: 0px; padding: 0px; outline: 0px; max-width: 100%; color: rgba(0, 0, 0, 0.9); font-family: &quot;PingFang SC NEW&quot;, system-ui, -apple-system, MacSystemFont, &quot;Helvetica Neue&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; letter-spacing: 0.544px; text-wrap-mode: wrap; background-color: rgb(255, 255, 255); font-size: 15px; font-weight: bold; visibility: visible; box-sizing: border-box !important; overflow-wrap: break-word !important;\">广东汕头华侨中学</span><span style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); margin: 0px; padding: 0px; outline: 0px; max-width: 100%; color: rgba(0, 0, 0, 0.9); font-family: &quot;PingFang SC NEW&quot;, system-ui, -apple-system, MacSystemFont, &quot;Helvetica Neue&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; letter-spacing: 0.544px; text-wrap-mode: wrap; background-color: rgb(255, 255, 255); font-size: 15px; visibility: visible; box-sizing: border-box !important; overflow-wrap: break-word !important;\">与</span><span style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); margin: 0px; padding: 0px; outline: 0px; max-width: 100%; color: rgba(0, 0, 0, 0.9); font-family: &quot;PingFang SC NEW&quot;, system-ui, -apple-system, MacSystemFont, &quot;Helvetica Neue&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; letter-spacing: 0.544px; text-wrap-mode: wrap; background-color: rgb(255, 255, 255); font-size: 15px; font-weight: bold; visibility: visible; box-sizing: border-box !important; overflow-wrap: break-word !important;\">汕头市东厦中学</span><span style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); margin: 0px; padding: 0px; outline: 0px; max-width: 100%; color: rgba(0, 0, 0, 0.9); font-family: &quot;PingFang SC NEW&quot;, system-ui, -apple-system, MacSystemFont, &quot;Helvetica Neue&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; letter-spacing: 0.544px; text-wrap-mode: wrap; background-color: rgb(255, 255, 255); font-size: 15px; visibility: visible; box-sizing: border-box !important; overflow-wrap: break-word !important;\">将红十字急救知识深度融入校本课程，引进红十字专业师资授课与实操演练，让急救课堂在校园内持续火热开展。</span></p><p><span style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); margin: 0px; padding: 0px; outline: 0px; max-width: 100%; color: rgba(0, 0, 0, 0.9); font-family: &quot;PingFang SC NEW&quot;, system-ui, -apple-system, MacSystemFont, &quot;Helvetica Neue&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; letter-spacing: 0.544px; text-wrap-mode: wrap; background-color: rgb(255, 255, 255); font-size: 15px; visibility: visible; box-sizing: border-box !important; overflow-wrap: break-word !important;\"><br/></span></p><p><span style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); margin: 0px; padding: 0px; outline: 0px; max-width: 100%; color: rgba(0, 0, 0, 0.9); font-family: &quot;PingFang SC NEW&quot;, system-ui, -apple-system, MacSystemFont, &quot;Helvetica Neue&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; letter-spacing: 0.544px; text-wrap-mode: wrap; background-color: rgb(255, 255, 255); font-size: 15px; visibility: visible; box-sizing: border-box !important; overflow-wrap: break-word !important;\"></span></p><p style=\"text-align: center;\"></p><p style=\"text-align: center;\"></p><p><span style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); margin: 0px; padding: 0px; outline: 0px; max-width: 100%; color: rgba(0, 0, 0, 0.9); font-family: &quot;PingFang SC NEW&quot;, system-ui, -apple-system, MacSystemFont, &quot;Helvetica Neue&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; letter-spacing: 0.544px; text-wrap-mode: wrap; background-color: rgb(255, 255, 255); font-size: 15px; visibility: visible; box-sizing: border-box !important; overflow-wrap: break-word !important;\"><br/></span><br/></p><p><span style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); margin: 0px; padding: 0px; outline: 0px; max-width: 100%; color: rgba(0, 0, 0, 0.9); font-family: &quot;PingFang SC NEW&quot;, system-ui, -apple-system, MacSystemFont, &quot;Helvetica Neue&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; letter-spacing: 0.544px; text-wrap-mode: wrap; background-color: rgb(255, 255, 255); font-size: 15px; visibility: visible; box-sizing: border-box !important; overflow-wrap: break-word !important;\"><span style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); margin: 0px; padding: 0px; outline: 0px; max-width: 100%; color: rgba(0, 0, 0, 0.9); font-family: &quot;PingFang SC NEW&quot;, system-ui, -apple-system, MacSystemFont, &quot;Helvetica Neue&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; font-size: 17px; letter-spacing: 0.544px; text-align: justify; text-wrap-mode: wrap; background-color: rgb(255, 255, 255); font-weight: 600; box-sizing: border-box !important; overflow-wrap: break-word !important;\"><span style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); margin: 0px; padding: 0px; outline: 0px; max-width: 100%; box-sizing: border-box !important; overflow-wrap: break-word !important;\"><span style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); margin: 0px; padding: 0px; outline: 0px; max-width: 100%; box-sizing: border-box !important; overflow-wrap: break-word !important; font-size: 15px; font-weight: normal;\">每周四下午，市红十字会应急救护师资准时走进</span><span style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); margin: 0px; padding: 0px; outline: 0px; max-width: 100%; font-size: 15px; box-sizing: border-box !important; overflow-wrap: break-word !important;\">华侨中学</span><span style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); margin: 0px; padding: 0px; outline: 0px; max-width: 100%; box-sizing: border-box !important; overflow-wrap: break-word !important; font-size: 15px; font-weight: normal;\">高二年级，开展“生命教育”第二课堂。课程涵盖红十字运动知识、创伤处置，以及心肺复苏（CPR）和AED实操，同学们在模拟演练中热情高涨。</span></span></span><span style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); margin: 0px; padding: 0px; outline: 0px; max-width: 100%; color: rgba(0, 0, 0, 0.9); font-family: &quot;PingFang SC NEW&quot;, system-ui, -apple-system, MacSystemFont, &quot;Helvetica Neue&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; font-size: 17px; letter-spacing: 0.544px; text-align: justify; text-wrap-mode: wrap; background-color: rgb(255, 255, 255); font-weight: 600; box-sizing: border-box !important; overflow-wrap: break-word !important;\"><span style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); margin: 0px; padding: 0px; outline: 0px; max-width: 100%; box-sizing: border-box !important; overflow-wrap: break-word !important;\"><span style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); margin: 0px; padding: 0px; outline: 0px; max-width: 100%; box-sizing: border-box !important; overflow-wrap: break-word !important; font-size: 15px; font-weight: normal;\">目前，该课程仍在持续推进中</span></span></span><span style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); margin: 0px; padding: 0px; outline: 0px; max-width: 100%; color: rgba(0, 0, 0, 0.9); font-family: &quot;PingFang SC NEW&quot;, system-ui, -apple-system, MacSystemFont, &quot;Helvetica Neue&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; font-size: 17px; letter-spacing: 0.544px; text-align: justify; text-wrap-mode: wrap; background-color: rgb(255, 255, 255); box-sizing: border-box !important; overflow-wrap: break-word !important;\"><span style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); margin: 0px; padding: 0px; outline: 0px; max-width: 100%; font-size: 15px; box-sizing: border-box !important; overflow-wrap: break-word !important;\">，后续还将完成更多课时的技能训练，让急救知识真正融入学生成长。</span></span></span></p><p><span style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); margin: 0px; padding: 0px; outline: 0px; max-width: 100%; color: rgba(0, 0, 0, 0.9); font-family: &quot;PingFang SC NEW&quot;, system-ui, -apple-system, MacSystemFont, &quot;Helvetica Neue&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; letter-spacing: 0.544px; text-wrap-mode: wrap; background-color: rgb(255, 255, 255); font-size: 15px; visibility: visible; box-sizing: border-box !important; overflow-wrap: break-word !important;\"><span style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); margin: 0px; padding: 0px; outline: 0px; max-width: 100%; color: rgba(0, 0, 0, 0.9); font-family: &quot;PingFang SC NEW&quot;, system-ui, -apple-system, MacSystemFont, &quot;Helvetica Neue&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; font-size: 17px; letter-spacing: 0.544px; text-align: justify; text-wrap-mode: wrap; background-color: rgb(255, 255, 255); box-sizing: border-box !important; overflow-wrap: break-word !important;\"><span style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); margin: 0px; padding: 0px; outline: 0px; max-width: 100%; font-size: 15px; box-sizing: border-box !important; overflow-wrap: break-word !important;\"><br/></span></span></span></p><p><span style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); margin: 0px; padding: 0px; outline: 0px; max-width: 100%; color: rgba(0, 0, 0, 0.9); font-family: &quot;PingFang SC NEW&quot;, system-ui, -apple-system, MacSystemFont, &quot;Helvetica Neue&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; letter-spacing: 0.544px; text-wrap-mode: wrap; background-color: rgb(255, 255, 255); font-size: 15px; visibility: visible; box-sizing: border-box !important; overflow-wrap: break-word !important;\"><span style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); margin: 0px; padding: 0px; outline: 0px; max-width: 100%; color: rgba(0, 0, 0, 0.9); font-family: &quot;PingFang SC NEW&quot;, system-ui, -apple-system, MacSystemFont, &quot;Helvetica Neue&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; font-size: 17px; letter-spacing: 0.544px; text-align: justify; text-wrap-mode: wrap; background-color: rgb(255, 255, 255); box-sizing: border-box !important; overflow-wrap: break-word !important;\"><span style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); margin: 0px; padding: 0px; outline: 0px; max-width: 100%; font-size: 15px; box-sizing: border-box !important; overflow-wrap: break-word !important;\"></span></span></span></p><p style=\"text-align: center;\"></p><p style=\"text-align: center;\"></p><p><span style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); margin: 0px; padding: 0px; outline: 0px; max-width: 100%; color: rgba(0, 0, 0, 0.9); font-family: &quot;PingFang SC NEW&quot;, system-ui, -apple-system, MacSystemFont, &quot;Helvetica Neue&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; letter-spacing: 0.544px; text-wrap-mode: wrap; background-color: rgb(255, 255, 255); font-size: 15px; visibility: visible; box-sizing: border-box !important; overflow-wrap: break-word !important;\"><span style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); margin: 0px; padding: 0px; outline: 0px; max-width: 100%; color: rgba(0, 0, 0, 0.9); font-family: &quot;PingFang SC NEW&quot;, system-ui, -apple-system, MacSystemFont, &quot;Helvetica Neue&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; font-size: 17px; letter-spacing: 0.544px; text-align: justify; text-wrap-mode: wrap; background-color: rgb(255, 255, 255); box-sizing: border-box !important; overflow-wrap: break-word !important;\"><span style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); margin: 0px; padding: 0px; outline: 0px; max-width: 100%; font-size: 15px; box-sizing: border-box !important; overflow-wrap: break-word !important;\"><br/></span></span></span><br/></p><p><span style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); margin: 0px; padding: 0px; outline: 0px; max-width: 100%; color: rgba(0, 0, 0, 0.9); font-family: &quot;PingFang SC NEW&quot;, system-ui, -apple-system, MacSystemFont, &quot;Helvetica Neue&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; letter-spacing: 0.544px; text-wrap-mode: wrap; background-color: rgb(255, 255, 255); font-size: 15px; visibility: visible; box-sizing: border-box !important; overflow-wrap: break-word !important;\"><span style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); margin: 0px; padding: 0px; outline: 0px; max-width: 100%; color: rgba(0, 0, 0, 0.9); font-family: &quot;PingFang SC NEW&quot;, system-ui, -apple-system, MacSystemFont, &quot;Helvetica Neue&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; font-size: 17px; letter-spacing: 0.544px; text-align: justify; text-wrap-mode: wrap; background-color: rgb(255, 255, 255); box-sizing: border-box !important; overflow-wrap: break-word !important;\"><span style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); margin: 0px; padding: 0px; outline: 0px; max-width: 100%; font-size: 15px; box-sizing: border-box !important; overflow-wrap: break-word !important;\"><span style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); margin: 0px; padding: 0px; outline: 0px; max-width: 100%; color: rgba(0, 0, 0, 0.9); font-family: &quot;PingFang SC NEW&quot;, system-ui, -apple-system, MacSystemFont, &quot;Helvetica Neue&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; letter-spacing: 0.544px; text-align: justify; text-wrap-mode: wrap; background-color: rgb(255, 255, 255); font-size: 15px; font-weight: bold; box-sizing: border-box !important; overflow-wrap: break-word !important;\">东厦中学</span><span style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); margin: 0px; padding: 0px; outline: 0px; max-width: 100%; color: rgba(0, 0, 0, 0.9); font-family: &quot;PingFang SC NEW&quot;, system-ui, -apple-system, MacSystemFont, &quot;Helvetica Neue&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; letter-spacing: 0.544px; text-align: justify; text-wrap-mode: wrap; background-color: rgb(255, 255, 255); font-size: 15px; box-sizing: border-box !important; overflow-wrap: break-word !important;\">将急救引入高一校本课程。10月9日，秋季学期第一节特色课程顺利开展。课程内容从红十字运动知识讲起，师资后续通过“案例讲解+模拟实操”相结合的方式，带领同学们系统学习止血包扎、心肺复苏、海姆立克急救法等关键急救技能，并延伸融合防溺水等安全主题。这堂“生命必修课”还将持续至明年1月，在常态化、系统化的课程学习过程中，强化同学们的生命安全意识与社会责任感。</span></span></span></span></p><p><span style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); margin: 0px; padding: 0px; outline: 0px; max-width: 100%; color: rgba(0, 0, 0, 0.9); font-family: &quot;PingFang SC NEW&quot;, system-ui, -apple-system, MacSystemFont, &quot;Helvetica Neue&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; letter-spacing: 0.544px; text-wrap-mode: wrap; background-color: rgb(255, 255, 255); font-size: 15px; visibility: visible; box-sizing: border-box !important; overflow-wrap: break-word !important;\"><span style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); margin: 0px; padding: 0px; outline: 0px; max-width: 100%; color: rgba(0, 0, 0, 0.9); font-family: &quot;PingFang SC NEW&quot;, system-ui, -apple-system, MacSystemFont, &quot;Helvetica Neue&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; font-size: 17px; letter-spacing: 0.544px; text-align: justify; text-wrap-mode: wrap; background-color: rgb(255, 255, 255); box-sizing: border-box !important; overflow-wrap: break-word !important;\"><span style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); margin: 0px; padding: 0px; outline: 0px; max-width: 100%; font-size: 15px; box-sizing: border-box !important; overflow-wrap: break-word !important;\"><span style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); margin: 0px; padding: 0px; outline: 0px; max-width: 100%; color: rgba(0, 0, 0, 0.9); font-family: &quot;PingFang SC NEW&quot;, system-ui, -apple-system, MacSystemFont, &quot;Helvetica Neue&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; letter-spacing: 0.544px; text-align: justify; text-wrap-mode: wrap; background-color: rgb(255, 255, 255); font-size: 15px; box-sizing: border-box !important; overflow-wrap: break-word !important;\"><br/></span></span></span></span></p><p><br/></p><p style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); margin-top: 16px; margin-bottom: 16px; padding: 0px; outline: 0px; max-width: 100%; clear: both; min-height: 1em; color: rgba(0, 0, 0, 0.9); font-family: &quot;PingFang SC NEW&quot;, system-ui, -apple-system, MacSystemFont, &quot;Helvetica Neue&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; font-size: 17px; letter-spacing: 0.544px; text-align: justify; text-wrap-mode: wrap; background-color: rgb(255, 255, 255); line-height: 1.75em; box-sizing: border-box !important; overflow-wrap: break-word !important;\"><span style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); margin: 0px; padding: 0px; outline: 0px; max-width: 100%; box-sizing: border-box !important; overflow-wrap: break-word !important;\"><span style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); margin: 0px; padding: 0px; outline: 0px; max-width: 100%; box-sizing: border-box !important; overflow-wrap: break-word !important; font-size: 15px;\">生命教育不停步，急救技能伴成长。</span><span style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); margin: 0px; padding: 0px; outline: 0px; max-width: 100%; box-sizing: border-box !important; overflow-wrap: break-word !important; font-size: 15px; color: rgb(255, 76, 0); font-weight: bold;\">值得一提的是，广东汕头华侨中学自2024年秋季学期、东厦中学自2025年春季学期起，便先后将红十字急救课堂引入校园，系列课程广受师生好评，如今已形成常态化开展机制。</span><span style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); margin: 0px; padding: 0px; outline: 0px; max-width: 100%; box-sizing: border-box !important; overflow-wrap: break-word !important; font-size: 15px;\">&nbsp;目前，两校的红十字急救课程仍在稳步、持续开展中。</span></span></p><p style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); margin-top: 16px; margin-bottom: 16px; padding: 0px; outline: 0px; max-width: 100%; clear: both; min-height: 1em; color: rgba(0, 0, 0, 0.9); font-family: &quot;PingFang SC NEW&quot;, system-ui, -apple-system, MacSystemFont, &quot;Helvetica Neue&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; font-size: 17px; letter-spacing: 0.544px; text-align: justify; text-wrap-mode: wrap; background-color: rgb(255, 255, 255); line-height: 1.75em; box-sizing: border-box !important; overflow-wrap: break-word !important;\"><span style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); margin: 0px; padding: 0px; outline: 0px; max-width: 100%; box-sizing: border-box !important; overflow-wrap: break-word !important;\"><span style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); margin: 0px; padding: 0px; outline: 0px; max-width: 100%; box-sizing: border-box !important; overflow-wrap: break-word !important; font-size: 15px;\">汕头市红十字会将持续深化学校红十字工作，常态化开展人道传播、生命教育和志愿服务，护航青少年健康成长，让青春力量汇聚向善微光！</span></span></p><p><span style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); margin: 0px; padding: 0px; outline: 0px; max-width: 100%; color: rgba(0, 0, 0, 0.9); font-family: &quot;PingFang SC NEW&quot;, system-ui, -apple-system, MacSystemFont, &quot;Helvetica Neue&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; letter-spacing: 0.544px; text-wrap-mode: wrap; background-color: rgb(255, 255, 255); font-size: 15px; visibility: visible; box-sizing: border-box !important; overflow-wrap: break-word !important;\"><span style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); margin: 0px; padding: 0px; outline: 0px; max-width: 100%; color: rgba(0, 0, 0, 0.9); font-family: &quot;PingFang SC NEW&quot;, system-ui, -apple-system, MacSystemFont, &quot;Helvetica Neue&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; font-size: 17px; letter-spacing: 0.544px; text-align: justify; text-wrap-mode: wrap; background-color: rgb(255, 255, 255); box-sizing: border-box !important; overflow-wrap: break-word !important;\"><span style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); margin: 0px; padding: 0px; outline: 0px; max-width: 100%; font-size: 15px; box-sizing: border-box !important; overflow-wrap: break-word !important;\"><span style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); margin: 0px; padding: 0px; outline: 0px; max-width: 100%; color: rgba(0, 0, 0, 0.9); font-family: &quot;PingFang SC NEW&quot;, system-ui, -apple-system, MacSystemFont, &quot;Helvetica Neue&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei UI&quot;, &quot;Microsoft YaHei&quot;, Arial, sans-serif; letter-spacing: 0.544px; text-align: justify; text-wrap-mode: wrap; background-color: rgb(255, 255, 255); font-size: 15px; box-sizing: border-box !important; overflow-wrap: break-word !important;\"><br/></span></span></span></span><br/></p>",
+   "publishTime": "2026-11-13",
+   "views": 0,
+   "link": ""
+  },
+  {
+   "id": 2165,
+   "categoryId": 426,
+   "title": "红十字救在身边，让急救技能成为新就业群体的“新装备”",
+   "summary": "9月12日是第27个“世界急救日”。为进一步普及应急救护知识，提升居民及新就业群体自救互救能力，金平区红十字会面向外卖骑手、网约车司机、快递员等新就业群体开展应急救护知识宣传普及活动，推动急救技能走进大众、服务大众。               市红十字应急救护师资队应邀为新就业群体开展急救知识宣讲培训。红十字救护师资…",
+   "cover": "/images/demo/jijiu-2.jpg",
+   "content": "<p>9月12日是第27个“世界急救日”。为进一步普及应急救护知识，提升居民及新就业群体自救互救能力，金平区红十字会面向外卖骑手、网约车司机、快递员等新就业群体开展应急救护知识宣传普及活动，推动急救技能走进大众、服务大众。               市红十字应急救护师资队应邀为新就业群体开展急救知识宣讲培训。红十字救护师资…</p><p>近日，汕头市红十字会围绕“人道、博爱、奉献”的红十字精神开展相关工作，持续推进应急救护、志愿服务、人道救助等业务，切实把温暖送到群众身边。</p><p>（示例内容，正式环境由后台文章管理模块维护。）</p>",
+   "publishTime": "2026-09-20",
+   "views": 0,
+   "link": ""
+  },
+  {
+   "id": 2162,
+   "categoryId": 426,
+   "title": "警红携手，急救赋能 | 市红十字会联合市公安局开展应急救护专题培训",
+   "summary": "9月12日是第27个“世界急救日”。为进一步提升公安干警在执法执勤和日常工作中应对突发事件的应急救援能力，在突发警情、事故现场抢抓生命救援“黄金四分钟”，保障人民群众生命安全，9月15日至16日，市红十字会联合市公安局开展了两期应急救护技能专题培训班。          此次培训紧扣公安一线工作实际需求，内容务实、针对…",
+   "cover": "/images/demo/jijiu-3.jpg",
+   "content": "<p>9月12日是第27个“世界急救日”。为进一步提升公安干警在执法执勤和日常工作中应对突发事件的应急救援能力，在突发警情、事故现场抢抓生命救援“黄金四分钟”，保障人民群众生命安全，9月15日至16日，市红十字会联合市公安局开展了两期应急救护技能专题培训班。          此次培训紧扣公安一线工作实际需求，内容务实、针对…</p><p>近日，汕头市红十字会围绕“人道、博爱、奉献”的红十字精神开展相关工作，持续推进应急救护、志愿服务、人道救助等业务，切实把温暖送到群众身边。</p><p>（示例内容，正式环境由后台文章管理模块维护。）</p>",
+   "publishTime": "2026-09-20",
+   "views": 0,
+   "link": ""
+  },
+  {
+   "id": 2132,
+   "categoryId": 426,
+   "title": "汕头市红十字会应急救护培训流程和授课内容",
+   "summary": "【培训时间】每周五与每周六（人数不足30人将延期至下周）    【培训地点】汕头市金平区中山路130号协华大厦11B1     汕头市红十字会应急救护工作咨询电话： 0754-87271836",
+   "cover": "",
+   "content": "<p>【培训时间】每周五与每周六（人数不足30人将延期至下周）    【培训地点】汕头市金平区中山路130号协华大厦11B1     汕头市红十字会应急救护工作咨询电话： 0754-87271836</p><p>近日，汕头市红十字会围绕“人道、博爱、奉献”的红十字精神开展相关工作，持续推进应急救护、志愿服务、人道救助等业务，切实把温暖送到群众身边。</p><p>（示例内容，正式环境由后台文章管理模块维护。）</p>",
+   "publishTime": "2026-09-18",
+   "views": 0,
+   "link": ""
+  },
+  {
+   "id": 2201,
+   "categoryId": 453,
+   "title": "致敬每一份初心表达  | 无偿献血主题征文及演讲比赛汕头预赛作品评审结果揭晓",
+   "summary": "为深入学习贯彻习近平新时代中国特色社会主义思想，激励广大红十字工作者、会员、志愿者以人道实践践行初心使命，根据广东省红十字会统一部署，汕头市红十字会组织开展 “红心向党守人道 热血奉献建新功”无偿献血主题  征文及演讲比赛汕头预赛作品征集 工作。全市各级红十字工作者、会员及志愿者踊跃投稿，结合参与红十字工作和活动的亲身…",
+   "cover": "/images/demo/vol-1.jpg",
+   "content": "<p>为深入学习贯彻习近平新时代中国特色社会主义思想，激励广大红十字工作者、会员、志愿者以人道实践践行初心使命，根据广东省红十字会统一部署，汕头市红十字会组织开展 “红心向党守人道 热血奉献建新功”无偿献血主题  征文及演讲比赛汕头预赛作品征集 工作。全市各级红十字工作者、会员及志愿者踊跃投稿，结合参与红十字工作和活动的亲身…</p><p>近日，汕头市红十字会围绕“人道、博爱、奉献”的红十字精神开展相关工作，持续推进应急救护、志愿服务、人道救助等业务，切实把温暖送到群众身边。</p><p>（示例内容，正式环境由后台文章管理模块维护。）</p>",
+   "publishTime": "2026-10-12",
+   "views": 0,
+   "link": ""
+  },
+  {
+   "id": 2153,
+   "categoryId": 453,
+   "title": "健康服务零距离 | “红十字健康行”惠民义诊活动走进珠池街道长泰社区",
+   "summary": "9月20日上午，助力“百千万工程”红十字健康行惠民义诊活动走进龙湖区珠池街道长泰社区，把优质健康服务送到居民家门口。本次活动由汕头市红十字会、龙湖区红十字会、汕头市医师协会、万年青国际医疗港联合主办，龙光·尚海阳光物业服务中心、汕头市潮普慈善会协办。          义诊现场，多家医疗机构的专家团队齐聚于此，为居民提…",
+   "cover": "/images/demo/vol-2.jpg",
+   "content": "<p>9月20日上午，助力“百千万工程”红十字健康行惠民义诊活动走进龙湖区珠池街道长泰社区，把优质健康服务送到居民家门口。本次活动由汕头市红十字会、龙湖区红十字会、汕头市医师协会、万年青国际医疗港联合主办，龙光·尚海阳光物业服务中心、汕头市潮普慈善会协办。          义诊现场，多家医疗机构的专家团队齐聚于此，为居民提…</p><p>近日，汕头市红十字会围绕“人道、博爱、奉献”的红十字精神开展相关工作，持续推进应急救护、志愿服务、人道救助等业务，切实把温暖送到群众身边。</p><p>（示例内容，正式环境由后台文章管理模块维护。）</p>",
+   "publishTime": "2026-09-23",
+   "views": 0,
+   "link": ""
+  },
+  {
+   "id": 2149,
+   "categoryId": 453,
+   "title": "致敬热血英雄！世界骨髓捐献者日：汕头迎来第40例捐献者",
+   "summary": "9月22日，正值第十二个   “世界骨髓捐献者日   ”，在这个致敬热血英雄的特殊日子里，爱心人士余伟振先生在汕大附一成功捐献造血干细胞，成为广东省第2910例、汕头市第40例非血缘造血干细胞捐献者。   一袋满载希望的生命种子，将为一名急性白血病患者搭起通往新生的桥梁。           十年坚守，静待生命缘分  …",
+   "cover": "",
+   "content": "<p>9月22日，正值第十二个   “世界骨髓捐献者日   ”，在这个致敬热血英雄的特殊日子里，爱心人士余伟振先生在汕大附一成功捐献造血干细胞，成为广东省第2910例、汕头市第40例非血缘造血干细胞捐献者。   一袋满载希望的生命种子，将为一名急性白血病患者搭起通往新生的桥梁。           十年坚守，静待生命缘分  …</p><p>近日，汕头市红十字会围绕“人道、博爱、奉献”的红十字精神开展相关工作，持续推进应急救护、志愿服务、人道救助等业务，切实把温暖送到群众身边。</p><p>（示例内容，正式环境由后台文章管理模块维护。）</p>",
+   "publishTime": "2026-09-23",
+   "views": 0,
+   "link": ""
+  },
+  {
+   "id": 2203,
+   "categoryId": 436,
+   "title": "致敬每一份初心表达  | 无偿献血主题征文及演讲比赛汕头预赛作品评审结果揭晓",
+   "summary": "为深入学习贯彻习近平新时代中国特色社会主义思想，激励广大红十字工作者、会员、志愿者以人道实践践行初心使命，根据广东省红十字会统一部署，汕头市红十字会组织开展 “红心向党守人道 热血奉献建新功”无偿献血主题  征文及演讲比赛汕头预赛作品征集 工作。全市各级红十字工作者、会员及志愿者踊跃投稿，结合参与红十字工作和活动的亲身…",
+   "cover": "http://www.stredcross.org.cn/uploads/f5/6c5f2c6f905f69560c76c6cc62e25b.png",
+   "content": "<p>为深入学习贯彻习近平新时代中国特色社会主义思想，激励广大红十字工作者、会员、志愿者以人道实践践行初心使命，根据广东省红十字会统一部署，汕头市红十字会组织开展 “红心向党守人道 热血奉献建新功”无偿献血主题  征文及演讲比赛汕头预赛作品征集 工作。全市各级红十字工作者、会员及志愿者踊跃投稿，结合参与红十字工作和活动的亲身…</p><p>近日，汕头市红十字会围绕“人道、博爱、奉献”的红十字精神开展相关工作，持续推进应急救护、志愿服务、人道救助等业务，切实把温暖送到群众身边。</p><p>（示例内容，正式环境由后台文章管理模块维护。）</p>",
+   "publishTime": "2026-10-12",
+   "views": 0,
+   "link": ""
+  },
+  {
+   "id": 2141,
+   "categoryId": 436,
+   "title": "汕头市红十字会关于公开征集应急救护培训证书制作供应商的公告",
+   "summary": "为满足应急救护培训证书制作需要，现面向社会公开征集证书制作供应商。具体需求及相关要求公告如下：        一、项目概况        1.项目名称：应急救护培训证书制作采购项目        2.采购方式：公开征集、按需下单        3.采购数量：合同期内，根据我会实际需要不定期、不定量制作。       4…",
+   "cover": "",
+   "content": "<p>为满足应急救护培训证书制作需要，现面向社会公开征集证书制作供应商。具体需求及相关要求公告如下：        一、项目概况        1.项目名称：应急救护培训证书制作采购项目        2.采购方式：公开征集、按需下单        3.采购数量：合同期内，根据我会实际需要不定期、不定量制作。       4…</p><p>近日，汕头市红十字会围绕“人道、博爱、奉献”的红十字精神开展相关工作，持续推进应急救护、志愿服务、人道救助等业务，切实把温暖送到群众身边。</p><p>（示例内容，正式环境由后台文章管理模块维护。）</p>",
+   "publishTime": "2026-09-23",
+   "views": 0,
+   "link": ""
+  },
+  {
+   "id": 2022,
+   "categoryId": 436,
+   "title": "守望人道 协力前行——2026年5·8人道公益日倡议书",
+   "summary": "全市各机关企事业单位、社会团体、各界爱心人士：    2026年5月8日第79个“世界红十字日”即将来临，今年的主题是“  守望人道 协力前行  ”。为弘扬“人道、博爱、奉献”的红十字精神，中国红十字会发起了“5·8人道公益日”网络众筹活动，倡导“人人皆可参与”的公益理念。    汕头市红十字会积极响应，依托腾讯公益平…",
+   "cover": "",
+   "content": "<p>全市各机关企事业单位、社会团体、各界爱心人士：    2026年5月8日第79个“世界红十字日”即将来临，今年的主题是“  守望人道 协力前行  ”。为弘扬“人道、博爱、奉献”的红十字精神，中国红十字会发起了“5·8人道公益日”网络众筹活动，倡导“人人皆可参与”的公益理念。    汕头市红十字会积极响应，依托腾讯公益平…</p><p>近日，汕头市红十字会围绕“人道、博爱、奉献”的红十字精神开展相关工作，持续推进应急救护、志愿服务、人道救助等业务，切实把温暖送到群众身边。</p><p>（示例内容，正式环境由后台文章管理模块维护。）</p>",
+   "publishTime": "2026-04-29",
+   "views": 0,
+   "link": ""
+  },
+  {
+   "id": 1703,
+   "categoryId": 436,
+   "title": "汕头市红十字会2024年国家机关“谁执法谁普法”责任清单",
+   "summary": "汕头市红十字会2024年国家机关“谁执法谁普法”责任清单            普法清单（2024）.pdf",
+   "cover": "",
+   "content": "<p>汕头市红十字会2024年国家机关“谁执法谁普法”责任清单            普法清单（2024）.pdf</p><p>近日，汕头市红十字会围绕“人道、博爱、奉献”的红十字精神开展相关工作，持续推进应急救护、志愿服务、人道救助等业务，切实把温暖送到群众身边。</p><p>（示例内容，正式环境由后台文章管理模块维护。）</p>",
+   "publishTime": "2024-05-24",
+   "views": 0,
+   "link": ""
+  },
+  {
+   "id": 2251,
+   "categoryId": 438,
+   "title": "汕头市红十字会关于捐赠款物收支情况的公示（2026年10月）",
+   "summary": "根据《中华人民共和国慈善法》、《中国红十字会捐赠工作管理办法  》等有关规定，  现将汕头市红十字会2026年10月捐赠款物收支情况公示如下。在此，向社会各界的爱心善举表示衷心感谢。            汕头市红十字会2026年10月1日至2026年10月31日接受社会捐赠一览表.xls",
+   "cover": "",
+   "content": "<p>根据《中华人民共和国慈善法》、《中国红十字会捐赠工作管理办法  》等有关规定，  现将汕头市红十字会2026年10月捐赠款物收支情况公示如下。在此，向社会各界的爱心善举表示衷心感谢。            汕头市红十字会2026年10月1日至2026年10月31日接受社会捐赠一览表.xls</p><p>近日，汕头市红十字会围绕“人道、博爱、奉献”的红十字精神开展相关工作，持续推进应急救护、志愿服务、人道救助等业务，切实把温暖送到群众身边。</p><p>（示例内容，正式环境由后台文章管理模块维护。）</p>",
+   "publishTime": "2026-11-13",
+   "views": 0,
+   "link": ""
+  },
+  {
+   "id": 2210,
+   "categoryId": 438,
+   "title": "汕头市红十字会关于捐赠款物收支情况的公示（2026年9月）",
+   "summary": "根据《中华人民共和国慈善法》、《中国红十字会捐赠工作管理办法  》等有关规定，  现将汕头市红十字会2026年9月捐赠款物收支情况公示如下。在此，向社会各界的爱心善举表示衷心感谢。         汕头市红十字会2026年9月1日至2026年9月30日接受社会捐赠一览表.xls     汕头市红十字会2026年9月1日…",
+   "cover": "",
+   "content": "<p>根据《中华人民共和国慈善法》、《中国红十字会捐赠工作管理办法  》等有关规定，  现将汕头市红十字会2026年9月捐赠款物收支情况公示如下。在此，向社会各界的爱心善举表示衷心感谢。         汕头市红十字会2026年9月1日至2026年9月30日接受社会捐赠一览表.xls     汕头市红十字会2026年9月1日…</p><p>近日，汕头市红十字会围绕“人道、博爱、奉献”的红十字精神开展相关工作，持续推进应急救护、志愿服务、人道救助等业务，切实把温暖送到群众身边。</p><p>（示例内容，正式环境由后台文章管理模块维护。）</p>",
+   "publishTime": "2026-10-12",
+   "views": 0,
+   "link": ""
+  },
+  {
+   "id": 2124,
+   "categoryId": 438,
+   "title": "汕头市红十字会关于捐赠款物收支情况的公示（2026年8月）",
+   "summary": "点击查看详情，了解更多红十字工作动态。",
+   "cover": "",
+   "content": "<p></p><p>近日，汕头市红十字会围绕“人道、博爱、奉献”的红十字精神开展相关工作，持续推进应急救护、志愿服务、人道救助等业务，切实把温暖送到群众身边。</p><p>（示例内容，正式环境由后台文章管理模块维护。）</p>",
+   "publishTime": "2026-09-15",
+   "views": 0,
+   "link": ""
+  },
+  {
+   "id": 2087,
+   "categoryId": 438,
+   "title": "汕头市红十字会关于捐赠款物收支情况的公示（2026年7月）",
+   "summary": "汕头市红十字会2026年7月1日至2026年7月31日社会捐赠支出情况.xlsx     汕头市红十字会2026年7月1日至2026年7月31日接受社会捐赠一览表.xls",
+   "cover": "",
+   "content": "<p>汕头市红十字会2026年7月1日至2026年7月31日社会捐赠支出情况.xlsx     汕头市红十字会2026年7月1日至2026年7月31日接受社会捐赠一览表.xls</p><p>近日，汕头市红十字会围绕“人道、博爱、奉献”的红十字精神开展相关工作，持续推进应急救护、志愿服务、人道救助等业务，切实把温暖送到群众身边。</p><p>（示例内容，正式环境由后台文章管理模块维护。）</p>",
+   "publishTime": "2026-08-12",
+   "views": 0,
+   "link": ""
+  },
+  {
+   "id": 2051,
+   "categoryId": 438,
+   "title": "汕头市红十字会关于捐赠款物收支情况的公示（2026年6月）",
+   "summary": "汕头市红十字会2026年6月1日至2026年6月30日社会捐赠支出情况.xlsx     汕头市红十字会2026年6月1日至2026年6月30日接受社会捐赠一览表.xls",
+   "cover": "",
+   "content": "<p>汕头市红十字会2026年6月1日至2026年6月30日社会捐赠支出情况.xlsx     汕头市红十字会2026年6月1日至2026年6月30日接受社会捐赠一览表.xls</p><p>近日，汕头市红十字会围绕“人道、博爱、奉献”的红十字精神开展相关工作，持续推进应急救护、志愿服务、人道救助等业务，切实把温暖送到群众身边。</p><p>（示例内容，正式环境由后台文章管理模块维护。）</p>",
+   "publishTime": "2026-07-14",
+   "views": 0,
+   "link": ""
+  },
+  {
+   "id": 2046,
+   "categoryId": 438,
+   "title": "汕头市红十字会关于捐赠款物收支情况的公示（2026年5月）",
+   "summary": "汕头市红十字会2026年5月1日至2026年5月31日社会捐赠支出情况.xlsx     汕头市红十字会2026年5月1日至2026年5月31日接受社会捐赠一览表.xls",
+   "cover": "",
+   "content": "<p>汕头市红十字会2026年5月1日至2026年5月31日社会捐赠支出情况.xlsx     汕头市红十字会2026年5月1日至2026年5月31日接受社会捐赠一览表.xls</p><p>近日，汕头市红十字会围绕“人道、博爱、奉献”的红十字精神开展相关工作，持续推进应急救护、志愿服务、人道救助等业务，切实把温暖送到群众身边。</p><p>（示例内容，正式环境由后台文章管理模块维护。）</p>",
+   "publishTime": "2026-06-17",
+   "views": 0,
+   "link": ""
+  },
+  {
+   "id": 1916,
+   "categoryId": 438,
+   "title": "汕头市红十字会2025年度财务报表审计报告",
+   "summary": "汕头市红十字会2025年度财务报表审计报告.pdf",
+   "cover": "",
+   "content": "<p>汕头市红十字会2025年度财务报表审计报告.pdf</p><p>近日，汕头市红十字会围绕“人道、博爱、奉献”的红十字精神开展相关工作，持续推进应急救护、志愿服务、人道救助等业务，切实把温暖送到群众身边。</p><p>（示例内容，正式环境由后台文章管理模块维护。）</p>",
+   "publishTime": "2026-05-27",
+   "views": 0,
+   "link": ""
+  },
+  {
+   "id": 2045,
+   "categoryId": 438,
+   "title": "汕头市红十字会关于捐赠款物收支情况的公示（2026年4月）",
+   "summary": "汕头市红十字会2026年4月1日至2026年4月30日社会捐赠支出情况.xlsx     汕头市红十字会2026年4月1日至2026年4月30日接受社会捐赠一览表.xls",
+   "cover": "",
+   "content": "<p>汕头市红十字会2026年4月1日至2026年4月30日社会捐赠支出情况.xlsx     汕头市红十字会2026年4月1日至2026年4月30日接受社会捐赠一览表.xls</p><p>近日，汕头市红十字会围绕“人道、博爱、奉献”的红十字精神开展相关工作，持续推进应急救护、志愿服务、人道救助等业务，切实把温暖送到群众身边。</p><p>（示例内容，正式环境由后台文章管理模块维护。）</p>",
+   "publishTime": "2026-05-15",
+   "views": 0,
+   "link": ""
+  },
+  {
+   "id": 2043,
+   "categoryId": 438,
+   "title": "汕头市红十字会关于捐赠款物收支情况的公示（2026年3月）",
+   "summary": "汕头市红十字会2026年3月1日至2026年3月31日社会捐赠支出情况.xlsx     汕头市红十字会2026年3月1日至2026年3月31日接受社会捐赠一览表.xls",
+   "cover": "",
+   "content": "<p>汕头市红十字会2026年3月1日至2026年3月31日社会捐赠支出情况.xlsx     汕头市红十字会2026年3月1日至2026年3月31日接受社会捐赠一览表.xls</p><p>近日，汕头市红十字会围绕“人道、博爱、奉献”的红十字精神开展相关工作，持续推进应急救护、志愿服务、人道救助等业务，切实把温暖送到群众身边。</p><p>（示例内容，正式环境由后台文章管理模块维护。）</p>",
+   "publishTime": "2026-04-15",
+   "views": 0,
+   "link": ""
+  },
+  {
+   "id": 2042,
+   "categoryId": 438,
+   "title": "汕头市红十字会关于捐赠款物收支情况的公示（2026年2月）",
+   "summary": "汕头市红十字会2026年2月1日至2026年2月28日接受社会捐赠一览表.xls     汕头市红十字会2026年2月1日至2026年2月28日社会捐赠支出情况.xlsx",
+   "cover": "",
+   "content": "<p>汕头市红十字会2026年2月1日至2026年2月28日接受社会捐赠一览表.xls     汕头市红十字会2026年2月1日至2026年2月28日社会捐赠支出情况.xlsx</p><p>近日，汕头市红十字会围绕“人道、博爱、奉献”的红十字精神开展相关工作，持续推进应急救护、志愿服务、人道救助等业务，切实把温暖送到群众身边。</p><p>（示例内容，正式环境由后台文章管理模块维护。）</p>",
+   "publishTime": "2026-03-16",
+   "views": 0,
+   "link": ""
+  },
+  {
+   "id": 1300,
+   "categoryId": 446,
+   "title": "汕头市红十字会简介",
+   "summary": "汕头市红十字会是从事人道主义工作的社会救助团体。单位单独设置为副处级单位，列入群团机关管理，内设办公室、赈济救护科。2007年11月，市红十字会加挂中国造血干细胞捐献者资料库广东省管理中心汕头工作站牌子。           多年来，汕头市红十字会认真履行《中华人民共和国红十字会法》赋予法定职责，充分发挥党和政府在人道",
+   "cover": "",
+   "content": "<p style=\"line-height: 1.75em;\"><span style=\"font-size: 16px;\">&nbsp; &nbsp; &nbsp; &nbsp;汕头市红十字会是从事人道主义工作的社会救助团体。单位单独设置为副处级单位，列入群团机关管理，内设办公室、赈济救护科。2007年11月，市红十字会加挂中国造血干细胞捐献者资料库广东省管理中心汕头工作站牌子。</span></p><p style=\"line-height: 1.75em;\"><span style=\"font-size: 16px;\">&nbsp; &nbsp; &nbsp; &nbsp;多年来，汕头市红十字会认真履行《中华人民共和国红十字会法》赋予法定职责，充分发挥党和政府在人道领域的助手作用，为我市经济社会发展作出了重要贡献，成为社会主义和谐社会建设的重要力量、精神文明建设的生力军和民间外交的重要渠道。</span></p><p style=\"line-height: 1.75em;\"><span style=\"font-size: 16px;\">&nbsp; &nbsp; &nbsp; &nbsp;市红十字会主要职责是：</span></p><p style=\"line-height: 1.75em;\"><span style=\"font-size: 16px;\">&nbsp; &nbsp; &nbsp; &nbsp;（一）宣传和贯彻执行《中华人民共和国红十字会法》等有关红十字方面的法律法规。宣传国际红十字与红新月运动的基本原则和日内瓦公约及其附加议定书，并依照其有关规定开展工作。</span></p><p style=\"line-height: 1.75em;\"><span style=\"font-size: 16px;\">&nbsp; &nbsp; &nbsp; &nbsp;（二）开展备灾救灾工作，在自然灾害和突发事件中对伤病人员和其他受害者提供紧急救援和人道救助。配合参与国际人道主义救援工作。</span></p><p style=\"line-height: 1.75em;\"><span style=\"font-size: 16px;\">&nbsp; &nbsp; &nbsp; &nbsp;（三）建立红十字应急救援体系和红十字会备灾救灾系统。</span></p><p style=\"line-height: 1.75em;\"><span style=\"font-size: 16px;\">&nbsp; &nbsp; &nbsp; &nbsp;（四）依法开展募捐活动，对困难群体开展人道救助。</span></p><p style=\"line-height: 1.75em;\"><span style=\"font-size: 16px;\">&nbsp; &nbsp; &nbsp; &nbsp;（五）依法开展应急救护培训和应急救护、防灾避险、卫生健康等知识的宣传，组织志愿者参与现场救护。开展艾滋病预防控制宣传和教育以及相关人道救助工作。</span></p><p style=\"line-height: 1.75em;\"><span style=\"font-size: 16px;\">&nbsp; &nbsp; &nbsp; &nbsp;（六）参与、推动无偿献血、造血干细胞捐献、遗体和人体器官捐献工作。</span></p><p style=\"line-height: 1.75em;\"><span style=\"font-size: 16px;\">&nbsp; &nbsp; &nbsp; &nbsp;（七）组织开展红十字宣传、红十字志愿服务、红十字青少年工作。</span></p><p style=\"line-height: 1.75em;\"><span style=\"font-size: 16px;\">&nbsp; &nbsp; &nbsp; &nbsp;（八）在省红十字会协调和指导下，加强国际间和与港澳台地区红十字会的交流和合作。</span></p><p style=\"line-height: 1.75em;\"><span style=\"font-size: 16px;\">&nbsp; &nbsp; &nbsp; &nbsp;（九）指导全市各级红十字会加强自身建设、组织建设和开展相关工作。</span></p><p style=\"line-height: 1.75em;\"><span style=\"font-size: 16px;\">&nbsp; &nbsp; &nbsp; &nbsp;（十）完成市委、市政府和省红十字会交办的其他任务。</span></p><p style=\"line-height: 1.75em;\"><span style=\"font-size: 16px;\">&nbsp; &nbsp; &nbsp; &nbsp;（十一）职能转变。</span></p><p style=\"line-height: 1.75em;\"><span style=\"font-size: 16px;\">&nbsp; &nbsp; &nbsp; &nbsp;1.坚持服务基层。在乡镇（街道）、社区、学校、企事业单位积极发展红十字基层组织，发挥其在新农村建设、和谐社区建设、文明校园、健康乡村建设中的作用。探索建立形式多样、覆盖面广的活动载体和服务平台。推动红十字会机关干部深入基层、联系群众、开展调查研究工作常态化制度化。</span></p><p style=\"line-height: 1.75em;\"><span style=\"font-size: 16px;\">&nbsp; &nbsp; &nbsp; &nbsp;2.加强人道服务。完善红十字应急救援体系，重视发挥红十字会在突发事件特别是重大自然灾害和公共卫生事件应急救援工作中的作用，把红十字应急救援工作纳入政府灾害应急响应体系。持续做好应急救援、应急救护、人道救助工作，依法依规开展无偿献血、造血干细胞捐献、遗体和人体器官捐献工作。动员社会各界广泛参与红十字运动，积极搭建爱心企业履行社会责任、爱心人士服务社会的平台。</span></p><p style=\"line-height: 1.75em;\"><span style=\"font-size: 16px;\">&nbsp; &nbsp; &nbsp; &nbsp;3.推进公开透明。建设“网上红十字会”，推动互联网与红十字会事业的全面深度融合，推进公开透明，提高红十字会的社会公信力。建立健全财务管理、内部审计、信息公开和监督检查等制度，规范信息发布，接受社会监督。</span></p><p><br/></p>",
+   "publishTime": "2022-12-26",
+   "views": 0,
+   "link": ""
+  },
+  {
+   "id": 1458,
+   "categoryId": 444,
+   "title": "领导机构",
+   "summary": "内容维护中，请稍后查看。",
+   "cover": "",
+   "content": "<p>内容维护中，请稍后查看。</p>",
+   "publishTime": "2024-01-01",
+   "views": 0,
+   "link": ""
+  },
+  {
+   "id": 1455,
+   "categoryId": 445,
+   "title": " 市红十字会机关内设机构",
+   "summary": "市红十字会机关设下列内设机构：        （一）办公室。负责机关综合协调、文电、会务、机要、档案等日常工作；承担信息、保密、安全、信访、政务公开、干部人事、机构编制、劳动工资、教育培训和退休人员服务等工作。负责机关党群工作；制订机关相关制度；承担编制红十字事业经费，管理机关各类资金和资产。负责红十字会宣传工作。负责",
+   "cover": "",
+   "content": "<p style=\"line-height: 2em;\">&nbsp; &nbsp; &nbsp; 市红十字会机关设下列内设机构：</p><p style=\"line-height: 2em;\">&nbsp; &nbsp; &nbsp;&nbsp;（一）办公室。负责机关综合协调、文电、会务、机要、档案等日常工作；承担信息、保密、安全、信访、政务公开、干部人事、机构编制、劳动工资、教育培训和退休人员服务等工作。负责机关党群工作；制订机关相关制度；承担编制红十字事业经费，管理机关各类资金和资产。负责红十字会宣传工作。负责红十字会组织建设、会员队伍建设和干部培训。负责国际间及与港澳台地区红十字组织的交往与合作，承担查人转信工作。承担理事会和监事会日常工作。</p><p style=\"line-height: 2em;\">&nbsp; &nbsp; &nbsp;&nbsp;（二）赈济救护科。负责红十字应急救援、救灾、备灾相关工作，负责救灾物资的接收、分配、统计。依法开展募捐活动。负责组织人道主义的社会救助和服务活动。开展应急救护培训，宣传普及应急救护、防灾避险和卫生健康等知识。开展艾滋病预防控制宣传和教育。指导参与、推动无偿献血、造血干细胞捐献、遗体和人体器官捐献工作。开展红十字青少年工作。负责红十字志愿者队伍建设和管理服务。组织协调内部审计。</p><p><br/></p>",
+   "publishTime": "2023-01-30",
+   "views": 0,
+   "link": ""
+  },
+  {
+   "id": 1271,
+   "categoryId": 416,
+   "title": "联系方式",
+   "summary": "汕头市红十字会      地址：汕头市金平区中山路130号协华大厦11楼A     联系电话：0754-88295834    传真：0754-88295834         邮箱：2179015971@qq.com             金平区红十字会     地址：  汕头  市金平区汕樟路79号6楼     ",
+   "cover": "",
+   "content": "<p style=\"text-align: left; text-indent: 2em;\"><span style=\"font-family: 宋体, SimSun;\"><strong><span style=\"color: rgb(255, 0, 0);\"><br/></span></strong></span></p><p style=\"text-align: left; text-indent: 2em;\"><span style=\"font-family: 宋体, SimSun;\"><strong><span style=\"color: rgb(255, 0, 0);\"><br/></span></strong></span></p><p style=\"text-align: left; text-indent: 2em;\"><span style=\"font-family: 宋体, SimSun;\"><strong><span style=\"color: rgb(255, 0, 0);\">汕头市红十字会</span></strong></span></p><p style=\"text-align: left; text-indent: 2em;\"><span style=\"color: rgb(0, 0, 0); font-family: 宋体, SimSun;\">地址：汕头市金平区中山路130号协华大厦11楼A<br/></span></p><p style=\"text-align: left; text-indent: 2em;\"><span style=\"color: rgb(0, 0, 0); font-family: 宋体, SimSun;\">联系电话：0754-88295834 &nbsp;&nbsp; 传真：0754-88295834 &nbsp; &nbsp;&nbsp;</span></p><p style=\"text-align: left; text-indent: 2em;\"><span style=\"color: rgb(0, 0, 0); font-family: 宋体, SimSun;\">邮箱：2179015971@qq.com&nbsp;</span></p><p style=\"white-space: normal; text-indent: 2em;\"><span style=\"color: rgb(255, 0, 0); font-family: 宋体, SimSun;\"><strong><br/></strong></span></p><p style=\"white-space: normal; text-indent: 2em;\"><span style=\"color: rgb(255, 0, 0); font-family: 宋体, SimSun;\"><strong>金平区红十字会</strong></span></p><p style=\"white-space: normal; text-indent: 2em;\"><span style=\"font-family: 宋体, SimSun;\">地址：</span><span style=\"font-family: 宋体, SimSun;\">汕头</span><span style=\"font-family: 宋体, SimSun;\">市金平区汕樟路79号6楼</span><span style=\"font-family: 宋体, SimSun;\"></span></p><p style=\"white-space: normal; text-indent: 2em;\"><span style=\"font-family: 宋体, SimSun;\">联系电话：0754-89657339 &nbsp;&nbsp;</span></p><p style=\"text-align: left; text-indent: 2em;\"><span style=\"color: rgb(255, 0, 0); font-family: 宋体, SimSun;\"><strong><br/></strong></span></p><p style=\"text-align: left; text-indent: 2em;\"><span style=\"color: rgb(255, 0, 0); font-family: 宋体, SimSun;\"><strong>龙湖区红十字会</strong></span></p><p style=\"text-align: left; text-indent: 2em;\"><span style=\"color: rgb(0, 0, 0); font-family: 宋体, SimSun;\">地址：</span><span style=\"font-family: 宋体, SimSun;\">汕头市龙湖区珠池路</span><span style=\"font-family: 宋体, SimSun;\">29号物产楼3楼</span></p><p style=\"text-align: left; text-indent: 2em;\"><span style=\"color: rgb(0, 0, 0); font-family: 宋体, SimSun;\">联系电话：0754-88488613 &nbsp; &nbsp;</span></p><p><br/></p><p style=\"text-align: left; text-indent: 2em;\"><span style=\"color: rgb(255, 0, 0); font-family: 宋体, SimSun;\"><strong>澄海区红十字会</strong></span></p><p style=\"text-align: left; text-indent: 2em;\"><span style=\"color: rgb(0, 0, 0); font-family: 宋体, SimSun;\">地址：汕头市澄海区中山南路柑园池卫生大楼</span></p><p style=\"text-align: left; text-indent: 2em;\"><span style=\"color: rgb(0, 0, 0); font-family: 宋体, SimSun;\">联系电话：0754-85820760</span></p><p><br/></p><p style=\"text-align: left; text-indent: 2em;\"><span style=\"font-family: 宋体, SimSun;\"><strong><span style=\"font-family: 宋体, SimSun; color: rgb(255, 0, 0);\">濠江区红十字会</span></strong></span></p><p style=\"text-align: left; text-indent: 2em;\"><span style=\"color: rgb(0, 0, 0); font-family: 宋体, SimSun;\">地址：汕头市濠江区濠江区达濠街道濠滨新乐园20幢203号</span></p><p style=\"text-align: left; text-indent: 2em;\"><span style=\"color: rgb(0, 0, 0); font-family: 宋体, SimSun;\">联系电话：0754-87381129</span></p><p><br/></p><p style=\"text-align: left; text-indent: 2em;\"><span style=\"font-family: 宋体, SimSun;\"><strong><span style=\"font-family: 宋体, SimSun; color: rgb(255, 0, 0);\">潮南区红十字会</span></strong></span></p><p style=\"text-align: left; text-indent: 2em;\"><span style=\"color: rgb(0, 0, 0); font-family: 宋体, SimSun;\">地址：</span><span style=\"font-family: 宋体, SimSun;\">汕头市潮南区党政办公用房附楼</span><span style=\"font-family: 宋体, SimSun;\">208</span></p><p style=\"text-align: left; text-indent: 2em;\"><span style=\"color: rgb(0, 0, 0); font-family: 宋体, SimSun;\">联系电话：0754-89618133</span></p><p style=\"text-align: left; text-indent: 2em;\"><span style=\"color: rgb(0, 0, 0); font-family: 宋体, SimSun;\"><br/></span></p><p style=\"text-align: left; text-indent: 2em;\"><span style=\"color: rgb(0, 0, 0); font-family: 宋体, SimSun;\"></span></p><p style=\"white-space: normal; text-indent: 2em;\"><span style=\"font-family: 宋体, SimSun;\"><strong><span style=\"color: rgb(255, 0, 0);\">潮阳区红十字会</span></strong></span></p><p style=\"white-space: normal; text-indent: 2em;\"><span style=\"font-family: 宋体, SimSun;\">地址：</span><span style=\"font-family: 宋体, SimSun;\">汕头市潮阳区东山大道</span><span style=\"font-family: 宋体, SimSun;\">289号311室</span></p><p style=\"white-space: normal; text-indent: 2em;\"><span style=\"font-family: 宋体, SimSun;\">联系</span><span style=\"font-family: 宋体, SimSun;\">电话：</span><span style=\"font-family: 宋体, SimSun;\">13556439500</span></p><p style=\"white-space: normal; text-indent: 2em;\"><br/></p><p><br/></p><p style=\"text-align: left; text-indent: 2em;\"><span style=\"font-family: 宋体, SimSun;\"><strong><span style=\"font-family: 宋体, SimSun; color: rgb(255, 0, 0);\">南澳县红十字会</span></strong></span></p><p style=\"text-align: left; text-indent: 2em;\"><span style=\"color: rgb(0, 0, 0); font-family: 宋体, SimSun;\">地址：</span><span style=\"color: rgb(0, 0, 0); font-family: 宋体, SimSun;\">南澳县后宅镇隆澳大街313号</span><span style=\"font-family: 宋体, SimSun;\">（县卫健局对面）</span></p><p style=\"text-align: left; text-indent: 2em;\"><span style=\"font-family: 宋体, SimSun;\">联系电话：0754-89806712</span></p><p><br/></p>",
+   "publishTime": "2022-09-28",
+   "views": 0,
+   "link": ""
+  },
+  {
+   "id": 1319,
+   "categoryId": 433,
+   "title": "爱心捐赠",
+   "summary": "点击查看详情，了解更多红十字工作动态。",
+   "cover": "",
+   "content": "<p></p>",
+   "publishTime": "2024-08-21",
+   "views": 0,
+   "link": ""
+  },
+  {
+   "id": 1327,
+   "categoryId": 432,
+   "title": "申请救助表下载",
+   "summary": "汕头市红十字会人道救助申请表.pdf    中央专项彩票公益金白血病儿童救助项目申请流程.doc    中国红十字基金会“中央专项彩票公益金大病儿童救助项目”白血病儿童资助申请表.pdf    中国红十字基金会“中央专项彩票公益金大病儿童救助项目”造血干细胞移植资助申请表.pdf    中央专项彩票公益金先心病儿童救助",
+   "cover": "",
+   "content": "<p style=\"line-height: 16px;\"><br/></p><p style=\"line-height: 16px;\"><a style=\"font-size:12px; color:#0066cc;\" href=\"/uploads/202609301790755949879427.pdf\" =\"汕头市红十字会人道救助申请表.pdf\">汕头市红十字会人道救助申请表.pdf</a></p><p style=\"line-height: 16px;\"><a style=\"font-size:12px; color:#0066cc;\" href=\"/uploads/202609301790755966517579.doc\" =\"中央专项彩票公益金白血病儿童救助项目申请流程.doc\">中央专项彩票公益金白血病儿童救助项目申请流程.doc</a></p><p style=\"line-height: 16px;\"><a style=\"font-size:12px; color:#0066cc;\" href=\"/uploads/202609301790755966969460.pdf\" =\"中国红十字基金会“中央专项彩票公益金大病儿童救助项目”白血病儿童资助申请表.pdf\">中国红十字基金会“中央专项彩票公益金大病儿童救助项目”白血病儿童资助申请表.pdf</a></p><p style=\"line-height: 16px;\"><a style=\"font-size:12px; color:#0066cc;\" href=\"/uploads/202609301790755966748000.pdf\" =\"中国红十字基金会“中央专项彩票公益金大病儿童救助项目”造血干细胞移植资助申请表.pdf\">中国红十字基金会“中央专项彩票公益金大病儿童救助项目”造血干细胞移植资助申请表.pdf</a></p><p style=\"line-height: 16px;\"><a style=\"font-size:12px; color:#0066cc;\" href=\"/uploads/202609301790755966467343.docx\" =\"中央专项彩票公益金先心病儿童救助项目申请流程.docx\">中央专项彩票公益金先心病儿童救助项目申请流程.docx</a></p><p><span style=\"font-size: 20px;\"></span></p><p><span style=\"font-size: 20px;\">可点击下载相关申请表</span></p>",
+   "publishTime": "2026-09-17",
+   "views": 0,
+   "link": ""
+  },
+  {
+   "id": 1320,
+   "categoryId": 441,
+   "title": "学习宣传贯彻党的二十大精神",
+   "summary": "点击查看详情，了解更多红十字工作动态。",
+   "cover": "/images/demo/ztzl-1.gif",
+   "content": "<p>学习宣传贯彻党的二十大精神</p>",
+   "publishTime": "2024-06-01",
+   "views": 0,
+   "link": "newList.html?cxsortid=448"
+  },
+  {
+   "id": 1269,
+   "categoryId": 441,
+   "title": "生命教育",
+   "summary": "点击查看详情，了解更多红十字工作动态。",
+   "cover": "/images/demo/ztzl-2.gif",
+   "content": "<p>生命教育</p>",
+   "publishTime": "2024-06-01",
+   "views": 0,
+   "link": "newList.html?cxsortid=458"
+  },
+  {
+   "id": 1526,
+   "categoryId": 417,
+   "title": "汕头12345服务热线平台",
+   "summary": "点击查看详情，了解更多红十字工作动态。",
+   "cover": "",
+   "content": "",
+   "publishTime": "2023-01-01",
+   "views": 0,
+   "link": "https://12345.shantou.gov.cn/"
+  },
+  {
+   "id": 1325,
+   "categoryId": 417,
+   "title": "红十字会与红新月会国际联合会",
+   "summary": "点击查看详情，了解更多红十字工作动态。",
+   "cover": "",
+   "content": "",
+   "publishTime": "2023-01-01",
+   "views": 0,
+   "link": "https://www.ifrc.org"
+  },
+  {
+   "id": 1324,
+   "categoryId": 417,
+   "title": "红十字国际委员会",
+   "summary": "点击查看详情，了解更多红十字工作动态。",
+   "cover": "",
+   "content": "",
+   "publishTime": "2023-01-01",
+   "views": 0,
+   "link": "https://www.icrc.org/zh"
+  },
+  {
+   "id": 1323,
+   "categoryId": 417,
+   "title": "中国红十字基金会官网",
+   "summary": "点击查看详情，了解更多红十字工作动态。",
+   "cover": "",
+   "content": "",
+   "publishTime": "2023-01-01",
+   "views": 0,
+   "link": "https://new.crcf.org.cn"
+  },
+  {
+   "id": 1322,
+   "categoryId": 417,
+   "title": "中华骨髓库",
+   "summary": "点击查看详情，了解更多红十字工作动态。",
+   "cover": "",
+   "content": "",
+   "publishTime": "2023-01-01",
+   "views": 0,
+   "link": "https://www.cmdp.org.cn/"
+  },
+  {
+   "id": 1321,
+   "categoryId": 417,
+   "title": "广东省红十字会",
+   "summary": "点击查看详情，了解更多红十字工作动态。",
+   "cover": "",
+   "content": "",
+   "publishTime": "2023-01-01",
+   "views": 0,
+   "link": "https://www.gdsredcross.org.cn/"
+  }
+ ],
+ "links": [
+  {
+   "id": 1526,
+   "title": "汕头12345服务热线平台",
+   "url": "https://12345.shantou.gov.cn/"
+  },
+  {
+   "id": 1325,
+   "title": "红十字会与红新月会国际联合会",
+   "url": "https://www.ifrc.org"
+  },
+  {
+   "id": 1324,
+   "title": "红十字国际委员会",
+   "url": "https://www.icrc.org/zh"
+  },
+  {
+   "id": 1323,
+   "title": "中国红十字基金会官网",
+   "url": "https://new.crcf.org.cn"
+  },
+  {
+   "id": 1322,
+   "title": "中华骨髓库",
+   "url": "https://www.cmdp.org.cn/"
+  },
+  {
+   "id": 1321,
+   "title": "广东省红十字会",
+   "url": "https://www.gdsredcross.org.cn/"
+  }
+ ],
+ "guestbookSubmits": []
+}

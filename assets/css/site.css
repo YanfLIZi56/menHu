@@ -1,0 +1,219 @@
+/* ------------------------------------------------------------------
+ * Nuxt 侧补充样式：只做「老站缺少的框架适配」与少量覆盖，
+ * 视觉主体全部来自 legacy.css（原 style.css）与 layui.css
+ * ------------------------------------------------------------------ */
+html,
+body {
+  font-family: 'Microsoft YaHei', 'PingFang SC', 'Hiragino Sans GB', 'Helvetica Neue', Arial, sans-serif;
+}
+
+body {
+  background: #f6f6f6;
+  color: #333;
+}
+
+#app {
+  min-height: 100vh;
+}
+
+img {
+  border: 0;
+}
+
+/* 首页 / 内页统一的浅粉色底纹区域（老站是行内 style，这里提成语义类） */
+.page-bg {
+  background: url('/images/theme/content-bg.gif') repeat-x top;
+  padding-top: 11px;
+}
+
+/* ---------------- 顶部欢迎条 ---------------- */
+.header-welcome {
+  height: 34px;
+  line-height: 34px;
+  color: #666;
+  font-size: 14px;
+}
+
+.header-welcome .welcome-time {
+  color: #666;
+}
+
+/* ---------------- 主导航 ---------------- */
+.nav .layui-nav {
+  padding: 0 20px;
+}
+
+.nav .layui-nav-item {
+  position: relative;
+}
+
+.nav .layui-nav-item > a {
+  position: relative;
+}
+
+.nav .layui-nav-more {
+  color: #fff;
+  font-size: 12px;
+  right: 6px;
+  top: 50%;
+  margin-top: -18px;
+}
+
+/* layui 默认二级菜单要靠 layui.js 才展开，这里改成纯 CSS hover */
+.nav .layui-nav-child {
+  display: none;
+  top: 47px;
+  min-width: 132px;
+  padding: 4px 0;
+  background: #fff;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+  border-radius: 0 0 3px 3px;
+  z-index: 30;
+}
+
+.nav .layui-nav-item:hover .layui-nav-child,
+.nav .layui-nav-itemed .layui-nav-child {
+  display: block;
+}
+
+.nav .layui-nav-child dd {
+  display: block;
+  padding: 0;
+}
+
+.nav .layui-nav-child dd a {
+  display: block;
+  line-height: 36px;
+  padding: 0 18px;
+  color: #383735 !important;
+  font-size: 14px;
+}
+
+.nav .layui-nav-child dd a:hover {
+  background: #f9bf04 !important;
+  color: #cf2b2c !important;
+}
+
+/* 面包屑：覆盖 layui 默认的 visibility:hidden（老站是靠 layui.js 点亮的） */
+.breadcrumb-wrap {
+  padding: 10px 0 6px;
+}
+
+.layui-breadcrumb {
+  visibility: visible;
+  display: block;
+  line-height: 26px;
+}
+
+.layui-breadcrumb a {
+  color: #666 !important;
+}
+
+.layui-breadcrumb i {
+  color: #e00;
+  margin: 0 10px;
+}
+
+.layui-breadcrumb span[lay-separator] {
+  margin: 0 4px;
+  color: #bbb;
+}
+
+/* ---------------- 列表分页 ---------------- */
+.pager {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 30px 0;
+  gap: 6px;
+}
+
+.pager button {
+  min-width: 36px;
+  height: 36px;
+  padding: 0 10px;
+  border: 1px solid #e6e6e6;
+  background: #fff;
+  color: #666;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.pager button:hover:not(:disabled) {
+  border-color: #e00;
+  color: #e00;
+}
+
+.pager button.active {
+  background: #e00;
+  border-color: #e00;
+  color: #fff;
+}
+
+.pager button:disabled {
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+.pager .pager-total {
+  color: #999;
+  font-size: 12px;
+  margin-left: 8px;
+}
+
+/* ---------------- 页脚 ---------------- */
+.foots .banQuan table {
+  width: 100%;
+  color: #fff;
+  font-size: 15px;
+  line-height: 30px;
+}
+
+.foots .banQuan td {
+  vertical-align: middle;
+  padding: 4px 0;
+}
+
+.foots .banQuan img {
+  width: 100px;
+  display: inline-block;
+}
+
+/* ---------------- 回到顶部 ---------------- */
+.totop {
+  opacity: 0.1;
+  cursor: pointer;
+}
+
+.totop:hover {
+  opacity: 0.85;
+}
+
+/* ---------------- 表单提示 ---------------- */
+.form-tip {
+  color: #e00;
+  font-size: 14px;
+  margin-left: 12px;
+}
+
+.form-tip.ok {
+  color: #2ca24a;
+}
+
+/* ---------------- 空状态 ---------------- */
+.empty-state {
+  padding: 60px 20px;
+  text-align: center;
+  color: #999;
+}
+
+.empty-state img {
+  max-width: 100%;
+}
+
+/* 内页正文里的图片自适应 */
+.newInfoContents img {
+  max-width: 100%;
+  height: auto;
+}

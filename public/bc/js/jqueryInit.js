@@ -1,3 +1,0 @@
-$(document).ready(function(){
-    // 在这里写你的代码...
-});
