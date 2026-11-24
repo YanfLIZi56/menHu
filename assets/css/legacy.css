@@ -215,6 +215,4 @@ a:hover {  color: #9C0000;}
 .indexVideo video{ width: 100%;}
 
 #gotoTop{display: none;}
-.totop{position:fixed;right:50px;bottom:33px; opacity: 0.1; display:block;width:53px;height:53px;background:url(/images/theme/totop.png) no-repeat 0 0;-webkit-transition: all 0.2s ease-in-out;}
-
-.totop:hover{ transform: scale(1.1); }
+/* 回到顶部按钮改由 components/BackToTop.vue 纯 CSS 实现，此处不再引用图片 */

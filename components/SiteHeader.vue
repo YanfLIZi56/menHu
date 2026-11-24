@@ -34,9 +34,10 @@
             <a v-if="item.external" :href="item.link" target="_blank" rel="noopener">{{ item.title }}</a>
             <NuxtLink v-else :to="item.link">
               {{ item.title }}
-              <i
+              <span
                 v-if="item.children && item.children.length"
-                class="layui-icon layui-icon-down layui-nav-more"
+                class="nav-more"
+                aria-hidden="true"
               />
             </NuxtLink>
 

@@ -51,17 +51,29 @@ img {
   position: relative;
 }
 
-.nav .layui-nav-more {
-  color: #fff;
-  font-size: 12px;
-  right: 6px;
+/* 下拉小箭头：纯 CSS 折角，垂直居中于文字，hover 时平滑翻转向上 */
+.nav-more {
+  position: absolute;
   top: 50%;
-  margin-top: -18px;
+  right: 7px;
+  width: 7px;
+  height: 7px;
+  margin-top: -5px;
+  border-right: 1.5px solid #fff;
+  border-bottom: 1.5px solid #fff;
+  transform: rotate(45deg);
+  transition: transform 0.3s ease;
+  pointer-events: none;
 }
 
-/* layui 默认二级菜单要靠 layui.js 才展开，这里改成纯 CSS hover */
+.nav .layui-nav-item:hover .nav-more,
+.nav .layui-nav-itemed .nav-more {
+  transform: rotate(225deg);
+}
+
+/* layui 默认二级菜单要靠 layui.js 才展开，这里改成纯 CSS hover（带淡入下滑） */
 .nav .layui-nav-child {
-  display: none;
+  display: block;
   top: 47px;
   min-width: 132px;
   padding: 4px 0;
@@ -69,11 +81,19 @@ img {
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
   border-radius: 0 0 3px 3px;
   z-index: 30;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition: opacity 0.22s ease, transform 0.22s ease, visibility 0.22s;
+  pointer-events: none;
 }
 
 .nav .layui-nav-item:hover .layui-nav-child,
 .nav .layui-nav-itemed .layui-nav-child {
-  display: block;
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
 }
 
 .nav .layui-nav-child dd {
@@ -181,13 +201,42 @@ img {
 }
 
 /* ---------------- 回到顶部 ---------------- */
-.totop {
-  opacity: 0.1;
+.back-to-top {
+  position: fixed;
+  right: 50px;
+  bottom: 33px;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #ee0000;
+  box-shadow: 0 6px 14px rgba(238, 0, 0, 0.32);
   cursor: pointer;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, transform 0.2s, opacity 0.25s;
 }
 
-.totop:hover {
-  opacity: 0.85;
+.back-to-top:hover {
+  background: #cf2b2c;
+  transform: translateY(-3px);
+}
+
+.back-to-top:active {
+  transform: translateY(-1px) scale(0.96);
+}
+
+/* 纯 CSS 白色箭头，不用图片 */
+.back-to-top .arrow {
+  width: 12px;
+  height: 12px;
+  margin-top: 2px;
+  border-left: 2px solid #fff;
+  border-top: 2px solid #fff;
+  transform: rotate(45deg);
 }
 
 /* ---------------- 表单提示 ---------------- */

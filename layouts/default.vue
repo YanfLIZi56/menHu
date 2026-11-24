@@ -8,5 +8,7 @@
     </div>
 
     <SiteFooter />
+
+    <BackToTop />
   </div>
 </template>

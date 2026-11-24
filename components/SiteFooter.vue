@@ -38,18 +38,14 @@
         </table>
       </div>
     </div>
-
-    <button class="totop" type="button" title="回到顶部" @click="backToTop" />
   </footer>
 </template>
 
 <script setup lang="ts">
 /**
- * 站点页脚：红底版权信息 + 公众号/捐款二维码 + 回到顶部。
+ * 站点页脚：红底版权信息 + 公众号/捐款二维码。
  * 文案取自老站 cxid=1328「底部版权信息」，后续若需后台维护，
  * 可新增 system/config 接口替换这里的静态内容。
+ * 回到顶部按钮已独立为 BackToTop 组件（纯 CSS 实现，不依赖图片）。
  */
-const backToTop = () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' })
-}
 </script>
