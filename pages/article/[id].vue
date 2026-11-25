@@ -30,6 +30,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import type { MenuNode } from '~/composables/useApi'
 import { articleExternalLink, findMenuNode, menuTarget } from '~/utils/menu'
 
 /**
@@ -42,7 +43,9 @@ const api = useApi()
 
 const articleId = computed(() => Number(route.params.id))
 
-const { data: menuTreeData } = await usePortalMenu()
+const { data: menuTreeData } = await useAsyncData('portal-menu', () =>
+  api.getMenuTree().catch(() => [] as MenuNode[]),
+)
 
 const { data: article, error } = await useAsyncData(
   () => `article-${articleId.value}`,
