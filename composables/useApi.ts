@@ -104,8 +104,8 @@ function toMenuNode(raw: any, parentId = 0): MenuNode {
   const id = Number(raw?.value ?? raw?.id ?? 0)
   const children = Array.isArray(raw?.children)
     ? raw.children
-        .filter((c: any) => c && typeof c === 'object')
-        .map((c: any) => toMenuNode(c, id))
+      .filter((c: any) => c && typeof c === 'object')
+      .map((c: any) => toMenuNode(c, id))
     : []
 
   return {
@@ -186,7 +186,7 @@ export const useApi = () => {
   return {
     /** 首页轮播图 */
     async getBanners(): Promise<Banner[]> {
-      const res = await $fetch<any>(url('/system/banner/list'))
+      const res = await $fetch<any>(url('/system/banner/portalList'))
       return pickRows(res)
         .map((r: any) => toBanner(r, fileBase))
         .sort((a, b) => a.sort - b.sort)
