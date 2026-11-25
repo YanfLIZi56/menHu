@@ -64,8 +64,8 @@
 | --- | --- | --- |
 | categoryId | 是 | 栏目 id；父栏目需要聚合所有子栏目的文章 |
 | templateType | 否 | 1 列表 / 2 单页，前端会带当前栏目类型 |
-| pageNum | 否 | 页码，默认 1（**OpenAPI 未声明，前端已带，需后端确认支持**） |
-| pageSize | 否 | 每页条数，默认 10（同上） |
+| pageNum | 否 | 页码，默认 1（已与后端确认可用） |
+| pageSize | 否 | 每页条数，默认 10（已与后端确认可用） |
 
 响应为若依 `TableDataInfo`：
 
@@ -108,8 +108,12 @@
 | --- | --- | --- |
 | templateType=1（列表） | `/list/{categoryId}` | `menu/list` |
 | templateType=2（单页） | `/page/{categoryId}` | `menu/{categoryId}` |
-| isExternal=1（外链） | 直接 `href` 新窗口 | 需 `link` 字段 |
-| 列表文章点进详情 | `/article/{id}` | `GET /article/article/{id}`（**缺口**） |
+| 列表文章点进详情 | `/article/{id}` | `GET /article/article/{id}`（已提供，响应同 `menu/{categoryId}` 的 `data`） |
+
+**外链规则**：栏目本身不做外链（不用 `isExternal`）。外链挂在“单页栏目 → 文章”上：文章 `link` 为 http/https 且不是 `.mp4/.m3u8` 时优先跳外链。
+- 单页栏目：`/page/{id}` 服务端取到文章后，直接 **302** 到 `link`；
+- 列表行：该行直接渲染成 `target="_blank"` 的外链，不再进详情页；
+- 视频 `link` 仍进详情页由播放器加载。
 
 访问错路由会自动纠正：`/list/446`（单页栏目）→ 301 `/page/446`；`/page/412`（列表栏目）→ 301 `/list/412`。
 
@@ -283,19 +287,17 @@ NUXT_MOCK=false NUXT_API_BASE=http://127.0.0.1:8080/prod-api npm run dev
 
 切换只需要环境变量，页面与组件代码不用动。
 
-## 六、还缺的接口（需要后端补）
+## 六、缺口与处理约定（2026-11-25 更新）
 
-| # | 用途 | 现状 | 期望 |
-| --- | --- | --- | --- |
-| 1 | 文章详情（列表点进） | 本次只给了“按栏目取单篇”，没有按文章 id 的详情 | `GET /article/article/{id}`，返回同 `data` 结构 |
-| 2 | 列表分页 | `menu/list` 参数只有 `categoryId/templateType`，但有 `total` | 确认支持 `pageNum/pageSize`（前端已带） |
-| 3 | 列表摘要 / 浏览量 | rows 无 `summary`、`viewCount` | 列表补 `summary`（或返回正文前 N 字），浏览量可后置 |
-| 4 | 外链栏目 | `isExternal=1` 但节点没有链接字段 | 栏目树补 `link/linkUrl` |
-| 5 | 轮播图 | 本次文件未包含 | `GET /system/banner/list`（`image/title/linkUrl/resourceType/resourceId/sort`） |
-| 6 | 父栏目聚合规则 | 未说明 `categoryId=412` 是否含 418/419… 子栏目文章 | 明确“递归聚合子栏目”或在参数上给 `withChildren=true` |
-| 7 | 友情链接 | 首页底部友链无接口 | 复用文章列表的 `link` 字段，或单独 `system/friendlink/list` |
-| 8 | 留言 / 培训报名 | 本次文件未包含 | `POST /guestbook/guestbook/add` |
-| 9 | 站点信息（页脚） | 版权、备案号、公众号/捐款二维码写在前端 | `GET /system/config`（或按栏目 449「底部版权信息」取） |
-| 10 | 搜索 | 无 | `menu/list` 加 `keyword`，或独立 `article/search` |
-| 11 | 单页栏目附件 / 手机正文 | `attachments`、`mobileContent` 可选 | 按需补，前端已留空处理 |
-
+| # | 用途 | 现状 / 约定 |
+| --- | --- | --- |
+| 1 | 文章详情（按 id） | **已提供**：`GET /article/article/{id}`，`data` 与 `menu/{categoryId}` 一致 |
+| 2 | 列表分页 | **已确认可用**：`pageNum/pageSize` 由前端传入 |
+| 3 | 外链 | 栏目不做外链；单页栏目文章 `link` 为 http(s) 时优先跳转（视频除外），前端已实现 302 / 新窗口 |
+| 4 | 轮播图 | **后端暂未开发**，前端继续用 mock（`system/banner/list` 契约先冻结） |
+| 5 | 父栏目聚合 | 前端按 `categoryId` 递归聚合子栏目文章（412 含 418/419…） |
+| 6 | 友情链接 | 复用文章列表的 `link` 字段，不单独建接口 |
+| 7 | 留言 / 报名 | 保持现有契约，接口就绪后 `NUXT_MOCK=false` 即切换 |
+| 8 | 站点信息（页脚） | 暂写在前端（版权、备案号、二维码），后续需要再做 `system/config` |
+| 9 | 搜索 | 暂不做，`menu/list` 的 `keyword` 先不加 |
+| 10 | 摘要 / 浏览量 | 接口不返回时前端不显示，不阻塞页面 |

@@ -57,16 +57,17 @@ NUXT_MOCK=false                                # 关掉内置 mock
 
 ## 接口
 
-导航与列表按新版「菜单接口」实现（来自后端默认模块 OpenAPI）：
+导航与列表按新版「菜单接口」实现（来自后端默认模块 OpenAPI）。
+外链规则：栏目不做外链，单页栏目绑定的文章若 `link` 为 http(s)（非视频），优先跳外链（页面 302 / 列表新窗口）。
 
 | 方法 | 路径 | 用途 |
 | --- | --- | --- |
 | GET | `/category/category/menu` | 门户导航栏目树（含 templateType / isExternal） |
 | GET | `/article/article/menu/list?categoryId=&templateType=&pageNum=&pageSize=` | 栏目文章列表（列表页 + 首页各版块） |
 | GET | `/article/article/menu/{categoryId}?templateType=` | 单页栏目内容 |
-| GET | `/article/article/{id}` | 文章详情（**待后端补**，见 docs 缺口 1） |
-| GET | `/system/banner/list` | 首页轮播图（**待后端补**） |
-| POST | `/guestbook/guestbook/add` | 培训报名 / 留言（**待后端补**） |
+| GET | `/article/article/{id}` | 文章详情（响应同 `menu/{categoryId}`） |
+| GET | `/system/banner/list` | 首页轮播图（后端未开发，暂用 mock） |
+| POST | `/guestbook/guestbook/add` | 培训报名 / 留言 |
 
 浏览器端不要求 token；详细字段、示例与老站字段映射见 [`docs/api.md`](./docs/api.md)。
 

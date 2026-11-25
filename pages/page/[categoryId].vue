@@ -25,6 +25,7 @@
 import { computed } from 'vue'
 import type { MenuNode } from '~/composables/useApi'
 import {
+  articleExternalLink,
   findMenuNode,
   menuPath,
   menuTarget,
@@ -60,6 +61,12 @@ const { data: article } = await useAsyncData(
       .catch(() => null),
   { watch: [categoryId] },
 )
+
+/** 单页栏目绑定的文章若带外链（http/https，且不是视频），直接 302 到外链 */
+const externalArticle = computed(() => articleExternalLink(article.value))
+if (externalArticle.value) {
+  await navigateTo(externalArticle.value, { external: true, redirectCode: 302 })
+}
 
 /** 面包屑：父栏目可点击，当前栏目不带链接；相邻同名（413 与 446 都叫“机构简介”）只保留一个 */
 const breadcrumbItems = computed(() => {

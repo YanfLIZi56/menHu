@@ -40,7 +40,12 @@
 
       <ul v-if="rows.length">
         <li v-for="item in rows" :key="item.id">
-          <NuxtLink :to="`/article/${item.id}`" :title="item.title">
+          <NuxtLink
+            :to="rowLink(item)"
+            :target="isRowExternal(item) ? '_blank' : undefined"
+            :rel="isRowExternal(item) ? 'noopener' : undefined"
+            :title="item.title"
+          >
             <span class="lefts title">
               <i class="layui-icon layui-icon-right" style="font-size: 13px; color: #ccc" />
               {{ item.title }}
@@ -77,7 +82,13 @@
 import { computed, ref, watch } from 'vue'
 import type { MenuNode } from '~/composables/useApi'
 import { contactInfo } from '~/utils/site'
-import { flattenMenu, findMenuNode, menuTarget, TEMPLATE_SINGLE } from '~/utils/menu'
+import {
+  articleTarget,
+  flattenMenu,
+  findMenuNode,
+  menuTarget,
+  TEMPLATE_SINGLE,
+} from '~/utils/menu'
 
 /**
  * 栏目列表页（替代老站 newList.html）
@@ -128,6 +139,10 @@ watch(
   },
   { immediate: true },
 )
+
+/** 列表行跳转：文章带外链（非视频）时优先外链，新窗口打开 */
+const rowLink = (item: any) => articleTarget(item).href || `/article/${item.id}`
+const isRowExternal = (item: any) => articleTarget(item).external
 
 const parentOf = (id: number) =>
   categories.value.find((c) => c.id === id)?.parentId ?? 0

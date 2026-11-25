@@ -32,6 +32,21 @@ export function menuTarget(node: Pick<MenuNode, 'id' | 'templateType' | 'isExter
   return { to: `/list/${node.id}`, external: false }
 }
 
+/** 文章外链判断：http(s) 且不是 mp4/m3u8（视频仍进详情页播放） */
+export function articleExternalLink(article?: { link?: string } | null): string {
+  const link = (article?.link || '').trim()
+  if (!/^https?:\/\//i.test(link)) return ''
+  if (/\.(mp4|m3u8)(\?|#|$)/i.test(link)) return ''
+  return link
+}
+
+/** 列表行 / 单页文章的跳转目标：有外链优先后外链，否则进详情页 */
+export function articleTarget(article: { id: number; link?: string }): MenuTarget {
+  const external = articleExternalLink(article)
+  if (external) return { href: external, external: true }
+  return { to: `/article/${article.id}`, external: false }
+}
+
 /** 栏目树拍平（保留 parentId，便于查父级/同级） */
 export function flattenMenu(nodes: MenuNode[], parentId = 0, out: MenuNode[] = []): MenuNode[] {
   for (const node of nodes || []) {

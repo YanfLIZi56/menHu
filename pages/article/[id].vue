@@ -30,15 +30,22 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import type { MenuNode } from '~/composables/useApi'
+import { articleExternalLink, findMenuNode, menuTarget } from '~/utils/menu'
 
 /**
- * 文章 / 单页详情（替代老站 newInfo.html）
- * 路由：/article/{id}
+ * 文章详情（替代老站 newInfo.html）
+ * 路由：/article/{id}，数据来自 GET /article/article/{id}（响应同 menu/{categoryId}）。
+ * 若文章自带外链（http/https，且不是视频）则 302 到外链。
  */
 const route = useRoute()
 const api = useApi()
 
 const articleId = computed(() => Number(route.params.id))
+
+const { data: menuTreeData } = await useAsyncData('portal-menu', () =>
+  api.getMenuTree().catch(() => [] as MenuNode[]),
+)
 
 const { data: article, error } = await useAsyncData(
   () => `article-${articleId.value}`,
@@ -52,6 +59,16 @@ const { data: article, error } = await useAsyncData(
   { watch: [articleId] },
 )
 
+/** 文章绑定栏目如果是单页栏目，面包屑应指回 /page/{categoryId} */
+const categoryNode = computed(() =>
+  findMenuNode(menuTreeData.value ?? [], Number(article.value?.categoryId ?? 0)),
+)
+
+const externalArticle = computed(() => articleExternalLink(article.value))
+if (externalArticle.value) {
+  await navigateTo(externalArticle.value, { external: true, redirectCode: 302 })
+}
+
 const categoryName = computed(() => {
   // 接口若返回 categoryName 可直接用；mock 已带，真实后端可选择性实现
   return (article.value as any)?.categoryName || ''
@@ -60,7 +77,10 @@ const categoryName = computed(() => {
 const breadcrumbItems = computed(() => {
   const items: { title: string; link?: string }[] = []
   if (categoryName.value) {
-    items.push({ title: categoryName.value, link: `/list/${article.value?.categoryId ?? 412}` })
+    const link = categoryNode.value
+      ? menuTarget(categoryNode.value).to
+      : `/list/${article.value?.categoryId ?? 412}`
+    items.push({ title: categoryName.value, link })
   }
   items.push({ title: '信息详情' })
   return items
