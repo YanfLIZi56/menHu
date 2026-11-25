@@ -196,7 +196,8 @@ export const useApi = () => {
       const res = await $fetch<any>(url('/article/article/menu/list'), {
         query: {
           categoryId: query.categoryId,
-          templateType: query.templateType,
+          // 后端未做 null 判断（templateType 空会 NPE），首页等无类型场景固定传 1（列表）
+          templateType: Number(query.templateType ?? 1),
           pageNum: query.pageNum ?? 1,
           pageSize: query.pageSize ?? 10,
         },
