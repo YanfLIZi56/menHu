@@ -120,14 +120,30 @@ function toMenuNode(raw: any, parentId = 0): MenuNode {
   }
 }
 
-function toArticle(raw: any): Article {
+/** 后端上传的相对路径（/profile/upload/...）补齐为可访问地址；mock 站内静态图保持原样 */
+function resolveAsset(path: string | undefined, fileBase: string): string {
+  const p = String(path ?? '').trim()
+  if (!p) return ''
+  if (/^(?:https?:)?\/\//i.test(p) || p.startsWith('data:') || p.startsWith('blob:')) return p
+  if (!fileBase) return p
+  if (p.startsWith('/images/') || p.startsWith('/fonts/')) return p
+  return `${fileBase.replace(/\/+$/, '')}/${p.replace(/^\/+/, '')}`
+}
+
+/** 正文里后台上传的图片也要补全域名，否则详情页 404 */
+function rewriteContent(html: string, fileBase: string): string {
+  if (!fileBase || !html) return html
+  return html.replace(/(src|href)="\/profile\//g, (_m, attr) => `${attr}="${fileBase}/profile/`)
+}
+
+function toArticle(raw: any, fileBase = ''): Article {
   return {
     id: Number(raw.id ?? raw.cxid),
     categoryId: Number(raw.categoryId ?? raw.cxsortid ?? 0),
     title: raw.title ?? raw.cxtitlecn ?? '',
     summary: raw.summary ?? stripHtml(raw.cxcontentcn),
-    cover: raw.cover ?? raw.image ?? raw.cximg0 ?? '',
-    content: raw.content ?? raw.cxcontentcn ?? '',
+    cover: resolveAsset(raw.cover ?? raw.image ?? raw.cximg0 ?? '', fileBase),
+    content: rewriteContent(raw.content ?? raw.cxcontentcn ?? '', fileBase),
     publishTime: String(raw.publishAt ?? raw.publishTime ?? raw.cxupdatetime ?? '').slice(0, 10),
     views: Number(raw.views ?? raw.cxhits ?? 0),
     link: raw.link ?? raw.cxlink ?? '',
@@ -135,11 +151,11 @@ function toArticle(raw: any): Article {
   }
 }
 
-function toBanner(raw: any): Banner {
+function toBanner(raw: any, fileBase = ''): Banner {
   return {
     id: Number(raw.id ?? raw.cxid),
     title: raw.title ?? raw.cxtitlecn ?? '',
-    image: raw.image ?? raw.imageUrl ?? raw.cximg0 ?? '',
+    image: resolveAsset(raw.image ?? raw.imageUrl ?? raw.cximg0 ?? '', fileBase),
     linkUrl: raw.linkUrl ?? raw.link ?? raw.cxlink ?? null,
     resourceId: raw.resourceId ?? null,
     resourceType: Number(raw.resourceType ?? (raw.linkUrl || raw.cxlink ? 3 : 0)),
@@ -164,13 +180,16 @@ export function bannerTarget(banner: Banner): { link: string; external: boolean 
 export const useApi = () => {
   const config = useRuntimeConfig()
   const prefix = config.public.apiPrefix || '/api'
+  const fileBase = String(config.public.fileBase || '')
   const url = (path: string) => `${prefix}${path.startsWith('/') ? '' : '/'}${path}`
 
   return {
     /** 首页轮播图 */
     async getBanners(): Promise<Banner[]> {
       const res = await $fetch<any>(url('/system/banner/list'))
-      return pickRows(res).map(toBanner).sort((a, b) => a.sort - b.sort)
+      return pickRows(res)
+        .map((r: any) => toBanner(r, fileBase))
+        .sort((a, b) => a.sort - b.sort)
     },
 
     /** 栏目树（扁平返回，前端按 parentId 组树） */
@@ -202,7 +221,7 @@ export const useApi = () => {
           pageSize: query.pageSize ?? 10,
         },
       })
-      const rows = pickRows(res).map(toArticle)
+      const rows = pickRows(res).map((r: any) => toArticle(r, fileBase))
       return { rows, total: pickTotal(res, rows) }
     },
 
@@ -211,13 +230,13 @@ export const useApi = () => {
       const res = await $fetch<any>(url(`/article/article/menu/${categoryId}`), {
         query: { templateType },
       })
-      return toArticle(pickData(res))
+      return toArticle(pickData(res), fileBase)
     },
 
     /** 文章 / 单页详情 */
     async getArticle(id: number | string): Promise<Article> {
       const res = await $fetch<any>(url(`/article/article/${id}`))
-      return toArticle(pickData(res))
+      return toArticle(pickData(res), fileBase)
     },
 
     /** 救护员培训报名 / 留言 */

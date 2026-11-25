@@ -20,6 +20,7 @@ node .output/server/index.mjs
 ```bash
 NUXT_API_BASE=http://127.0.0.1:8080/prod-api   # 真实后端网关，仅服务端使用
 NUXT_MOCK=false                                # 关掉内置 mock
+NUXT_PUBLIC_FILE_BASE=http://127.0.0.1:8080    # 可选：上传图片域名，不填自动取网关的协议+域名
 ```
 
 ## 路由

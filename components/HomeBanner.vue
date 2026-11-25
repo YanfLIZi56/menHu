@@ -34,6 +34,7 @@ import 'swiper/css/pagination'
 /**
  * 首页轮播图：还原老站 Swiper 配置
  * effect: flip / slidesPerView:1 / centeredSlides / autoHeight / autoplay 3000 / loop
+ * 注意：loop 需要至少 3 张图，后台只配 1~2 张时关闭 loop，避免 Swiper 警告与空白。
  */
 const props = defineProps<{ items: Banner[] }>()
 
@@ -47,6 +48,8 @@ onMounted(async () => {
   const [{ default: Swiper }, { EffectFlip, Navigation, Pagination, Autoplay }] =
     await Promise.all([import('swiper'), import('swiper/modules')])
 
+  const canLoop = props.items.length >= 3
+
   swiper = new Swiper(rootEl.value, {
     modules: [EffectFlip, Navigation, Pagination, Autoplay],
     direction: 'horizontal',
@@ -54,12 +57,14 @@ onMounted(async () => {
     slidesPerView: 1,
     centeredSlides: true,
     autoHeight: true,
-    loop: true,
-    autoplay: {
-      delay: 3000,
-      stopOnLastSlide: false,
-      disableOnInteraction: true,
-    },
+    loop: canLoop,
+    autoplay: props.items.length > 1
+      ? {
+          delay: 3000,
+          stopOnLastSlide: false,
+          disableOnInteraction: true,
+        }
+      : false,
     pagination: {
       el: rootEl.value.querySelector('.swiper-pagination') as HTMLElement,
     },
@@ -69,7 +74,7 @@ onMounted(async () => {
     },
   })
 
-  swiper.slideToLoop(0, 0, false)
+  if (canLoop) swiper.slideToLoop(0, 0, false)
 })
 
 onBeforeUnmount(() => {

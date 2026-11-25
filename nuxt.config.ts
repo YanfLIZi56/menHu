@@ -1,4 +1,17 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+
+// 后端网关（服务端代理用）；文件（/profile/upload/...）需要浏览器可直接访问的地址
+const apiBaseEnv = process.env.NUXT_API_BASE || ''
+let fileBaseEnv = process.env.NUXT_PUBLIC_FILE_BASE || ''
+if (!fileBaseEnv && apiBaseEnv) {
+  try {
+    // 若网关是 http://host:8080/prod-api，文件默认走同源根路径 http://host:8080
+    fileBaseEnv = new URL(apiBaseEnv).origin
+  } catch {
+    fileBaseEnv = ''
+  }
+}
+
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   telemetry: false,
@@ -18,12 +31,14 @@ export default defineNuxtConfig({
   runtimeConfig: {
     // 后端真实网关地址，只在服务端使用（Nitro 代理，天然规避浏览器跨域）
     // 例如 http://127.0.0.1:8080/prod-api
-    apiBase: process.env.NUXT_API_BASE || '',
+    apiBase: apiBaseEnv,
     // 是否使用内置 mock 数据；正式联调时设置 NUXT_MOCK=false
     mock: process.env.NUXT_MOCK !== 'false',
     public: {
       // 前端统一走 /api/**，由 Nitro 转发或返回 mock
       apiPrefix: '/api',
+      // 后端上传图片域名前缀；为空时保持接口返回的相对路径
+      fileBase: fileBaseEnv,
       siteName: '汕头市红十字会 官方网站 www.stredcross.org.cn',
     },
   },

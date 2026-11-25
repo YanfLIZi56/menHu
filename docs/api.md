@@ -4,6 +4,10 @@
 
 ## 一、总体约定
 
+图片字段（`cover`/`image`/正文 `<img>`）可以直接返回相对路径 `/profile/upload/...`，前端会按
+`NUXT_PUBLIC_FILE_BASE`（未配置时自动取 `NUXT_API_BASE` 的协议+域名）补全为绝对地址。
+
+
 | 项目 | 说明 |
 | --- | --- |
 | 网关地址 | 由环境变量 `NUXT_API_BASE` 指定，例如 `http://127.0.0.1:8080/prod-api` |
