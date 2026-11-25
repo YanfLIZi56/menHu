@@ -122,50 +122,44 @@
 列表页左侧栏目导航**统一按列表路由** `/list/{id}`，即使该栏目是单页类型也只展示列表，不再跳 `/page`。
 `/page/412`（列表栏目被当作单页访问）仍会 301 回 `/list/412`。
 
-## 三、旧版 / 兼容接口清单
+## 三、其他接口清单（轮播 / 栏目 / 文章 / 留言）
 
-### 1. 轮播图列表
+### 1. 轮播图列表（门户）
 
-`GET /system/banner/list`
+`GET /system/banner/portalList`
 
-**请求参数**：无（可选 `position`，用于区分首页/栏目页，前端暂未传）
-
-**响应 rows 字段**
-
-| 字段 | 类型 | 必填 | 说明 |
-| --- | --- | --- | --- |
-| id | long | 是 | 主键 |
-| title | string | 是 | 标题，用于图片 alt 与 SEO |
-| image | string | 是 | 图片地址（建议 1600×600 以内，返回相对路径或完整 URL） |
-| resourceType | int | 是 | 跳转类型：0 无跳转、1 文章、2 栏目、3 外链 |
-| resourceId | long | 否 | `resourceType=1/2` 时必填，对应文章 id / 栏目 id |
-| linkUrl | string | 否 | `resourceType=3` 时必填，外链地址 |
-| sort | int | 是 | 升序展示 |
-| status | int | 是 | 1 启用、0 停用（前端会过滤 0） |
-
-> 与后台「横幅管理」的约束一致：`resourceType=0` 时 `linkUrl`、`resourceId` 均为空；`resourceType=3` 时 `resourceId` 为空；`resourceType=1/2` 时 `linkUrl` 为空。
-
-**示例**
+无参数。响应为 `{code,msg,data:[...]}`（注意这里是 `data` 数组，不是 `rows`）：
 
 ```json
 {
+  "msg": "操作成功",
   "code": 200,
-  "msg": "查询成功",
-  "rows": [
+  "data": [
     {
-      "id": 2255,
-      "title": "学习宣传贯彻党的二十届五中全会精神",
-      "image": "/upload/2026/11/banner-1.jpg",
-      "resourceType": 1,
-      "resourceId": 2084,
-      "linkUrl": null,
+      "id": 4,
+      "imageUrl": "/profile/upload/2026/11/25/xxx.jpg",
+      "linkUrl": "",
+      "openType": 1,
+      "resourceId": 7,
+      "resourceType": 2,
       "sort": 1,
-      "status": 1
+      "status": null
     }
-  ],
-  "total": 9
+  ]
 }
 ```
+
+| 字段 | 类型 | 说明 |
+| --- | --- | --- |
+| id | long | 主键 |
+| imageUrl | string | 图片地址，可为相对路径（前端按 `NUXT_PUBLIC_FILE_BASE` 补全） |
+| resourceType | int | **0 无跳转 / 1 类别 / 2 文章 / 3 外链** |
+| resourceId | long | `1` 时为栏目 id，`2` 时为文章 id，其余为空 |
+| linkUrl | string | `3` 时外链地址 |
+| openType | int | `1` = 新标签页打开，其他为当前页 |
+| sort | int | 升序 |
+
+前端映射：`1 → /list/{resourceId}`、`2 → /article/{resourceId}`、`3 → linkUrl`、`0` 不可点击；`openType=1` 时统一 `target="_blank"`。
 
 ### 2. 栏目列表
 

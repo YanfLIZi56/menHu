@@ -7,12 +7,17 @@
         class="swiper-slide"
       >
         <NuxtLink
+          v-if="bannerTarget(item).link"
           :to="bannerTarget(item).link"
-          :target="bannerTarget(item).external ? '_blank' : undefined"
+          :target="bannerTarget(item).newTab ? '_blank' : undefined"
+          :rel="bannerTarget(item).newTab ? 'noopener' : undefined"
           :title="item.title"
         >
           <img :src="item.image" :alt="item.title" />
         </NuxtLink>
+        <div v-else :title="item.title">
+          <img :src="item.image" :alt="item.title" />
+        </div>
       </div>
     </div>
 

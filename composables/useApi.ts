@@ -19,8 +19,10 @@ export interface Banner {
   image: string
   linkUrl?: string | null
   resourceId?: number | null
-  /** 0 无跳转 / 1 文章 / 2 栏目 / 3 外链 */
+  /** 0 无跳转 / 1 类别 / 2 文章 / 3 外链（按后端 portalList 定义） */
   resourceType: number
+  /** 1 = 新标签页打开 */
+  openType?: number
   sort: number
 }
 
@@ -159,21 +161,28 @@ function toBanner(raw: any, fileBase = ''): Banner {
     linkUrl: raw.linkUrl ?? raw.link ?? raw.cxlink ?? null,
     resourceId: raw.resourceId ?? null,
     resourceType: Number(raw.resourceType ?? (raw.linkUrl || raw.cxlink ? 3 : 0)),
+    openType: Number(raw.openType ?? 0),
     sort: Number(raw.sort ?? 0),
   }
 }
 
-/** 轮播图 / 文章跳转目标统一在这里解析 */
-export function bannerTarget(banner: Banner): { link: string; external: boolean } {
-  switch (banner.resourceType) {
+/** 轮播图跳转目标：resourceType 0 无跳转 / 1 类别 / 2 文章 / 3 外链；openType=1 新标签页 */
+export function bannerTarget(banner: Banner): {
+  link: string
+  external: boolean
+  newTab: boolean
+} {
+  const newTab = Number(banner.openType) === 1
+
+  switch (Number(banner.resourceType)) {
     case 1:
-      return { link: `/article/${banner.resourceId}`, external: false }
+      return { link: `/list/${banner.resourceId}`, external: false, newTab }
     case 2:
-      return { link: `/list/${banner.resourceId}`, external: false }
+      return { link: `/article/${banner.resourceId}`, external: false, newTab }
     case 3:
-      return { link: banner.linkUrl || '#', external: true }
+      return { link: banner.linkUrl || '', external: true, newTab }
     default:
-      return { link: '#', external: false }
+      return { link: '', external: false, newTab: false }
   }
 }
 
