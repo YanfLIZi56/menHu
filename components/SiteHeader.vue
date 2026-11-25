@@ -27,26 +27,31 @@
       <div class="nav w1200">
         <ul class="layui-nav">
           <li
-            v-for="item in mainMenu"
-            :key="item.title"
+            v-for="item in navItems"
+            :key="item.name"
             class="layui-nav-item"
           >
-            <a v-if="item.external" :href="item.link" target="_blank" rel="noopener">{{ item.title }}</a>
-            <NuxtLink v-else :to="item.link">
-              {{ item.title }}
+            <a
+              v-if="item.href"
+              :href="item.href"
+              target="_blank"
+              rel="noopener"
+            >{{ item.name }}</a>
+            <NuxtLink v-else :to="item.to || '/'">
+              {{ item.name }}
               <span
-                v-if="item.children && item.children.length"
+                v-if="item.children.length"
                 class="nav-more"
                 aria-hidden="true"
               />
             </NuxtLink>
 
-            <dl v-if="item.children && item.children.length" class="layui-nav-child">
-              <dd v-for="child in item.children" :key="child.title">
-                <a v-if="child.external" :href="child.link" target="_blank" rel="noopener">
-                  {{ child.title }}
+            <dl v-if="item.children.length" class="layui-nav-child">
+              <dd v-for="child in item.children" :key="child.name">
+                <a v-if="child.href" :href="child.href" target="_blank" rel="noopener">
+                  {{ child.name }}
                 </a>
-                <NuxtLink v-else :to="child.link">{{ child.title }}</NuxtLink>
+                <NuxtLink v-else :to="child.to || '/'">{{ child.name }}</NuxtLink>
               </dd>
             </dl>
           </li>
@@ -57,13 +62,65 @@
 </template>
 
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import type { MenuNode } from '~/composables/useApi'
+import { mainMenu } from '~/utils/site'
 
 /**
  * 站点头部：欢迎条 + Logo + 红色主导航（与老站 header.js 的模板一致）
+ * 导航数据来自 /category/category/menu：templateType=2 走单页 /page/{id}，
+ * 其余走列表 /list/{id}；接口异常时回退到本地 mainMenu 配置。
  * 老站右侧的「注册 / 登陆」按需求去掉，新站不提供会员体系。
  */
 const nowText = ref('')
+const api = useApi()
+
+const { data: menuTree } = await useAsyncData('portal-menu', () =>
+  api.getMenuTree().catch(() => [] as MenuNode[]),
+)
+
+interface NavChild {
+  name: string
+  to?: string
+  href?: string
+  external: boolean
+}
+
+interface NavItem extends NavChild {
+  children: NavChild[]
+}
+
+const toNavChild = (node: MenuNode): NavChild => ({
+  name: node.name,
+  ...menuTarget(node),
+})
+
+/** 接口不可用时的兜底：沿用 utils/site.ts 里的静态菜单 */
+const fallbackNav: NavItem[] = mainMenu.map((item) => ({
+  name: item.title,
+  to: item.external ? undefined : item.link,
+  href: item.external ? item.link : undefined,
+  external: Boolean(item.external),
+  children: (item.children ?? []).map((child) => ({
+    name: child.title,
+    to: child.external ? undefined : child.link,
+    href: child.external ? child.link : undefined,
+    external: Boolean(child.external),
+  })),
+}))
+
+const navItems = computed<NavItem[]>(() => {
+  const tree = (menuTree.value ?? []) as MenuNode[]
+  const items: NavItem[] = tree.length
+    ? tree.map((node) => ({
+        name: node.name,
+        ...menuTarget(node),
+        children: (node.children ?? []).map(toNavChild),
+      }))
+    : fallbackNav
+
+  return [{ name: '首页', to: '/', external: false, children: [] }, ...items]
+})
 
 const pad = (n: number) => String(n).padStart(2, '0')
 const formatNow = () => {

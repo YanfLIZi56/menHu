@@ -297,7 +297,7 @@ import { serviceEntries, infoPublicEntries, redCrossEntries } from '~/utils/site
 
 /**
  * 首页：版块顺序、宽度比例、留白全部按老站 index.html 复刻。
- * 数据来源：system/banner、article/article（按栏目取）、category 由导航静态配置兜底。
+ * 数据来源：system/banner 轮播 + article/article/menu/list 按栏目取文章；导航由 /category/category/menu 驱动。
  */
 const api = useApi()
 

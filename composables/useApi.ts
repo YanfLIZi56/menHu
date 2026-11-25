@@ -2,11 +2,12 @@
  * 门户对外接口统一封装。
  *
  * 约定（详见 docs/api.md）：
- *   轮播图   GET  /system/banner/list
- *   栏目     GET  /category/category/list
- *   文章列表 GET  /article/article/list?categoryId=&pageNum=&pageSize=
- *   文章详情 GET  /article/article/{id}
- *   留言报名 POST /guestbook/guestbook/add
+ *   导航栏目树   GET  /category/category/menu
+ *   栏目文章列表 GET  /article/article/menu/list?categoryId=&templateType=&pageNum=&pageSize=
+ *   单页栏目内容 GET  /article/article/menu/{categoryId}?templateType=
+ *   文章详情     GET  /article/article/{id}（待后端提供，门户列表点进详情用）
+ *   轮播图       GET  /system/banner/list
+ *   留言报名     POST /guestbook/guestbook/add
  *
  * 前端统一请求 /api/**，由 Nitro（server/api/[...path].ts）转发到真实后端，
  * 或在内置 mock 模式下返回示例数据。浏览器端不需要带 token。
@@ -45,8 +46,30 @@ export interface Article {
   categoryName?: string
 }
 
+export interface MenuNode {
+  id: number
+  parentId: number
+  name: string
+  sort: number
+  /** 1 列表页 / 2 单页（详情页） */
+  templateType: number
+  /** 1 表示外链 */
+  isExternal: number
+  /** 外链地址（isExternal=1 时使用） */
+  link?: string
+  children: MenuNode[]
+}
+
+export interface MenuQuery {
+  categoryId: number
+  templateType?: number
+  pageNum?: number
+  pageSize?: number
+}
+
 export interface ArticleQuery {
   categoryId?: number | string
+  templateType?: number
   pageNum?: number
   pageSize?: number
   keyword?: string
@@ -76,6 +99,27 @@ function pickData(res: any): any {
   return res?.data !== undefined ? res.data : res
 }
 
+/** 兼容后端 {value,label} 与前端 {id,name} 两种命名，递归归一化栏目树 */
+function toMenuNode(raw: any, parentId = 0): MenuNode {
+  const id = Number(raw?.value ?? raw?.id ?? 0)
+  const children = Array.isArray(raw?.children)
+    ? raw.children
+        .filter((c: any) => c && typeof c === 'object')
+        .map((c: any) => toMenuNode(c, id))
+    : []
+
+  return {
+    id,
+    parentId,
+    name: String(raw?.label ?? raw?.name ?? ''),
+    sort: Number(raw?.sort ?? 0),
+    templateType: Number(raw?.templateType ?? 1),
+    isExternal: Number(raw?.isExternal ?? 0),
+    link: raw?.link ?? raw?.linkUrl ?? '',
+    children,
+  }
+}
+
 function toArticle(raw: any): Article {
   return {
     id: Number(raw.id ?? raw.cxid),
@@ -84,7 +128,7 @@ function toArticle(raw: any): Article {
     summary: raw.summary ?? stripHtml(raw.cxcontentcn),
     cover: raw.cover ?? raw.image ?? raw.cximg0 ?? '',
     content: raw.content ?? raw.cxcontentcn ?? '',
-    publishTime: String(raw.publishTime ?? raw.cxupdatetime ?? '').slice(0, 10),
+    publishTime: String(raw.publishAt ?? raw.publishTime ?? raw.cxupdatetime ?? '').slice(0, 10),
     views: Number(raw.views ?? raw.cxhits ?? 0),
     link: raw.link ?? raw.cxlink ?? '',
     categoryName: raw.categoryName ?? '',
@@ -140,18 +184,33 @@ export const useApi = () => {
       }))
     },
 
-    /** 文章列表（友情链接栏目复用该接口，link 字段即外链） */
+    /** 门户导航栏目树（两级，含 templateType / isExternal） */
+    async getMenuTree(): Promise<MenuNode[]> {
+      const res = await $fetch<any>(url('/category/category/menu'))
+      const data = pickData(res)
+      return Array.isArray(data) ? data.map((n: any) => toMenuNode(n)) : []
+    },
+
+    /** 栏目文章列表（导航列表栏目 / 首页各版块共用） */
     async getArticles(query: ArticleQuery = {}): Promise<{ rows: Article[]; total: number }> {
-      const res = await $fetch<any>(url('/article/article/list'), {
+      const res = await $fetch<any>(url('/article/article/menu/list'), {
         query: {
           categoryId: query.categoryId,
+          templateType: query.templateType,
           pageNum: query.pageNum ?? 1,
           pageSize: query.pageSize ?? 10,
-          keyword: query.keyword,
         },
       })
       const rows = pickRows(res).map(toArticle)
       return { rows, total: pickTotal(res, rows) }
+    },
+
+    /** 单页栏目：该栏目绑定的文章（导航 templateType=2 时使用） */
+    async getMenuArticle(categoryId: number | string, templateType = 2): Promise<Article> {
+      const res = await $fetch<any>(url(`/article/article/menu/${categoryId}`), {
+        query: { templateType },
+      })
+      return toArticle(pickData(res))
     },
 
     /** 文章 / 单页详情 */

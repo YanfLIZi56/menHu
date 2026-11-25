@@ -8,7 +8,7 @@
       <div class="navLeft">
         <div class="title">{{ groupName }}</div>
         <ul>
-          <NuxtLink v-for="item in sideCategories" :key="item.id" :to="`/list/${item.id}`">
+          <NuxtLink v-for="item in sideCategories" :key="item.id" :to="menuTarget(item).to || `/list/${item.id}`">
             <li :class="{ this: item.id === categoryId }" :title="item.name">
               {{ item.name }}
             </li>
@@ -75,7 +75,9 @@
 
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
+import type { MenuNode } from '~/composables/useApi'
 import { contactInfo } from '~/utils/site'
+import { flattenMenu, findMenuNode, menuTarget, TEMPLATE_SINGLE } from '~/utils/menu'
 
 /**
  * 栏目列表页（替代老站 newList.html）
@@ -87,12 +89,29 @@ const api = useApi()
 const categoryId = computed(() => Number(route.params.id) || 412)
 const pageSize = 15
 
-const { data: categoriesData } = await useAsyncData('categories', () => api.getCategories())
-const categories = computed(() => categoriesData.value ?? [])
+/** 门户栏目树（接口驱动，含 templateType 决定单页/列表） */
+const { data: menuTreeData } = await useAsyncData('portal-menu', () =>
+  api.getMenuTree().catch(() => [] as MenuNode[]),
+)
+const categories = computed(() => flattenMenu(menuTreeData.value ?? []))
+
+/** 当前栏目节点：单页栏目误访问 /list 时 301 到 /page */
+const currentNode = computed(() => findMenuNode(menuTreeData.value ?? [], categoryId.value))
+if (currentNode.value && Number(currentNode.value.templateType) === TEMPLATE_SINGLE) {
+  await navigateTo(`/page/${categoryId.value}`, { redirectCode: 301 })
+}
+
+const templateType = computed(() => Number(currentNode.value?.templateType ?? 1))
 
 const { data: listData } = await useAsyncData(
   () => `list-${categoryId.value}`,
-  () => api.getArticles({ categoryId: categoryId.value, pageNum: 1, pageSize }),
+  () =>
+    api.getArticles({
+      categoryId: categoryId.value,
+      templateType: templateType.value,
+      pageNum: 1,
+      pageSize,
+    }),
   { watch: [categoryId] },
 )
 
@@ -117,9 +136,9 @@ const childrenOf = (id: number) =>
 
 /** 当前栏目的名字 */
 const currentName = computed(() => {
+  if (currentNode.value) return currentNode.value.name
   const cat = categories.value.find((c) => c.id === categoryId.value)
-  if (cat) return cat.name
-  return '栏目'
+  return cat?.name || '栏目'
 })
 
 /** 左侧导航分组：有子栏目就以自身为分组，否则用父级 */
@@ -156,7 +175,12 @@ const pageList = computed(() => {
 
 const goPage = async (page: number) => {
   if (page < 1 || page > pageCount.value || page === pageNum.value) return
-  const res = await api.getArticles({ categoryId: categoryId.value, pageNum: page, pageSize })
+  const res = await api.getArticles({
+    categoryId: categoryId.value,
+    templateType: templateType.value,
+    pageNum: page,
+    pageSize,
+  })
   rows.value = res.rows
   total.value = res.total
   pageNum.value = page

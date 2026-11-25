@@ -17,7 +17,103 @@
 
 前端 `useApi` 已兼容两种外壳（`{rows,total}` 与老站 `{codes,data:{rows}}`），后端按若依风格实现即可。
 
-## 二、接口清单
+## 二、门户菜单接口（新版，前端已按此实现）
+
+来源：后端「默认模块」OpenAPI（`/category/category/menu`、`/article/article/menu/*`）。
+前端导航、列表页、单页栏目都走这三条，不再用旧的 `/category/category/list` + `/article/article/list` 组装门户。
+
+### 1. 查询导航栏目树
+
+`GET /category/category/menu`
+
+无参数，返回两级栏目树：
+
+```json
+{
+  "msg": "操作成功",
+  "code": 200,
+  "data": [
+    {
+      "value": 413,
+      "label": "机构简介",
+      "sort": 4,
+      "templateType": 1,
+      "isExternal": 0,
+      "children": [
+        { "value": 446, "label": "机构简介", "sort": 25, "templateType": 2, "isExternal": 0, "children": [] }
+      ]
+    }
+  ]
+}
+```
+
+| 字段 | 类型 | 说明 |
+| --- | --- | --- |
+| value | int | 栏目 id（前端当作 id 用） |
+| label | string | 导航显示名 |
+| sort | int | 排序（同级升序） |
+| templateType | int | **1 = 列表页，2 = 单页（直接显示一篇文章）** |
+| isExternal | int | 0 站内 / 1 外链（外链还需要 link 字段，见缺口） |
+| children | array | 子栏目，结构同上，最多两级 |
+
+### 2. 栏目文章列表（列表页 / 首页各版块）
+
+`GET /article/article/menu/list`
+
+| 参数 | 必填 | 说明 |
+| --- | --- | --- |
+| categoryId | 是 | 栏目 id；父栏目需要聚合所有子栏目的文章 |
+| templateType | 否 | 1 列表 / 2 单页，前端会带当前栏目类型 |
+| pageNum | 否 | 页码，默认 1（**OpenAPI 未声明，前端已带，需后端确认支持**） |
+| pageSize | 否 | 每页条数，默认 10（同上） |
+
+响应为若依 `TableDataInfo`：
+
+```json
+{
+  "code": 200,
+  "msg": "查询成功",
+  "total": 2,
+  "rows": [
+    {
+      "id": 2252,
+      "categoryId": 419,
+      "title": "入库更简单！我市新增口腔黏膜拭子采样入库方式",
+      "cover": "/images/demo/news-1.jpg",
+      "coverAlt": "",
+      "link": "",
+      "publishAt": "2026-11-16",
+      "isTop": 0,
+      "sort": 0,
+      "createTime": "2026-11-16",
+      "updateTime": "2026-11-16",
+      "summary": "点击查看详情，了解更多红十字工作动态。"
+    }
+  ]
+}
+```
+
+`summary / viewCount` 不在 OpenAPI 里，前端已在代码中做了缺省（不返回就不显示摘要）。
+
+### 3. 单页栏目内容（导航 templateType=2）
+
+`GET /article/article/menu/{categoryId}?templateType=2`
+
+返回该栏目绑定的那一篇文章，`data` 结构与文章详情一致：`id/categoryId/title/content/mobileContent/cover/coverAlt/link/publishAt/isTop/sort`。
+前端用 `content` 渲染正文，`publishAt` 显示时间。
+
+### 4. 前端路由映射
+
+| 栏目类型 | 前端路由 | 数据接口 |
+| --- | --- | --- |
+| templateType=1（列表） | `/list/{categoryId}` | `menu/list` |
+| templateType=2（单页） | `/page/{categoryId}` | `menu/{categoryId}` |
+| isExternal=1（外链） | 直接 `href` 新窗口 | 需 `link` 字段 |
+| 列表文章点进详情 | `/article/{id}` | `GET /article/article/{id}`（**缺口**） |
+
+访问错路由会自动纠正：`/list/446`（单页栏目）→ 301 `/page/446`；`/page/412`（列表栏目）→ 301 `/list/412`。
+
+## 三、旧版 / 兼容接口清单
 
 ### 1. 轮播图列表
 
@@ -160,7 +256,7 @@
 
 建议后端字段落库为：`name / people / phone / train_time / remark / created_at / status(0待处理 1已联系)`。
 
-## 三、老站字段对照（迁移参考）
+## 四、老站字段对照（迁移参考）
 
 | 老站字段（`cxnews`） | 新接口字段 |
 | --- | --- |
@@ -175,7 +271,7 @@
 
 老站「网上办事」「信息公开」「红会事业」等入口在重构后由 `utils/site.ts` 静态维护（不占接口），后续如要后台可视化配置，再补 `system/menu` 一类的接口即可。
 
-## 四、前端联调方式
+## 五、前端联调方式
 
 ```bash
 # 1) 默认：使用内置 mock（数据在 server/mock/data.json）
@@ -186,3 +282,20 @@ NUXT_MOCK=false NUXT_API_BASE=http://127.0.0.1:8080/prod-api npm run dev
 ```
 
 切换只需要环境变量，页面与组件代码不用动。
+
+## 六、还缺的接口（需要后端补）
+
+| # | 用途 | 现状 | 期望 |
+| --- | --- | --- | --- |
+| 1 | 文章详情（列表点进） | 本次只给了“按栏目取单篇”，没有按文章 id 的详情 | `GET /article/article/{id}`，返回同 `data` 结构 |
+| 2 | 列表分页 | `menu/list` 参数只有 `categoryId/templateType`，但有 `total` | 确认支持 `pageNum/pageSize`（前端已带） |
+| 3 | 列表摘要 / 浏览量 | rows 无 `summary`、`viewCount` | 列表补 `summary`（或返回正文前 N 字），浏览量可后置 |
+| 4 | 外链栏目 | `isExternal=1` 但节点没有链接字段 | 栏目树补 `link/linkUrl` |
+| 5 | 轮播图 | 本次文件未包含 | `GET /system/banner/list`（`image/title/linkUrl/resourceType/resourceId/sort`） |
+| 6 | 父栏目聚合规则 | 未说明 `categoryId=412` 是否含 418/419… 子栏目文章 | 明确“递归聚合子栏目”或在参数上给 `withChildren=true` |
+| 7 | 友情链接 | 首页底部友链无接口 | 复用文章列表的 `link` 字段，或单独 `system/friendlink/list` |
+| 8 | 留言 / 培训报名 | 本次文件未包含 | `POST /guestbook/guestbook/add` |
+| 9 | 站点信息（页脚） | 版权、备案号、公众号/捐款二维码写在前端 | `GET /system/config`（或按栏目 449「底部版权信息」取） |
+| 10 | 搜索 | 无 | `menu/list` 加 `keyword`，或独立 `article/search` |
+| 11 | 单页栏目附件 / 手机正文 | `attachments`、`mobileContent` 可选 | 按需补，前端已留空处理 |
+

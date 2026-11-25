@@ -60,6 +60,68 @@ function subtreeIds(rootId: number): number[] {
   return ids
 }
 
+/** 门户导航根栏目顺序（与老站 8 项导航一致，后台可按需调整） */
+const MENU_ROOTS = [413, 412, 411, 410, 414, 415, 416]
+
+/** 单页栏目：导航直接进入一篇文章；其余按列表页展示 */
+const SINGLE_PAGES = new Set([446, 444, 445, 416, 432, 433])
+
+/** 库内栏目名与老站导航文案的差异（415 库内叫“信息公开”，导航显示“公告公示”） */
+const MENU_LABELS: Record<number, string> = { 415: '公告公示' }
+
+const templateTypeOf = (id: number) => (SINGLE_PAGES.has(id) ? 2 : 1)
+
+/** 栏目树：最多两级，字段与 /category/category/menu 对齐 */
+function buildMenuNode(cat: any, depth = 0): any {
+  const seen = new Set<number>()
+  const children = db.categories
+    .filter((c) => Number(c.parentId) === Number(cat.id))
+    .filter((c) => {
+      const id = Number(c.id)
+      if (seen.has(id)) return false
+      seen.add(id)
+      return true
+    })
+    .sort((a, b) => Number(a.sort ?? 0) - Number(b.sort ?? 0))
+    .map((c) =>
+      depth >= 1
+        ? {
+            value: Number(c.id),
+            label: MENU_LABELS[Number(c.id)] ?? c.name,
+            sort: Number(c.sort ?? 0),
+            templateType: templateTypeOf(Number(c.id)),
+            isExternal: 0,
+            children: [],
+          }
+        : buildMenuNode(c, depth + 1),
+    )
+
+  return {
+    value: Number(cat.id),
+    label: MENU_LABELS[Number(cat.id)] ?? cat.name,
+    sort: Number(cat.sort ?? 0),
+    templateType: templateTypeOf(Number(cat.id)),
+    isExternal: 0,
+    children,
+  }
+}
+
+/** /article/article/menu/list 的行结构（不含正文，字段按后端示例） */
+const toMenuRow = (a: MockArticle) => ({
+  id: a.id,
+  categoryId: a.categoryId,
+  title: a.title,
+  cover: a.cover,
+  coverAlt: '',
+  link: a.link ?? '',
+  publishAt: a.publishTime,
+  isTop: 0,
+  sort: 0,
+  createTime: a.publishTime,
+  updateTime: a.publishTime,
+  summary: a.summary,
+})
+
 function articlesOf(categoryId: number): MockArticle[] {
   // 父栏目聚合下级栏目的文章（老站新闻资讯就是这种结构：412 下挂 418/419/420…）
   let rows = db.articles.filter((a) => subtreeIds(categoryId).includes(a.categoryId))
@@ -131,6 +193,78 @@ export function handleMock(
       data: {
         ...article,
         categoryName: category?.name ?? '',
+      },
+    }
+  }
+
+  // ---------------- 门户导航：栏目树 ----------------
+  if (clean === 'category/category/menu' && method === 'GET') {
+    const rows = MENU_ROOTS.map((id) => db.categories.find((c) => Number(c.id) === id))
+      .filter(Boolean)
+      .map((c) => buildMenuNode(c))
+    return { code: 200, msg: '操作成功', data: rows }
+  }
+
+  // ---------------- 门户导航：栏目文章列表 ----------------
+  if (clean === 'article/article/menu/list' && method === 'GET') {
+    const categoryId = Number(query.categoryId ?? 0)
+    const pageNum = Math.max(1, Number(query.pageNum ?? 1))
+    const pageSize = Math.max(1, Number(query.pageSize ?? 10))
+
+    let rows = categoryId ? articlesOf(categoryId) : db.articles
+    rows = [...rows].sort(
+      (a, b) => String(b.publishTime).localeCompare(String(a.publishTime)),
+    )
+
+    const total = rows.length
+    const start = (pageNum - 1) * pageSize
+    return ok(rows.slice(start, start + pageSize).map(toMenuRow), total)
+  }
+
+  // ---------------- 门户导航：单页栏目内容 ----------------
+  const menuDetail = clean.match(/^article\/article\/menu\/(\d+)$/)
+  if (menuDetail && method === 'GET') {
+    const categoryId = Number(menuDetail[1])
+    const cat = db.categories.find((c) => Number(c.id) === categoryId)
+    const article =
+      db.articles.find((a) => a.categoryId === categoryId) ??
+      db.articles.find((a) => subtreeIds(categoryId).includes(a.categoryId))
+
+    if (!article) {
+      return {
+        code: 200,
+        msg: '操作成功',
+        data: {
+          id: categoryId,
+          categoryId,
+          title: MENU_LABELS[categoryId] ?? cat?.name ?? '栏目内容',
+          content: `<p>${MENU_LABELS[categoryId] ?? cat?.name ?? '栏目'}内容待后台维护。</p>`,
+          mobileContent: '',
+          cover: '',
+          coverAlt: '',
+          link: '',
+          publishAt: '',
+          isTop: 0,
+          sort: 0,
+          createBy: null,
+          createTime: '',
+          updateBy: null,
+          updateTime: '',
+        },
+      }
+    }
+
+    return {
+      code: 200,
+      msg: '操作成功',
+      data: {
+        ...article,
+        categoryName: cat?.name ?? '',
+        mobileContent: `<p>${article.summary ?? ''}</p>`,
+        coverAlt: '',
+        publishAt: article.publishTime,
+        isTop: 0,
+        sort: 0,
       },
     }
   }

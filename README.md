@@ -27,8 +27,9 @@ NUXT_MOCK=false                                # 关掉内置 mock
 | 路由 | 说明 | 老站对应 |
 | --- | --- | --- |
 | `/` | 首页（轮播、网上办事、信息公开、新闻资讯、专题、红会事业、志愿服务、捐赠公示、友情链接） | `/h5/index.html` |
-| `/list/[categoryId]` | 栏目列表（面包屑、左侧栏目导航、分页） | `/h5/newList.html?cxsortid=` |
-| `/article/[id]` | 文章 / 单页详情（含视频播放） | `/h5/newInfo.html?cxid=` |
+| `/list/[categoryId]` | 栏目列表（面包屑、左侧栏目导航、分页）；导航 `templateType=1` | `/h5/newList.html?cxsortid=` |
+| `/page/[categoryId]` | 单页栏目（栏目直接显示一篇文章）；导航 `templateType=2` | `/h5/newInfo.html?cxid=` |
+| `/article/[id]` | 文章详情（列表点进，含视频播放） | `/h5/newInfo.html?cxid=` |
 | `/guestbook` | 救护员培训在线报名 | `/h5/guestBook.html` |
 
 老站 `/h5/**`、`/mobile/**` 已在 `nuxt.config.ts` 的 `routeRules` 中 301 到新站，避免外链与搜索结果失效。
@@ -38,10 +39,10 @@ NUXT_MOCK=false                                # 关掉内置 mock
 ```
 .
 ├── assets/css/           # layui.css / iconfont / legacy.css（原 style.css 原样搬运）/ site.css
-├── components/           # SiteHeader、SiteFooter、SiteBreadcrumb、HomeBanner（Swiper flip 效果）
+├── components/           # SiteHeader（导航接口驱动）、SiteFooter、SiteBreadcrumb、HomeBanner、BackToTop
 ├── composables/useApi.ts # 门户接口统一封装 + 字段归一化
 ├── layouts/default.vue
-├── pages/                # index / list/[id] / article/[id] / guestbook
+├── pages/                # index / list/[id] / page/[categoryId] / article/[id] / guestbook
 ├── public/
 │   ├── images/theme/     # 头部底纹、Logo、标题底纹、回到顶部等原站素材
 │   ├── images/demo/      # mock 演示图（轮播、新闻、二维码、专题）
@@ -49,21 +50,23 @@ NUXT_MOCK=false                                # 关掉内置 mock
 ├── server/
 │   ├── api/[...path].ts  # /api/** 统一出口：mock 或转发到 NUXT_API_BASE
 │   └── mock/             # 与正式接口同路径的示例数据
-├── utils/site.ts         # 主导航、首页各版块入口等静态配置
+├── utils/menu.ts         # 栏目 → 路由/外链解析（templateType=1 列表、2 单页）
+├── utils/site.ts         # 首页各版块入口、联系方式等静态配置
 └── docs/api.md           # 接口文档（给后端）
 ```
 
 ## 接口
 
-前端只依赖 5 个接口，路径与后台模块一致：
+导航与列表按新版「菜单接口」实现（来自后端默认模块 OpenAPI）：
 
-| 方法 | 路径 |
-| --- | --- |
-| GET | `/system/banner/list` |
-| GET | `/category/category/list` |
-| GET | `/article/article/list?categoryId=&pageNum=&pageSize=` |
-| GET | `/article/article/{id}` |
-| POST | `/guestbook/guestbook/add` |
+| 方法 | 路径 | 用途 |
+| --- | --- | --- |
+| GET | `/category/category/menu` | 门户导航栏目树（含 templateType / isExternal） |
+| GET | `/article/article/menu/list?categoryId=&templateType=&pageNum=&pageSize=` | 栏目文章列表（列表页 + 首页各版块） |
+| GET | `/article/article/menu/{categoryId}?templateType=` | 单页栏目内容 |
+| GET | `/article/article/{id}` | 文章详情（**待后端补**，见 docs 缺口 1） |
+| GET | `/system/banner/list` | 首页轮播图（**待后端补**） |
+| POST | `/guestbook/guestbook/add` | 培训报名 / 留言（**待后端补**） |
 
 浏览器端不要求 token；详细字段、示例与老站字段映射见 [`docs/api.md`](./docs/api.md)。
 
