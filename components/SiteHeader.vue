@@ -73,11 +73,8 @@ import { mainMenu } from '~/utils/site'
  * 老站右侧的「注册 / 登陆」按需求去掉，新站不提供会员体系。
  */
 const nowText = ref('')
-const api = useApi()
 
-const { data: menuTree } = await useAsyncData('portal-menu', () =>
-  api.getMenuTree().catch(() => [] as MenuNode[]),
-)
+const { data: menuTree } = await usePortalMenu()
 
 interface NavChild {
   name: string

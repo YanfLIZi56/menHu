@@ -80,7 +80,6 @@
 
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
-import type { MenuNode } from '~/composables/useApi'
 import { contactInfo } from '~/utils/site'
 import { articleTarget, flattenMenu, findMenuNode } from '~/utils/menu'
 
@@ -95,9 +94,7 @@ const categoryId = computed(() => Number(route.params.id) || 412)
 const pageSize = 15
 
 /** 门户栏目树（接口驱动，含 templateType 决定单页/列表） */
-const { data: menuTreeData } = await useAsyncData('portal-menu', () =>
-  api.getMenuTree().catch(() => [] as MenuNode[]),
-)
+const { data: menuTreeData } = await usePortalMenu()
 const categories = computed(() => flattenMenu(menuTreeData.value ?? []))
 
 /** 当前栏目节点；列表页侧边栏切换一律按列表展示，单页栏目也不跳到 /page */

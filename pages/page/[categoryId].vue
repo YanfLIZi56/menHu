@@ -23,7 +23,6 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import type { MenuNode } from '~/composables/useApi'
 import {
   articleExternalLink,
   findMenuNode,
@@ -43,9 +42,7 @@ const api = useApi()
 
 const categoryId = computed(() => Number(route.params.categoryId))
 
-const { data: menuTreeData } = await useAsyncData('portal-menu', () =>
-  api.getMenuTree().catch(() => [] as MenuNode[]),
-)
+const { data: menuTreeData } = await usePortalMenu()
 
 const currentNode = computed(() => findMenuNode(menuTreeData.value ?? [], categoryId.value))
 
