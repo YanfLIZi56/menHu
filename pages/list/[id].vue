@@ -8,7 +8,7 @@
       <div class="navLeft">
         <div class="title">{{ groupName }}</div>
         <ul>
-          <NuxtLink v-for="item in sideCategories" :key="item.id" :to="menuTarget(item).to || `/list/${item.id}`">
+          <NuxtLink v-for="item in sideCategories" :key="item.id" :to="`/list/${item.id}`">
             <li :class="{ this: item.id === categoryId }" :title="item.name">
               {{ item.name }}
             </li>
@@ -82,13 +82,7 @@
 import { computed, ref, watch } from 'vue'
 import type { MenuNode } from '~/composables/useApi'
 import { contactInfo } from '~/utils/site'
-import {
-  articleTarget,
-  flattenMenu,
-  findMenuNode,
-  menuTarget,
-  TEMPLATE_SINGLE,
-} from '~/utils/menu'
+import { articleTarget, flattenMenu, findMenuNode } from '~/utils/menu'
 
 /**
  * 栏目列表页（替代老站 newList.html）
@@ -106,20 +100,17 @@ const { data: menuTreeData } = await useAsyncData('portal-menu', () =>
 )
 const categories = computed(() => flattenMenu(menuTreeData.value ?? []))
 
-/** 当前栏目节点：单页栏目误访问 /list 时 301 到 /page */
+/** 当前栏目节点；列表页侧边栏切换一律按列表展示，单页栏目也不跳到 /page */
 const currentNode = computed(() => findMenuNode(menuTreeData.value ?? [], categoryId.value))
-if (currentNode.value && Number(currentNode.value.templateType) === TEMPLATE_SINGLE) {
-  await navigateTo(`/page/${categoryId.value}`, { redirectCode: 301 })
-}
-
-const templateType = computed(() => Number(currentNode.value?.templateType ?? 1))
+/** 列表页固定按列表类型查询（侧边栏切换到单页栏目也当列表展示） */
+const templateType = 1
 
 const { data: listData } = await useAsyncData(
   () => `list-${categoryId.value}`,
   () =>
     api.getArticles({
       categoryId: categoryId.value,
-      templateType: templateType.value,
+      templateType,
       pageNum: 1,
       pageSize,
     }),
@@ -192,7 +183,7 @@ const goPage = async (page: number) => {
   if (page < 1 || page > pageCount.value || page === pageNum.value) return
   const res = await api.getArticles({
     categoryId: categoryId.value,
-    templateType: templateType.value,
+    templateType,
     pageNum: page,
     pageSize,
   })
