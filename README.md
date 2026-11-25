@@ -66,7 +66,7 @@ NUXT_PUBLIC_FILE_BASE=http://127.0.0.1:8080    # 可选：上传图片域名，�
 | GET | `/category/category/menu` | 门户导航栏目树（含 templateType / isExternal） |
 | GET | `/article/article/menu/list?categoryId=&templateType=&pageNum=&pageSize=` | 栏目文章列表（列表页 + 首页各版块） |
 | GET | `/article/article/menu/{categoryId}?templateType=` | 单页栏目内容 |
-| GET | `/article/article/{id}` | 文章详情（响应同 `menu/{categoryId}`） |
+| GET | `/article/article/menu/info/{id}` | 文章详情（响应同 `menu/{categoryId}`） |
 | GET | `/system/banner/list` | 首页轮播图（后端未开发，暂用 mock） |
 | POST | `/guestbook/guestbook/add` | 培训报名 / 留言 |
 

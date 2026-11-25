@@ -5,7 +5,7 @@
  *   导航栏目树   GET  /category/category/menu
  *   栏目文章列表 GET  /article/article/menu/list?categoryId=&templateType=&pageNum=&pageSize=
  *   单页栏目内容 GET  /article/article/menu/{categoryId}?templateType=
- *   文章详情     GET  /article/article/{id}（待后端提供，门户列表点进详情用）
+ *   文章详情     GET  /article/article/menu/info/{id}
  *   轮播图       GET  /system/banner/list
  *   留言报名     POST /guestbook/guestbook/add
  *
@@ -244,7 +244,7 @@ export const useApi = () => {
 
     /** 文章 / 单页详情 */
     async getArticle(id: number | string): Promise<Article> {
-      const res = await $fetch<any>(url(`/article/article/${id}`))
+      const res = await $fetch<any>(url(`/article/article/menu/info/${id}`))
       return toArticle(pickData(res), fileBase)
     },
 

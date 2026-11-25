@@ -112,7 +112,7 @@
 | --- | --- | --- |
 | templateType=1（列表） | `/list/{categoryId}` | `menu/list` |
 | templateType=2（单页） | `/page/{categoryId}` | `menu/{categoryId}` |
-| 列表文章点进详情 | `/article/{id}` | `GET /article/article/{id}`（已提供，响应同 `menu/{categoryId}` 的 `data`） |
+| 列表文章点进详情 | `/article/{id}` | `GET /article/article/menu/info/{id}`（响应同 `menu/{categoryId}` 的 `data`） |
 
 **外链规则**：栏目本身不做外链（不用 `isExternal`）。外链挂在“单页栏目 → 文章”上：文章 `link` 为 http/https 且不是 `.mp4/.m3u8` 时优先跳外链。
 - 单页栏目：`/page/{id}` 服务端取到文章后，直接 **302** 到 `link`；
@@ -210,7 +210,7 @@
 
 ### 4. 文章详情
 
-`GET /article/article/{id}`
+`GET /article/article/menu/info/{id}`
 
 **响应 data 字段**
 
@@ -290,7 +290,7 @@ NUXT_MOCK=false NUXT_API_BASE=http://127.0.0.1:8080/prod-api npm run dev
 
 | # | 用途 | 现状 / 约定 |
 | --- | --- | --- |
-| 1 | 文章详情（按 id） | **已提供**：`GET /article/article/{id}`，`data` 与 `menu/{categoryId}` 一致 |
+| 1 | 文章详情（按 id） | **已提供**：`GET /article/article/menu/info/{id}`，`data` 与 `menu/{categoryId}` 一致 |
 | 2 | 列表分页 | **已确认可用**：`pageNum/pageSize` 由前端传入 |
 | 3 | 外链 | 栏目不做外链；单页栏目文章 `link` 为 http(s) 时优先跳转（视频除外），前端已实现 302 / 新窗口 |
 | 4 | 轮播图 | **后端暂未开发**，前端继续用 mock（`system/banner/list` 契约先冻结） |

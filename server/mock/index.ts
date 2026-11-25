@@ -221,6 +221,32 @@ export function handleMock(
     return ok(rows.slice(start, start + pageSize).map(toMenuRow), total)
   }
 
+  // ---------------- 门户导航：文章详情（按 id） ----------------
+  const articleDetail = clean.match(/^article\/article\/menu\/info\/(\d+)$/)
+  if (articleDetail && method === 'GET') {
+    const id = Number(articleDetail[1])
+    const article = db.articles.find((a) => Number(a.id) === id)
+    if (!article) return { code: 404, msg: '文章不存在' }
+    const cat = db.categories.find((c) => Number(c.id) === article.categoryId)
+    return {
+      code: 200,
+      msg: '操作成功',
+      data: {
+        ...article,
+        categoryName: cat?.name ?? '',
+        mobileContent: `<p>${article.summary ?? ''}</p>`,
+        coverAlt: '',
+        publishAt: article.publishTime,
+        createBy: null,
+        createTime: article.publishTime,
+        updateBy: null,
+        updateTime: '',
+        isTop: 0,
+        sort: 0,
+      },
+    }
+  }
+
   // ---------------- 门户导航：单页栏目内容 ----------------
   const menuDetail = clean.match(/^article\/article\/menu\/(\d+)$/)
   if (menuDetail && method === 'GET') {
