@@ -47,7 +47,7 @@ img {
   position: relative;
 }
 
-.nav .layui-nav-item > a {
+.nav .layui-nav-item>a {
   position: relative;
 }
 
@@ -68,7 +68,7 @@ img {
 
 .nav .layui-nav-item:hover .nav-more,
 .nav .layui-nav-itemed .nav-more {
-  transform: rotate(225deg);
+  transform: translateY(3px) rotate(225deg);
 }
 
 /* layui 默认二级菜单要靠 layui.js 才展开，这里改成纯 CSS hover（带淡入下滑） */
@@ -78,7 +78,7 @@ img {
   min-width: 132px;
   padding: 4px 0;
   background: #fff;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
   border-radius: 0 0 3px 3px;
   z-index: 30;
   opacity: 0;
@@ -211,7 +211,7 @@ img {
   border: 0;
   border-radius: 50%;
   background: #ee0000;
-  box-shadow: 0 6px 14px rgba(238, 0, 0, 0.32);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
   cursor: pointer;
   z-index: 60;
   display: flex;

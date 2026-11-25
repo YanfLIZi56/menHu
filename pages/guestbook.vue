@@ -44,11 +44,11 @@
                 <td colspan="2" style="padding: 55px 0">
                   <a class="submits" style="margin-right: 50px" @click="submit">提交</a>
                   <a class="submits" @click="goBack">返回</a>
-                  <span v-if="tip" class="form-tip" :class="{ ok: tipOk }">{{ tip }}</span>
                 </td>
               </tr>
             </tbody>
           </table>
+          <div v-if="tip" class="form-tip" :class="{ ok: tipOk }">{{ tip }}</div>
         </div>
       </div>
     </div>
