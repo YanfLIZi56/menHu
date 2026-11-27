@@ -194,6 +194,24 @@ function blockItems(block: HomeBlock) {
 
   if (block.sourceType === 'static') return []
 
+  // category + target=children：取直接子类别（条目是类别，点进列表页）
+  if (cfg.target === 'children') {
+    const pids: number[] = Array.isArray(cfg.categoryIds) ? cfg.categoryIds : []
+    return db.categories
+      .filter((c) => pids.includes(Number(c.parentId)))
+      .sort((a, b) => Number(a.sort ?? 0) - Number(b.sort ?? 0))
+      .slice(0, Number(block.limitCount || 6))
+      .map((c: any) => ({
+        id: Number(c.id),
+        categoryId: Number(c.parentId),
+        title: c.name,
+        cover: c.cover ?? '',
+        summary: '',
+        publishAt: '',
+        link: `/list/${c.id}`,
+      }))
+  }
+
   // category：父栏目默认聚合子栏目（includeChildren !== false）
   const ids: number[] = Array.isArray(cfg.categoryIds) ? cfg.categoryIds : []
   const pool = ids.flatMap((id) =>
@@ -421,6 +439,25 @@ export function handleMock(
   }
 
   // ---------------- 栏目 ----------------
+  // 栏目的直接子类别（首页专题专栏等版块）
+  const childCats = clean.match(/^category\/category\/items\/(\d+)$/)
+  if (childCats && method === 'GET') {
+    const pid = Number(childCats[1])
+    const rows = db.categories
+      .filter((c) => Number(c.parentId) === pid)
+      .sort((a, b) => Number(a.sort ?? 0) - Number(b.sort ?? 0))
+      .map((c) => ({
+        id: Number(c.id),
+        parentId: pid,
+        name: c.name,
+        cover: c.cover ?? '',
+        sort: Number(c.sort ?? 0),
+        children: [],
+        templateType: 1,
+      }))
+    return { code: 200, msg: '操作成功', data: rows }
+  }
+
   if (clean === 'category/category/list' && method === 'GET') {
     const parentId = query.parentId !== undefined ? Number(query.parentId) : undefined
     const rows =

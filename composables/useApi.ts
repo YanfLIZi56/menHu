@@ -257,6 +257,20 @@ export const useApi = () => {
       }
     },
 
+    /** 栏目的直接子类别（首页「专题专栏」等版块用，点进去是列表页） */
+    async getCategoryItems(id: number | string): Promise<
+      Array<{ id: number; name: string; cover: string; sort: number; parentId: number }>
+    > {
+      const res = await $fetch<any>(url(`/category/category/items/${id}`))
+      return pickRows(res).map((r: any) => ({
+        id: Number(r.id),
+        name: r.name ?? '',
+        cover: resolveAsset(r.cover ?? r.image ?? '', fileBase),
+        sort: Number(r.sort ?? 0),
+        parentId: Number(r.parentId ?? 0),
+      }))
+    },
+
     /** 栏目树（扁平返回，前端按 parentId 组树） */
     async getCategories(): Promise<Category[]> {
       const res = await $fetch<any>(url('/category/category/list'))

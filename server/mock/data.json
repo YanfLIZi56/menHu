@@ -359,6 +359,54 @@
       "name": "红十字志愿服务与青少年工作",
       "sort": 37,
       "visible": true
+    },
+    {
+      "id": 4421,
+      "parentId": 441,
+      "name": "学习宣传贯彻党的二十大精神",
+      "sort": 1,
+      "visible": true,
+      "cover": "/images/demo/ztzl-1.gif"
+    },
+    {
+      "id": 4422,
+      "parentId": 441,
+      "name": "生命教育",
+      "sort": 2,
+      "visible": true,
+      "cover": "/images/demo/ztzl-2.gif"
+    },
+    {
+      "id": 4423,
+      "parentId": 441,
+      "name": "专题专栏：学习贯彻党的二十届四中全会精神专题",
+      "sort": 3,
+      "visible": true,
+      "cover": "/images/demo/news-3.jpg"
+    },
+    {
+      "id": 4424,
+      "parentId": 441,
+      "name": "专题专栏：生命教育 人道相伴",
+      "sort": 4,
+      "visible": true,
+      "cover": "/images/demo/news-4.jpg"
+    },
+    {
+      "id": 4425,
+      "parentId": 441,
+      "name": "专题专栏：红十字博爱周",
+      "sort": 5,
+      "visible": true,
+      "cover": "/images/demo/news-1.jpg"
+    },
+    {
+      "id": 4426,
+      "parentId": 441,
+      "name": "专题专栏：99公益日 一起做好事",
+      "sort": 6,
+      "visible": true,
+      "cover": "/images/demo/news-2.jpg"
     }
   ],
   "articles": [

@@ -70,7 +70,28 @@ export const useHomeBlockItems = (block: HomeBlock) =>
       // 5) 入口型静态版块（网上办事 / 信息公开 / 红会事业），不发请求
       if (block.sourceType === 'static') return []
 
-      // 6) 栏目文章
+      // 6) 直接子类别（target=children）：条目是类别，点进去是列表页
+      if (cfg.target === 'children') {
+        const ids: number[] = Array.isArray(cfg.categoryIds) ? cfg.categoryIds : []
+        const cats: any[] = []
+        for (const id of ids) {
+          cats.push(...(await api.getCategoryItems(id)))
+        }
+        return cats
+          .sort((a, b) => Number(a.sort ?? 0) - Number(b.sort ?? 0))
+          .slice(0, limit)
+          .map((c) =>
+            normalize({
+              id: c.id,
+              categoryId: c.parentId ?? ids[0] ?? 0,
+              title: c.name,
+              cover: c.cover,
+              link: `/list/${c.id}`,
+            }),
+          )
+      }
+
+      // 7) 栏目文章
       const ids: number[] = Array.isArray(cfg.categoryIds) ? cfg.categoryIds : []
       const rows: any[] = []
       for (const id of ids) {

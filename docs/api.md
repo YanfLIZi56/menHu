@@ -412,8 +412,12 @@ PUT /admin/home/layout
 ### 5. sourceConfig 约定
 
 ```json
-// category：includeChildren=true 时聚合子栏目
+// category：includeChildren=true 时聚合子栏目（取文章，默认）
 { "categoryIds": [412], "includeChildren": true }
+
+// category + target=children：取该栏目的【直接子类别】，条目是类别、点进去是列表页
+// 专题专栏用的就是这种：id/name/cover 来自 /category/category/items/{id}
+{ "categoryIds": [441], "includeChildren": false, "target": "children" }
 
 // article：手工指定文章 id
 { "articleIds": [2252, 2243] }
@@ -429,13 +433,15 @@ PUT /admin/home/layout
 
 `entry_grid` 还可带 `promoImage / promoLink` 渲染底部公益图。
 
+`target` 只有 `category` 用得到：缺省/`articles` = 栏目下文章，`children` = 直接子类别（不递归）。取到的类别条目字段为 `{id, title(=name), cover, link=/list/{id}}`，`publishAt / summary` 为空，所以只适合不显示日期的版式（如 `image_strip`）。
+
 ### 6. 默认布局（老站还原）
 
 | 行 | 左 | 中 | 右 |
 | --- | --- | --- | --- |
 | 1 | 网上办事 3 格 | 轮播 9 格 | — |
 | 2 | 信息公开 3 格 | 新闻资讯 9 格 | — |
-| 3 | 专题专栏 12 格 | — | — |
+| 3 | 专题专栏 12 格（`target=children`，取 441 的子类别封面） | — | — |
 | 4 | 红会事业 3 格 | 应急救护 6 格 | 捐赠公示 3 格（跨 4–5 行） |
 | 5 | 通知公告 3 格 | 志愿服务 6 格 | 捐赠公示续 |
 | 6 | 友情链接（`friend_links`，栏目 417）12 格 | — | — |

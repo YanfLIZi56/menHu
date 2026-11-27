@@ -32,6 +32,8 @@ export interface HomeBlockConfig {
   promoLink?: string
   categoryIds?: number[]
   includeChildren?: boolean
+  /** category 源取什么：articles=栏目文章（默认）、children=直接子类别（点进列表页） */
+  target?: 'articles' | 'children'
   articleIds?: number[]
   items?: HomeBlockItem[]
 }
@@ -126,7 +128,7 @@ export const DEFAULT_HOME_BLOCKS: HomeBlock[] = [
     title: '专题专栏',
     styleKey: 'image_strip',
     sourceType: 'category',
-    sourceConfig: { categoryIds: [441], includeChildren: false },
+    sourceConfig: { categoryIds: [441], includeChildren: false, target: 'children' },
     limitCount: 6,
     moreLink: '/list/441',
     rowNo: 3,

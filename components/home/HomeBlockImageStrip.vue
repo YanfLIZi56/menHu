@@ -3,9 +3,9 @@
     <NuxtLink
       v-for="item in items"
       :key="item.id"
-      :to="isExternal(item) ? (item.link as string) : `/article/${item.id}`"
-      :target="isExternal(item) ? '_blank' : undefined"
-      :rel="isExternal(item) ? 'noopener' : undefined"
+      :to="targetOf(item).to"
+      :target="targetOf(item).external ? '_blank' : undefined"
+      :rel="targetOf(item).external ? 'noopener' : undefined"
       :title="item.title"
     >
       <img
@@ -27,5 +27,13 @@ const props = defineProps<{ block: HomeBlock }>()
 
 const items = computed(() => props.block.items ?? [])
 
-const isExternal = (item: HomeBlockItem) => Boolean(item.link && /^https?:/.test(item.link))
+/**
+ * 跳转目标：优先用条目自带的 link（子类别版块是 /list/{id}，外链是 http…），
+ * 没有 link 才回落到文章详情。
+ */
+const targetOf = (item: HomeBlockItem) => {
+  const external = Boolean(item.link && /^https?:/.test(item.link))
+  if (item.link) return { to: item.link, external }
+  return { to: `/article/${item.id}`, external: false }
+}
 </script>
