@@ -121,7 +121,9 @@ const navItems = computed<NavItem[]>(() => {
       }))
     : fallbackNav
 
-  return [{ name: '首页', to: '/', external: false, children: [] }, ...items]
+  // 后端栏目树里常自带一个「首页」根节点，这里去掉，避免首页出现两个入口
+  const roots = items.filter((item) => !/^\s*首页\s*$/.test(item.name))
+  return [{ name: '首页', to: '/', external: false, children: [] }, ...roots]
 })
 
 const pad = (n: number) => String(n).padStart(2, '0')

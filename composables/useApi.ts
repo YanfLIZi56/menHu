@@ -188,6 +188,19 @@ export function bannerTarget(banner: Banner): {
   }
 }
 
+/** sourceConfig 可能是对象，也可能是后端返回的 JSON 字符串 */
+function parseSourceConfig(v: any): HomeBlock['sourceConfig'] {
+  if (!v) return null
+  if (typeof v === 'string') {
+    try {
+      return JSON.parse(v)
+    } catch {
+      return null
+    }
+  }
+  return typeof v === 'object' ? v : null
+}
+
 function toHomeBlock(raw: any, fileBase = ''): HomeBlock {
   const items = Array.isArray(raw.items) ? raw.items : []
   return {
@@ -197,7 +210,7 @@ function toHomeBlock(raw: any, fileBase = ''): HomeBlock {
     title: raw.title ?? '',
     styleKey: String(raw.styleKey ?? raw.style_key ?? 'text_list'),
     sourceType: String(raw.sourceType ?? raw.source_type ?? 'category') as HomeBlock['sourceType'],
-    sourceConfig: raw.sourceConfig ?? raw.source_config ?? null,
+    sourceConfig: parseSourceConfig(raw.sourceConfig ?? raw.source_config),
     limitCount: Number(raw.limitCount ?? raw.limit_count ?? 6),
     moreLink: raw.moreLink ?? raw.more_link ?? '',
     rowNo: Number(raw.rowNo ?? raw.row_no ?? 1),
@@ -232,8 +245,13 @@ export const useApi = () => {
     /** 首页版块（后台可配置）：一次返回骨架与已取好的条目 */
     async getHomePage(): Promise<{ blocks: HomeBlock[] }> {
       const res = await $fetch<any>(url('/portal/home'))
-      const payload = pickData(res) ?? {}
-      const blocks = Array.isArray(payload.blocks) ? payload.blocks : []
+      const payload = pickData(res)
+      // 兼容两种返回：{ blocks: [...] } 或直接 [...]（后端 /portal/home 目前是后者）
+      const blocks = Array.isArray(payload)
+        ? payload
+        : Array.isArray(payload?.blocks)
+          ? payload.blocks
+          : []
       return {
         blocks: blocks.map((b: any) => toHomeBlock(b, fileBase)),
       }

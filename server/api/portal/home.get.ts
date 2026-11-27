@@ -13,6 +13,38 @@ import { DEFAULT_HOME_BLOCKS, type HomeBlock, type HomeBlockItem } from '../../.
 
 type Fetcher = (path: string, query?: Record<string, any>) => Promise<any>
 
+/** sourceConfig 后端若用 json/字符串存，这里统一解析成对象 */
+const parseConfig = (v: any): any => {
+  if (!v) return null
+  if (typeof v === 'string') {
+    try {
+      return JSON.parse(v)
+    } catch {
+      return null
+    }
+  }
+  return typeof v === 'object' ? v : null
+}
+
+/** 后端只返回版块配置（可能 snake_case、可能缺 rowSpan）时统一成 HomeBlock */
+const toBlock = (raw: any): HomeBlock => ({
+  id: raw.id !== undefined && raw.id !== null ? Number(raw.id) : undefined,
+  blockKey: String(raw.blockKey ?? raw.block_key ?? ''),
+  blockType: (raw.blockType ?? raw.block_type) === 'banner' ? 'banner' : 'content',
+  title: raw.title ?? '',
+  styleKey: String(raw.styleKey ?? raw.style_key ?? 'text_list'),
+  sourceType: String(raw.sourceType ?? raw.source_type ?? 'category') as HomeBlock['sourceType'],
+  sourceConfig: parseConfig(raw.sourceConfig ?? raw.source_config),
+  limitCount: Number(raw.limitCount ?? raw.limit_count ?? 6),
+  moreLink: raw.moreLink ?? raw.more_link ?? '',
+  rowNo: Number(raw.rowNo ?? raw.row_no ?? 1),
+  rowSpan: Number(raw.rowSpan ?? raw.row_span ?? 1),
+  colStart: Number(raw.colStart ?? raw.col_start ?? 1),
+  colSpan: Number(raw.colSpan ?? raw.col_span ?? 12),
+  isVisible: Number(raw.isVisible ?? raw.is_visible ?? 1),
+  items: Array.isArray(raw.items) ? raw.items : undefined,
+})
+
 const pickList = (res: any): any[] => {
   if (!res) return []
   if (Array.isArray(res)) return res
@@ -51,7 +83,8 @@ async function itemsOf(block: HomeBlock, get: Fetcher): Promise<HomeBlockItem[]>
   if (block.blockType === 'banner' || block.sourceType === 'banner') {
     const res = await get('/system/banner/portalList')
     return pickList(res)
-      .filter((b) => b.status !== 0)
+      // 若依的 status：'0'/0 = 正常显示，'1'/1 = 停用；不能用 !== 0 过滤
+      .filter((b) => !(b.status === 1 || b.status === '1' || b.status === false))
       .sort((a, b) => Number(a.sort ?? 0) - Number(b.sort ?? 0))
       .slice(0, Number(block.limitCount || 9))
       .map(toBannerItem)
@@ -99,6 +132,20 @@ async function itemsOf(block: HomeBlock, get: Fetcher): Promise<HomeBlockItem[]>
     .map(toItem)
 }
 
+/** 版块条目：后端没给（只回了配置）就按 source_type 现取 */
+async function withItems(list: HomeBlock[], get: Fetcher): Promise<HomeBlock[]> {
+  const out: HomeBlock[] = []
+  for (const block of list) {
+    if (Number(block.isVisible) === 0) continue
+    const given = Array.isArray(block.items) ? block.items : []
+    out.push({
+      ...block,
+      items: given.length ? given : await itemsOf(block, get),
+    })
+  }
+  return out
+}
+
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig(event)
 
@@ -121,19 +168,28 @@ export default defineEventHandler(async (event) => {
     }
   }
 
-  // 1) 后端已实现聚合接口 → 透传（后台配置的布局/条目原样使用）
+  // 1) 后端已实现 /portal/home → 用它的版块配置（data 可能是数组，也可能是 { blocks }）
+  //    注意：它只回配置、不回条目，条目这里补齐后再返回给页面
   const remote = await get('/portal/home')
-  const remoteBlocks = remote?.data?.blocks
-  if (Array.isArray(remoteBlocks) && remoteBlocks.length) {
-    return remote
+  const remoteRaw = remote?.data
+  const remoteList = Array.isArray(remoteRaw)
+    ? remoteRaw
+    : Array.isArray(remoteRaw?.blocks)
+      ? remoteRaw.blocks
+      : []
+
+  if (remoteList.length) {
+    const blocks = await withItems(remoteList.map(toBlock), get)
+    return {
+      code: 200,
+      msg: '操作成功',
+      data: { blocks },
+      source: 'backend', // 布局来自后台配置
+    }
   }
 
   // 2) 未实现 → 默认布局 + 现有接口逐个版块聚合
-  const blocks: any[] = []
-  for (const block of DEFAULT_HOME_BLOCKS) {
-    if (Number(block.isVisible) === 0) continue
-    blocks.push({ ...block, items: await itemsOf(block, get) })
-  }
+  const blocks = await withItems(DEFAULT_HOME_BLOCKS.map((b) => ({ ...b })), get)
 
   return {
     code: 200,
