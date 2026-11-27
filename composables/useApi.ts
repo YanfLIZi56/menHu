@@ -253,10 +253,10 @@ export const useApi = () => {
       name: string
       people: number
       phone: string
-      trainTime: string[]
+      trainingTimes: string
       remark?: string
     }): Promise<{ code: number; msg: string }> {
-      const res = await $fetch<any>(url('/guestbook/guestbook/add'), {
+      const res = await $fetch<any>(url('/leaveMessage/leaveMessage'), {
         method: 'POST',
         body: payload,
       })

@@ -31,11 +31,11 @@
                 <td>参训时间：</td>
                 <td>
                   <label style="margin-right: 30px">
-                    <input v-model="form.trainTime" type="checkbox" value="工作日（周一至周五）" />
+                    <input v-model="form.trainingTimes" type="checkbox" value="工作日（周一至周五）" />
                     工作日（周一至周五）
                   </label>
                   <label>
-                    <input v-model="form.trainTime" type="checkbox" value="非工作日（周六、周日）" />
+                    <input v-model="form.trainingTimes" type="checkbox" value="非工作日（周六、周日）" />
                     非工作日（周六、周日）
                   </label>
                 </td>
@@ -61,7 +61,7 @@ import { reactive, ref } from 'vue'
 
 /**
  * 救护员培训报名 / 留言（替代老站 guestBook.html）
- * 提交接口：POST /guestbook/guestbook/add
+ * 提交接口：POST /leaveMessage/leaveMessage
  */
 const api = useApi()
 
@@ -69,7 +69,7 @@ const form = reactive({
   name: '',
   people: 1,
   phone: '',
-  trainTime: [] as string[],
+  trainingTimes: [] as string[],
 })
 
 const tip = ref('')
@@ -93,7 +93,7 @@ const submit = async () => {
     tip.value = '请输入正确的 11 位手机号'
     return
   }
-  if (!form.trainTime.length) {
+  if (!form.trainingTimes.length) {
     tip.value = '请选择参训时间'
     return
   }
@@ -104,7 +104,7 @@ const submit = async () => {
       name: form.name.trim(),
       people: Number(form.people),
       phone: form.phone,
-      trainTime: form.trainTime,
+      trainingTimes: JSON.stringify(form.trainingTimes),
     })
     tip.value = res.msg
     tipOk.value = res.code === 200
@@ -112,7 +112,7 @@ const submit = async () => {
       form.name = ''
       form.people = 1
       form.phone = ''
-      form.trainTime = []
+      form.trainingTimes = []
     }
   } catch (e: any) {
     tip.value = e?.data?.msg || e?.message || '提交失败，请稍后重试'
