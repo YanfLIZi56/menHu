@@ -331,11 +331,11 @@ NUXT_MOCK=false NUXT_API_BASE=http://127.0.0.1:8080/prod-api npm run dev
 - 内容块的 `items` 为 `{id, categoryId, title, cover, summary, publishAt, link}`
 - `sourceType=static` 的入口型版块不返回条目，由前端按 `sourceConfig.entriesKey` 读静态配置
 
-> **兼容说明（后端现有实现）**：后端目前只返回**版块配置**，不返回 `items`，且 `data` 直接是数组、`sourceConfig` 是 JSON 字符串。门户服务端（Nitro）已做兼容：
-> - `data` 为数组或 `{ blocks: [...] }` 都接受；
-> - `sourceConfig` 为对象或 JSON 字符串都接受；
-> - 缺 `items` 时由服务端按 `sourceType` 逐个版块补齐（与下方兜底聚合同一套逻辑），响应带 `"source": "backend"`；
-> - 后端将来把 `items` 一起返回也不会冲突（给了就直接用）。
+> **职责边界（重要）**：`/portal/home` 只负责**布局**，`items` 可选。
+> - 门户服务端（Nitro）拿到的版块配置会原样下发给页面，`data` 为数组或 `{ blocks: [...] }` 都接受，`sourceConfig` 为对象或 JSON 字符串都接受；
+> - **条目由每个版块组件自己取数**（见 `composables/useHomeBlockData.ts`）：`banner`→`banner/portalList`、`category`→`menu/list`、`article`→`menu/info/{id}`、`custom`→配置内联、`static`→前端静态入口；
+> - 因此后端只维护布局即可；如果哪天把 `items` 一起返回，前端优先用返回的，不再重复请求；
+> - 单个版块接口失败只影响该版块（显示“暂无内容”），不会让整页空白。
 
 #### 2.2 仅骨架（可选，调试/懒加载用）
 
@@ -354,7 +354,7 @@ NUXT_MOCK=false NUXT_API_BASE=http://127.0.0.1:8080/prod-api npm run dev
 | POST | `/admin/home/layout/reset` | 恢复默认布局 |
 
 > **后端尚未实现时的兜底（重要）**：门户的 `/api/portal/home` 由门户服务端（Nitro）提供，不是直接打后端。规则是：
-> 1. 后端已实现 `GET /portal/home` → 用它的版块配置（后台布局立即生效）；若它没返回 `items`，由门户服务端补齐条目，响应带 `"source": "backend"`；
+> 1. 后端已实现 `GET /portal/home` → 用它的版块配置（后台布局立即生效），条目由各版块组件自行获取，响应带 `"source": "backend"`；
 > 2. 后端未实现 → 用 `utils/homeBlocks.ts` 的默认布局，逐个版块调用**现有接口**（`system/banner/portalList`、`article/article/menu/list`、`article/article/menu/info/{id}`）自行聚合，响应里带 `"source": "fallback"`；
 > 3. `NUXT_MOCK=true` → 走内置 mock 的聚合结果。
 >

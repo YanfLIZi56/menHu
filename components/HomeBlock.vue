@@ -1,20 +1,20 @@
 <template>
   <section class="hb" :class="`hb-${block.blockKey}`" :style="homeBlockGridStyle(block)">
     <!-- 轮播位：没有标题栏，直接铺满 -->
-    <HomeBlockBanner v-if="block.blockType === 'banner'" :block="block" />
+    <HomeBlockBanner v-if="view.blockType === 'banner'" :block="view" />
 
     <template v-else>
       <div v-if="showTitle" class="titles">
-        <NuxtLink v-if="block.moreLink" :to="block.moreLink">{{ block.title }}</NuxtLink>
-        <span v-else>{{ block.title }}</span>
-        <span v-if="block.moreLink" class="more">
-          <NuxtLink :to="block.moreLink">
+        <NuxtLink v-if="view.moreLink" :to="view.moreLink">{{ view.title }}</NuxtLink>
+        <span v-else>{{ view.title }}</span>
+        <span v-if="view.moreLink" class="more">
+          <NuxtLink :to="view.moreLink">
             更多 <i class="layui-icon layui-icon-next" />
           </NuxtLink>
         </span>
       </div>
 
-      <component :is="styleComponent" :block="block" />
+      <component :is="styleComponent" :block="view" />
     </template>
   </section>
 </template>
@@ -22,6 +22,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { homeBlockGridStyle, type HomeBlock } from '~/utils/homeBlocks'
+import { useHomeBlockItems } from '~/composables/useHomeBlockData'
 
 /**
  * 首页版块容器：负责栅格定位、标题栏，并按 styleKey 分发到具体版式组件。
@@ -54,6 +55,17 @@ const STYLE_COMPONENTS: Record<string, any> = {
 }
 
 const props = defineProps<{ block: HomeBlock }>()
+
+/**
+ * 版块自己取数：服务端只下发布局配置，条目不预聚合。
+ * 每个版块按自己的 sourceType 单独请求（SSR 时并行在服务端发，客户端切页也能复用缓存）。
+ */
+const { data: blockItems } = await useHomeBlockItems(props.block)
+
+const view = computed<HomeBlock>(() => ({
+  ...props.block,
+  items: blockItems.value ?? [],
+}))
 
 const styleComponent = computed(() => STYLE_COMPONENTS[props.block.styleKey] ?? HomeBlockTextList)
 
