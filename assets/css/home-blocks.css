@@ -339,7 +339,40 @@
   color: #cf2d2b;
 }
 
-/* ---------------- 友情链接 ---------------- */
+/* ---------------- 友情链接（栏目 417 专用版式） ---------------- */
+.hb-friend-links {
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  min-height: 67px;
+  line-height: 67px;
+  font-size: 15px;
+  border-top: 4px solid #f5f5f5;
+}
+.hb-friend-label {
+  flex: none;
+  margin-right: 10px;
+  color: #f00;
+}
+.hb-friend-items {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+}
+.hb-friend-items li {
+  margin-right: 22px;
+  color: #333;
+}
+.hb-friend-items li a {
+  color: #333;
+}
+.hb-friend-items li a:hover {
+  color: #f00;
+}
+
+/* ---------------- 通用文字链接列表 ---------------- */
 .hb-links {
   display: flex;
   align-items: center;

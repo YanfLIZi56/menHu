@@ -55,7 +55,7 @@ NUXT_PUBLIC_FILE_BASE=http://127.0.0.1:8080    # 可选：上传图片域名，�
 ├── utils/site.ts         # 首页静态入口、联系方式等静态配置
 ├── utils/homeBlocks.ts   # 首页 12 栅格默认布局（也是接口异常时的兜底）
 ├── components/HomeBlock.vue       # 版块容器：栅格定位 + 标题栏 + styleKey 分发
-├── components/home/*.vue          # 10 种版式组件（news_list / text_list / card_list …）
+├── components/home/*.vue          # 11 种版式组件（news_list / text_list / card_list …）
 └── docs/api.md           # 接口文档（给后端）
 ```
 

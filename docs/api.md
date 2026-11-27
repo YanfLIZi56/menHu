@@ -391,7 +391,8 @@ PUT /admin/home/layout
 | `cover_list` | `HomeBlockCoverList` | 应急救护（左图右列表） |
 | `text_list` | `HomeBlockTextList` | 通知公告 / 捐赠公示 |
 | `card_list` | `HomeBlockCardList` | 志愿服务（图文卡片） |
-| `link_list` | `HomeBlockLinkList` | 友情链接 |
+| `link_list` | `HomeBlockLinkList` | 通用文字链接行（无「友情链接：」前缀） |
+| `friend_links` | `HomeBlockFriendLinks` | 友情链接（绑定栏目 417，`link` 为外链时新窗口） |
 
 未知 `styleKey` 回落 `text_list`，新增样式只需加组件并登记映射。
 
@@ -424,7 +425,7 @@ PUT /admin/home/layout
 | 3 | 专题专栏 12 格 | — | — |
 | 4 | 红会事业 3 格 | 应急救护 6 格 | 捐赠公示 3 格（跨 4–5 行） |
 | 5 | 通知公告 3 格 | 志愿服务 6 格 | 捐赠公示续 |
-| 6 | 友情链接 12 格 | — | — |
+| 6 | 友情链接（`friend_links`，栏目 417）12 格 | — | — |
 
 该布局同时是 `utils/homeBlocks.ts` 的 `DEFAULT_HOME_BLOCKS`、mock 种子与接口异常时的前端兜底。版块高度按老站实测值写在 `assets/css/home-blocks.css`（`.hb-{blockKey}`），新增版块不写则随内容撑开。
 

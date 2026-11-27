@@ -37,6 +37,7 @@ import HomeBlockCoverList from './home/HomeBlockCoverList.vue'
 import HomeBlockTextList from './home/HomeBlockTextList.vue'
 import HomeBlockCardList from './home/HomeBlockCardList.vue'
 import HomeBlockLinkList from './home/HomeBlockLinkList.vue'
+import HomeBlockFriendLinks from './home/HomeBlockFriendLinks.vue'
 
 const STYLE_COMPONENTS: Record<string, any> = {
   banner: HomeBlockBanner,
@@ -49,6 +50,7 @@ const STYLE_COMPONENTS: Record<string, any> = {
   text_list: HomeBlockTextList,
   card_list: HomeBlockCardList,
   link_list: HomeBlockLinkList,
+  friend_links: HomeBlockFriendLinks,
 }
 
 const props = defineProps<{ block: HomeBlock }>()
@@ -60,6 +62,7 @@ const showTitle = computed(
   () =>
     props.block.blockType !== 'banner' &&
     props.block.styleKey !== 'link_list' &&
+    props.block.styleKey !== 'friend_links' &&
     Boolean(props.block.title),
 )
 </script>

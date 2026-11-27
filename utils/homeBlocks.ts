@@ -214,7 +214,7 @@ export const DEFAULT_HOME_BLOCKS: HomeBlock[] = [
     blockKey: 'links',
     blockType: 'content',
     title: '友情链接',
-    styleKey: 'link_list',
+    styleKey: 'friend_links',
     sourceType: 'category',
     sourceConfig: { categoryIds: [417], includeChildren: false },
     limitCount: 8,
@@ -239,6 +239,7 @@ export const HOME_STYLE_COMPONENTS: Record<string, string> = {
   text_list: 'HomeBlockTextList',
   card_list: 'HomeBlockCardList',
   link_list: 'HomeBlockLinkList',
+  friend_links: 'HomeBlockFriendLinks',
 }
 
 export function styleComponentOf(styleKey: string): string {
