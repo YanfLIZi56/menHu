@@ -301,7 +301,7 @@ NUXT_MOCK=false NUXT_API_BASE=http://127.0.0.1:8080/prod-api npm run dev
 
 #### 2.1 首页数据（唯一请求）
 
-`GET /portal/home`
+`GET /system/blockSet/portal/home`（门户侧仍可用 `/api/portal/home` 取同一份数据）
 
 无参数，按 `isVisible=1` 的行列顺序返回：
 

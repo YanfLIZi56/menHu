@@ -289,7 +289,8 @@ export function handleMock(
   }
 
   // ---------------- 首页版块（门户） ----------------
-  if (clean === 'portal/home' && method === 'GET') {
+  // 后端真实路径：/system/blockSet/portal/home（门户代理时也用这个）
+  if ((clean === 'portal/home' || clean === 'system/blockSet/portal/home') && method === 'GET') {
     return composePortalHome()
   }
   if (clean === 'portal/home/layout' && method === 'GET') {

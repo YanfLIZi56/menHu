@@ -9,11 +9,14 @@
  *   - F12 里能直接看到每个版块各自的请求。
  *
  * 三种来源：
- *   1. 后端已实现 GET /portal/home → 用它的配置（data 可能是数组，也可能是 { blocks }）
+ *   1. 后端已实现 GET /system/blockSet/portal/home → 用它的配置（data 可能是数组，也可能是 { blocks }）
  *   2. 未实现 → 用 utils/homeBlocks.ts 的默认布局
  *   3. NUXT_MOCK=true → 内置 mock
  */
 import { DEFAULT_HOME_BLOCKS, type HomeBlock } from '../../../utils/homeBlocks'
+
+/** 后端版块配置接口地址（后台「区块设置」模块） */
+const BACKEND_PATH = '/system/blockSet/portal/home'
 
 /** sourceConfig 后端若按 json/字符串存，统一解析成对象 */
 const parseConfig = (v: any): any => {
@@ -70,7 +73,7 @@ export default defineEventHandler(async (event) => {
     }
   }
 
-  const remote = await get('/portal/home')
+  const remote = await get(BACKEND_PATH)
   const raw = remote?.data
   const list = Array.isArray(raw) ? raw : Array.isArray(raw?.blocks) ? raw.blocks : []
 
@@ -87,6 +90,6 @@ export default defineEventHandler(async (event) => {
     code: 200,
     msg: '操作成功',
     data: { blocks: DEFAULT_HOME_BLOCKS },
-    source: 'fallback', // 后端还没有 /portal/home，用默认布局
+    source: 'fallback', // 后端还没有版块配置接口，用默认布局
   }
 })
