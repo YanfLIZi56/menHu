@@ -347,6 +347,13 @@ NUXT_MOCK=false NUXT_API_BASE=http://127.0.0.1:8080/prod-api npm run dev
 | PUT | `/admin/home/layout` | 保存整份布局（拖拽只调这个） |
 | POST | `/admin/home/layout/reset` | 恢复默认布局 |
 
+> **后端尚未实现时的兜底（重要）**：门户的 `/api/portal/home` 由门户服务端（Nitro）提供，不是直接打后端。规则是：
+> 1. 后端已实现 `GET /portal/home` → 原样透传（后台配置立即生效）；
+> 2. 后端未实现 → 用 `utils/homeBlocks.ts` 的默认布局，逐个版块调用**现有接口**（`system/banner/portalList`、`article/article/menu/list`、`article/article/menu/info/{id}`）自行聚合，响应里带 `"source": "fallback"`；
+> 3. `NUXT_MOCK=true` → 走内置 mock 的聚合结果。
+>
+> 也就是说：`home_block` 表 / 后台接口没上线时，首页布局固定为默认那套、但内容照常取；上线后无需改前端，自动切到后台配置。
+
 #### 3.1 新建区块
 
 ```json
