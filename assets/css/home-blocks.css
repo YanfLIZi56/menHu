@@ -23,6 +23,38 @@
 .hb-service {
   min-height: 330px;
 }
+
+/* 轮播位：固定高度铺满，图片等比裁切（cover）而不是拉伸，底部不留白 */
+.hb-banner {
+  height: 330px;
+}
+.hb-banner .ad1 {
+  width: 100%;
+  height: 100%;
+}
+.hb-banner .ad1 .swiper-wrapper,
+.hb-banner .ad1 .swiper-slide {
+  height: 100%;
+}
+/* 图片绝对定位铺满：既解决 img 行内基线造成的底部空隙，也避免不同尺寸图片被拉伸 */
+.hb-banner .ad1 .swiper-slide {
+  position: relative;
+}
+.hb-banner .ad1 .swiper-slide > a,
+.hb-banner .ad1 .swiper-slide > div {
+  display: block;
+  height: 100%;
+}
+.hb-banner .ad1 img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+}
 .hb-info,
 .hb-news {
   min-height: 473px;

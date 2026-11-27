@@ -61,7 +61,7 @@ onMounted(async () => {
     effect: 'flip',
     slidesPerView: 1,
     centeredSlides: true,
-    autoHeight: true,
+    autoHeight: false, // 高度由版块固定（330px）+ 图片 cover 撑满，避免底部留白
     loop: canLoop,
     autoplay: props.items.length > 1
       ? {
