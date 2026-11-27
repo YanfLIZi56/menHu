@@ -31,20 +31,22 @@
             :key="item.name"
             class="layui-nav-item"
           >
+            <!-- 有子栏目的条目只作为下拉容器，不提供点击跳转（老站行为） -->
             <a
-              v-if="item.href"
+              v-if="item.children.length"
+              class="nav-root"
+              aria-haspopup="true"
+            >
+              {{ item.name }}
+              <span class="nav-more" aria-hidden="true" />
+            </a>
+            <a
+              v-else-if="item.href"
               :href="item.href"
               target="_blank"
               rel="noopener"
             >{{ item.name }}</a>
-            <NuxtLink v-else :to="item.to || '/'">
-              {{ item.name }}
-              <span
-                v-if="item.children.length"
-                class="nav-more"
-                aria-hidden="true"
-              />
-            </NuxtLink>
+            <NuxtLink v-else :to="item.to || '/'">{{ item.name }}</NuxtLink>
 
             <dl v-if="item.children.length" class="layui-nav-child">
               <dd v-for="child in item.children" :key="child.name">

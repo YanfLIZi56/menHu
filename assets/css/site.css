@@ -47,6 +47,11 @@ img {
   position: relative;
 }
 
+.nav .layui-nav-item>.nav-root {
+  position: relative;
+  cursor: default;
+}
+
 .nav .layui-nav-item>a {
   position: relative;
 }
