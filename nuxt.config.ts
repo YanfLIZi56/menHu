@@ -26,6 +26,7 @@ export default defineNuxtConfig({
     '~/assets/css/iconfont.css', // 老站自建图标字体
     '~/assets/css/legacy.css', // 从老站 style.css 原样搬过来，保持像素级一致
     '~/assets/css/site.css', // Nuxt 侧补充与覆盖
+    '~/assets/css/home-blocks.css', // 首页 12 栅格与各版块样式
   ],
 
   runtimeConfig: {

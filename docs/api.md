@@ -12,7 +12,7 @@
 | --- | --- |
 | 网关地址 | 由环境变量 `NUXT_API_BASE` 指定，例如 `http://127.0.0.1:8080/prod-api` |
 | 前端请求 | 浏览器统一请求本站 `/api/{path}`，Nitro 在服务端转发到网关，天然同源，**不需要后端开 CORS** |
-| 鉴权 | 门户为公开站点，**所有接口免 token**（建议后端放行 `/article/**`、`/category/**`、`/system/banner/**`、`/guestbook/**`） |
+| 鉴权 | 门户为公开站点，**所有接口免 token**（建议后端放行 `/article/**`、`/category/**`、`/system/banner/**`、`/leaveMessage/**`、`/portal/**`） |
 | 方法 | 查询 GET，提交 POST（`Content-Type: application/json`） |
 | 分页 | `pageNum` 从 1 开始，`pageSize` 默认 10 |
 | 列表响应 | 若依 `TableDataInfo`：`{ "code": 200, "msg": "查询成功", "rows": [...], "total": 12 }` |
@@ -229,7 +229,7 @@
 
 ### 5. 救护员培训报名 / 留言
 
-`POST /guestbook/guestbook/add`
+`POST /leaveMessage/leaveMessage`
 
 **请求体**
 
@@ -238,7 +238,7 @@
   "name": "张三",
   "people": 3,
   "phone": "13800138000",
-  "trainTime": ["工作日（周一至周五）"],
+  "trainingTimes": "[\"工作日（周一至周五）\"]",
   "remark": ""
 }
 ```
@@ -248,7 +248,7 @@
 | name | string | 是 | 联系人姓名 |
 | people | int | 是 | 参训人数，≥1 |
 | phone | string | 是 | 11 位手机号，前端已做正则校验 |
-| trainTime | string[] | 是 | 参训时间多选：`工作日（周一至周五）` / `非工作日（周六、周日）` |
+| trainingTimes | string | 是 | 参训时间多选，**JSON 字符串**：`"[\"工作日（周一至周五）\",\"非工作日（周六、周日）\"]"` |
 | remark | string | 否 | 备注 |
 
 **响应**
@@ -286,14 +286,156 @@ NUXT_MOCK=false NUXT_API_BASE=http://127.0.0.1:8080/prod-api npm run dev
 
 切换只需要环境变量，页面与组件代码不用动。
 
-## 六、缺口与处理约定（2026-11-25 更新）
+## 六、首页区块配置（后台可配首页布局）
+
+首页不再由前端写死版块顺序，改为按 `home_block` 表渲染：一行一个版块，既存内容定义（标题、样式、取数来源），也存 12 栅格摆位（`rowNo / rowSpan / colStart / colSpan`）。门户只请求一个接口拿到“骨架 + 已取好的条目”，后台拖拽只提交一份布局。
+
+### 1. 栅格约定
+
+- 一行 12 栏，`colStart` 从 1 开始，`colStart + colSpan - 1 ≤ 12`
+- `colSpan` 建议 3 / 4 / 6 / 12（老站 22%/77% 近似为 3/9）
+- `rowSpan` 默认 1；老站“捐赠公示”在右侧跨两排，seed 里为 2
+- 同一行内区间不允许重叠；保存后服务端会把 `rowNo` 压实成 1..n
+
+### 2. 门户接口（前台）
+
+#### 2.1 首页数据（唯一请求）
+
+`GET /portal/home`
+
+无参数，按 `isVisible=1` 的行列顺序返回：
+
+```json
+{
+  "code": 200,
+  "data": {
+    "blocks": [
+      {
+        "blockKey": "banner", "blockType": "banner", "styleKey": "banner", "title": "",
+        "rowNo": 1, "rowSpan": 1, "colStart": 4, "colSpan": 9, "moreLink": "",
+        "items": [{ "id": 2255, "imageUrl": "/images/demo/banner-1.jpg", "linkUrl": "",
+                    "resourceType": 1, "resourceId": 412, "openType": 0, "sort": 1 }]
+      },
+      {
+        "blockKey": "news", "blockType": "content", "styleKey": "news_list", "title": "新闻资讯",
+        "rowNo": 2, "rowSpan": 1, "colStart": 4, "colSpan": 9, "moreLink": "/list/412",
+        "items": [{ "id": 2252, "categoryId": 419, "title": "入库更简单！…",
+                   "cover": "/profile/upload/…jpg", "summary": "…", "publishAt": "2026-11-16", "link": "" }]
+      }
+    ]
+  }
+}
+```
+
+- 轮播块的 `items` 与 `/system/banner/portalList` 字段一致（`imageUrl / resourceType / openType`）
+- 内容块的 `items` 为 `{id, categoryId, title, cover, summary, publishAt, link}`
+- `sourceType=static` 的入口型版块不返回条目，由前端按 `sourceConfig.entriesKey` 读静态配置
+
+#### 2.2 仅骨架（可选，调试/懒加载用）
+
+`GET /portal/home/layout` → `data.blocks` 同上，但不含 `items`。
+
+### 3. 后台接口（供管理端）
+
+| 方法 | 路径 | 说明 |
+| --- | --- | --- |
+| GET | `/admin/home/blocks` | 全部区块（含隐藏），按行、列排序 |
+| GET | `/admin/home/blocks/{blockKey}` | 单个区块 |
+| POST | `/admin/home/blocks` | 新建区块 |
+| PUT | `/admin/home/blocks/{blockKey}` | 修改内容配置（标题/样式/来源/条数/更多链接） |
+| DELETE | `/admin/home/blocks/{blockKey}` | 删除区块（`banner` 不可删） |
+| PUT | `/admin/home/layout` | 保存整份布局（拖拽只调这个） |
+| POST | `/admin/home/layout/reset` | 恢复默认布局 |
+
+#### 3.1 新建区块
+
+```json
+POST /admin/home/blocks
+{
+  "blockKey": "notice", "blockType": "content", "title": "通知公告",
+  "styleKey": "text_list", "sourceType": "category",
+  "sourceConfig": { "categoryIds": [436], "includeChildren": false },
+  "limitCount": 8, "moreLink": "/list/436",
+  "rowNo": 2, "rowSpan": 1, "colStart": 7, "colSpan": 6, "isVisible": 1
+}
+```
+
+`blockKey` 规则：小写字母开头，`[a-z0-9_]`，2–64 位；重复返回 `409`。摆位字段不传时追加到新行。
+
+#### 3.2 保存布局
+
+```json
+PUT /admin/home/layout
+{
+  "items": [
+    { "blockKey": "banner", "rowNo": 1, "rowSpan": 1, "colStart": 4, "colSpan": 9, "isVisible": 1 },
+    { "blockKey": "news",   "rowNo": 2, "rowSpan": 1, "colStart": 4, "colSpan": 9, "isVisible": 1 }
+  ]
+}
+```
+
+- `items` 必须覆盖该页所有未删除区块，否则 `400 布局缺少区块：xxx`
+- 越界 / 重叠返回 `422`，`data` 为明细数组：`[{"blockKey":"notice","reason":"第2行与 news 的栅格区间重叠"}]`
+- 成功返回刷新后的完整列表
+
+### 4. styleKey 与组件映射（前端）
+
+| styleKey | 组件 | 适用 |
+| --- | --- | --- |
+| `banner` | `HomeBlockBanner` | 轮播位 |
+| `service_entries` | `HomeBlockServiceEntries` | 网上办事（图标入口） |
+| `entry_grid` | `HomeBlockEntryGrid` | 信息公开（6 入口 + 公益图） |
+| `entry_chips` | `HomeBlockEntryChips` | 红会事业（两列小卡片） |
+| `news_list` | `HomeBlockNewsList` | 新闻资讯（首条图文 + 标题列表） |
+| `image_strip` | `HomeBlockImageStrip` | 专题专栏（横排图片） |
+| `cover_list` | `HomeBlockCoverList` | 应急救护（左图右列表） |
+| `text_list` | `HomeBlockTextList` | 通知公告 / 捐赠公示 |
+| `card_list` | `HomeBlockCardList` | 志愿服务（图文卡片） |
+| `link_list` | `HomeBlockLinkList` | 友情链接 |
+
+未知 `styleKey` 回落 `text_list`，新增样式只需加组件并登记映射。
+
+### 5. sourceConfig 约定
+
+```json
+// category：includeChildren=true 时聚合子栏目
+{ "categoryIds": [412], "includeChildren": true }
+
+// article：手工指定文章 id
+{ "articleIds": [2252, 2243] }
+
+// custom：后台直接维护条目
+{ "items": [{ "id": 1, "title": "…", "link": "/article/2250", "cover": "" }] }
+
+// static：入口型版块，entriesKey ∈ service / infoPublic / redCross
+{ "entriesKey": "service" }
+
+// banner：null
+```
+
+`entry_grid` 还可带 `promoImage / promoLink` 渲染底部公益图。
+
+### 6. 默认布局（老站还原）
+
+| 行 | 左 | 中 | 右 |
+| --- | --- | --- | --- |
+| 1 | 网上办事 3 格 | 轮播 9 格 | — |
+| 2 | 信息公开 3 格 | 新闻资讯 9 格 | — |
+| 3 | 专题专栏 12 格 | — | — |
+| 4 | 红会事业 3 格 | 应急救护 6 格 | 捐赠公示 3 格（跨 4–5 行） |
+| 5 | 通知公告 3 格 | 志愿服务 6 格 | 捐赠公示续 |
+| 6 | 友情链接 12 格 | — | — |
+
+该布局同时是 `utils/homeBlocks.ts` 的 `DEFAULT_HOME_BLOCKS`、mock 种子与接口异常时的前端兜底。版块高度按老站实测值写在 `assets/css/home-blocks.css`（`.hb-{blockKey}`），新增版块不写则随内容撑开。
+
+## 七、缺口与处理约定（2026-11-25 更新）
 
 | # | 用途 | 现状 / 约定 |
 | --- | --- | --- |
 | 1 | 文章详情（按 id） | **已提供**：`GET /article/article/menu/info/{id}`，`data` 与 `menu/{categoryId}` 一致 |
 | 2 | 列表分页 | **已确认可用**：`pageNum/pageSize` 由前端传入 |
 | 3 | 外链 | 栏目不做外链；单页栏目文章 `link` 为 http(s) 时优先跳转（视频除外），前端已实现 302 / 新窗口 |
-| 4 | 轮播图 | **后端暂未开发**，前端继续用 mock（`system/banner/list` 契约先冻结） |
+| 4 | 轮播图 | 已提供 `GET /system/banner/portalList`（`data` 数组，字段见第三节），前端已切换 |
 | 5 | 父栏目聚合 | 前端按 `categoryId` 递归聚合子栏目文章（412 含 418/419…） |
 | 6 | 友情链接 | 复用文章列表的 `link` 字段，不单独建接口 |
 | 7 | 留言 / 报名 | 保持现有契约，接口就绪后 `NUXT_MOCK=false` 即切换 |

@@ -52,7 +52,10 @@ NUXT_PUBLIC_FILE_BASE=http://127.0.0.1:8080    # 可选：上传图片域名，�
 │   ├── api/[...path].ts  # /api/** 统一出口：mock 或转发到 NUXT_API_BASE
 │   └── mock/             # 与正式接口同路径的示例数据
 ├── utils/menu.ts         # 栏目 → 路由/外链解析（templateType=1 列表、2 单页）
-├── utils/site.ts         # 首页各版块入口、联系方式等静态配置
+├── utils/site.ts         # 首页静态入口、联系方式等静态配置
+├── utils/homeBlocks.ts   # 首页 12 栅格默认布局（也是接口异常时的兜底）
+├── components/HomeBlock.vue       # 版块容器：栅格定位 + 标题栏 + styleKey 分发
+├── components/home/*.vue          # 10 种版式组件（news_list / text_list / card_list …）
 └── docs/api.md           # 接口文档（给后端）
 ```
 
@@ -67,8 +70,10 @@ NUXT_PUBLIC_FILE_BASE=http://127.0.0.1:8080    # 可选：上传图片域名，�
 | GET | `/article/article/menu/list?categoryId=&templateType=&pageNum=&pageSize=` | 栏目文章列表（列表页 + 首页各版块） |
 | GET | `/article/article/menu/{categoryId}?templateType=` | 单页栏目内容 |
 | GET | `/article/article/menu/info/{id}` | 文章详情（响应同 `menu/{categoryId}`） |
-| GET | `/system/banner/list` | 首页轮播图（后端未开发，暂用 mock） |
-| POST | `/guestbook/guestbook/add` | 培训报名 / 留言 |
+| GET | `/system/banner/portalList` | 首页轮播图（字段 imageUrl / resourceType / openType） |
+| GET | `/portal/home` | 首页版块（骨架 + 条目一次返回，由 home_block 表驱动） |
+| GET/POST/PUT/DELETE | `/admin/home/blocks`、`/admin/home/layout` | 后台首页区块配置（管理端用，门户不调） |
+| POST | `/leaveMessage/leaveMessage` | 培训报名 / 留言 |
 
 浏览器端不要求 token；详细字段、示例与老站字段映射见 [`docs/api.md`](./docs/api.md)。
 

@@ -6,12 +6,14 @@
  *   栏目文章列表 GET  /article/article/menu/list?categoryId=&templateType=&pageNum=&pageSize=
  *   单页栏目内容 GET  /article/article/menu/{categoryId}?templateType=
  *   文章详情     GET  /article/article/menu/info/{id}
+ *   首页版块     GET  /portal/home（骨架 + 条目一次返回，由 home_block 表驱动）
  *   轮播图       GET  /system/banner/list
  *   留言报名     POST /guestbook/guestbook/add
  *
  * 前端统一请求 /api/**，由 Nitro（server/api/[...path].ts）转发到真实后端，
  * 或在内置 mock 模式下返回示例数据。浏览器端不需要带 token。
  */
+import type { HomeBlock } from '~/utils/homeBlocks'
 
 export interface Banner {
   id: number
@@ -186,6 +188,32 @@ export function bannerTarget(banner: Banner): {
   }
 }
 
+function toHomeBlock(raw: any, fileBase = ''): HomeBlock {
+  const items = Array.isArray(raw.items) ? raw.items : []
+  return {
+    id: raw.id !== undefined ? Number(raw.id) : undefined,
+    blockKey: String(raw.blockKey ?? raw.block_key ?? ''),
+    blockType: raw.blockType === 'banner' || raw.block_type === 'banner' ? 'banner' : 'content',
+    title: raw.title ?? '',
+    styleKey: String(raw.styleKey ?? raw.style_key ?? 'text_list'),
+    sourceType: String(raw.sourceType ?? raw.source_type ?? 'category') as HomeBlock['sourceType'],
+    sourceConfig: raw.sourceConfig ?? raw.source_config ?? null,
+    limitCount: Number(raw.limitCount ?? raw.limit_count ?? 6),
+    moreLink: raw.moreLink ?? raw.more_link ?? '',
+    rowNo: Number(raw.rowNo ?? raw.row_no ?? 1),
+    rowSpan: Number(raw.rowSpan ?? raw.row_span ?? 1),
+    colStart: Number(raw.colStart ?? raw.col_start ?? 1),
+    colSpan: Number(raw.colSpan ?? raw.col_span ?? 12),
+    isVisible: Number(raw.isVisible ?? raw.is_visible ?? 1),
+    // 条目：封面 / 正文图片统一补全文件域名
+    items: items.map((item: any) => ({
+      ...item,
+      cover: resolveAsset(item.cover ?? '', fileBase),
+      image: resolveAsset(item.image ?? item.imageUrl ?? '', fileBase),
+    })),
+  }
+}
+
 export const useApi = () => {
   const config = useRuntimeConfig()
   const prefix = config.public.apiPrefix || '/api'
@@ -193,12 +221,22 @@ export const useApi = () => {
   const url = (path: string) => `${prefix}${path.startsWith('/') ? '' : '/'}${path}`
 
   return {
-    /** 首页轮播图 */
+    /** 首页轮播图（保留给旧代码 / 单页使用，首页已并入 /portal/home） */
     async getBanners(): Promise<Banner[]> {
       const res = await $fetch<any>(url('/system/banner/portalList'))
       return pickRows(res)
         .map((r: any) => toBanner(r, fileBase))
         .sort((a, b) => a.sort - b.sort)
+    },
+
+    /** 首页版块（后台可配置）：一次返回骨架与已取好的条目 */
+    async getHomePage(): Promise<{ blocks: HomeBlock[] }> {
+      const res = await $fetch<any>(url('/portal/home'))
+      const payload = pickData(res) ?? {}
+      const blocks = Array.isArray(payload.blocks) ? payload.blocks : []
+      return {
+        blocks: blocks.map((b: any) => toHomeBlock(b, fileBase)),
+      }
     },
 
     /** 栏目树（扁平返回，前端按 parentId 组树） */
@@ -248,7 +286,7 @@ export const useApi = () => {
       return toArticle(pickData(res), fileBase)
     },
 
-    /** 救护员培训报名 / 留言 */
+    /** 救护员培训报名 / 留言（后端 05e4021 起改为 /leaveMessage/leaveMessage） */
     async submitGuestbook(payload: {
       name: string
       people: number

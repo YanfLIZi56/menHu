@@ -1,0 +1,368 @@
+/* ============================================================
+   首页 12 栅格（可后台配置）
+   - .home-grid：12 列栅格容器，版块通过 grid-row / grid-column 占位
+   - .hb-{blockKey}：老站像素级高度基准，新增版块未定义时高度随内容
+   ============================================================ */
+
+.home-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 12px;
+  padding-top: 12px;
+  align-items: stretch;
+}
+
+.home-grid > .hb {
+  min-width: 0;
+  overflow: hidden;
+  background: #fff;
+}
+
+/* 老站各版块高度（1200 宽下的实测值） */
+.hb-banner,
+.hb-service {
+  min-height: 330px;
+}
+.hb-info,
+.hb-news {
+  min-height: 473px;
+}
+.hb-specials {
+  min-height: 160px;
+}
+.hb-cause,
+.hb-rescue,
+.hb-notice,
+.hb-volunteer {
+  min-height: 252px;
+}
+.hb-donate {
+  min-height: 516px;
+}
+.hb-links {
+  min-height: 67px;
+}
+
+.hb-empty {
+  color: #999;
+  font-size: 13px;
+  padding: 20px 15px;
+  text-align: center;
+}
+
+/* ---------------- 网上办事 ---------------- */
+.hb-service-list {
+  padding: 0 13px;
+}
+.hb-service-list ul li {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 6px 10px;
+  margin-bottom: 6px;
+  cursor: pointer;
+  color: #cf2b2c;
+  background: #fff3f3;
+  transition: all 0.3s cubic-bezier(0.215, 0.61, 0.355, 1) 0s;
+}
+.hb-service-list ul li:nth-child(2) {
+  background: #fffdf6;
+  color: #d3a60b;
+}
+.hb-service-list ul li:nth-child(3) {
+  background: #f4feff;
+  color: #2cb1bf;
+}
+.hb-service-list ul li:nth-child(4) {
+  background: #f6f3fe;
+  color: #6039c9;
+}
+.hb-service-list ul li:nth-child(5) {
+  background: #f0e3e0;
+  color: #ef7143;
+}
+.hb-service-list ul li i {
+  display: block;
+  width: 22%;
+  font-size: 26px;
+  line-height: 1.2;
+  transition: all 0.3s cubic-bezier(0.215, 0.61, 0.355, 1) 0s;
+}
+.hb-service-list ul li .wenzi {
+  width: 78%;
+  padding-left: 5px;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.5;
+  text-align: left;
+}
+.hb-service-list ul li .wenzi span {
+  font-size: 12px;
+  font-weight: 500;
+}
+.hb-service-list ul li:hover i {
+  font-size: 32px;
+  color: #e00;
+}
+
+/* ---------------- 信息公开（入口 + 公益图） ---------------- */
+.hb-entry-grid {
+  padding: 0 13px 13px;
+}
+.hb-entry-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.hb-entry-list li {
+  width: calc(50% - 6px);
+}
+.hb-entry-list li a {
+  display: block;
+  height: 61px;
+  padding-top: 10px;
+  font-size: 14px;
+  color: #cf2d2b;
+  text-align: center;
+  background: #fffdf6;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  transition: border-color 0.2s;
+}
+.hb-entry-list li a:hover {
+  border-color: #cf2d2b;
+}
+.hb-entry-list li a i {
+  font-size: 18px;
+}
+.hb-entry-list li a div {
+  margin-top: 6px;
+}
+.hb-entry-promo {
+  margin-top: 12px;
+}
+.hb-entry-promo img {
+  width: 100%;
+}
+
+/* ---------------- 红会事业（两列小卡片） ---------------- */
+.hb-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 0 13px;
+}
+.hb-chips li {
+  width: calc(50% - 5px);
+}
+.hb-chips li a {
+  display: block;
+  padding: 10px 0;
+  font-size: 14px;
+  color: #cf2d2b;
+  text-align: center;
+  background: #fffdf6;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  transition: all 0.2s;
+}
+.hb-chips li a:hover {
+  color: #f00;
+  border-color: #f00;
+}
+
+/* ---------------- 新闻资讯 ---------------- */
+.hb-news-list {
+  padding: 0 15px 10px;
+}
+.hb-news-lead {
+  display: flex;
+  gap: 15px;
+  text-decoration: none;
+}
+.hb-news-lead-img {
+  flex: none;
+  width: 281px;
+}
+.hb-news-lead-img img {
+  width: 100%;
+  height: 170px;
+}
+.hb-news-lead-text {
+  flex: 1;
+  min-width: 0;
+}
+.hb-news-lead-text .title {
+  font-size: 16px;
+  line-height: 34px;
+  color: #2d2d2d;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.hb-news-lead-text .contents {
+  font-size: 14px;
+  line-height: 32px;
+  color: #999;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+.hb-news-lead:hover .title,
+.hb-news-lead:hover .contents {
+  color: #f00;
+}
+.hb-news-rows li a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  line-height: 40px;
+  font-size: 16px;
+  color: #2d2d2d;
+}
+.hb-news-rows li a .title {
+  width: calc(100% - 120px);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.hb-news-rows li a .date {
+  color: #ccc;
+  font-size: 14px;
+  flex: none;
+}
+.hb-news-rows li a:hover,
+.hb-news-rows li a:hover .date {
+  color: #f00;
+}
+
+/* ---------------- 专题专栏（图片长条） ---------------- */
+.hb-strip {
+  display: flex;
+  gap: 6px;
+  padding: 0 13px 13px;
+  overflow: hidden;
+}
+.hb-strip a {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+.hb-strip a img {
+  width: 100%;
+  height: 100px;
+}
+
+/* ---------------- 应急救护（左图右列表） ---------------- */
+.hb-cover-list {
+  display: flex;
+  gap: 15px;
+  padding: 0 13px 13px;
+}
+.hb-cover-left {
+  flex: none;
+  width: 38%;
+}
+.hb-cover-left img {
+  width: 100%;
+  height: 143px;
+}
+.hb-cover-right {
+  flex: 1;
+  min-width: 0;
+}
+.hb-cover-right li a {
+  display: block;
+  font-size: 16px;
+  line-height: 37px;
+  color: #2d2d2d;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.hb-cover-right li a:hover {
+  color: #f00;
+}
+
+/* ---------------- 纯文字列表（通知公告 / 捐赠公示） ---------------- */
+.hb-text-wrap {
+  padding: 0 15px;
+}
+.hb-text-list li a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  line-height: 30px;
+  font-size: 14px;
+  color: #2d2d2d;
+}
+.hb-text-title {
+  width: calc(100% - 90px);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.hb-text-date {
+  flex: none;
+  color: #999;
+  font-size: 12px;
+}
+.hb-text-list li a:hover,
+.hb-text-list li a:hover .hb-text-date {
+  color: #f00;
+}
+
+/* ---------------- 志愿服务（图文卡片） ---------------- */
+.hb-card-list {
+  display: flex;
+  gap: 15px;
+  padding: 0 15px 15px;
+}
+.hb-card-list li {
+  width: calc(33.33% - 10px);
+}
+.hb-card-list li img {
+  width: 100%;
+  height: 135px;
+}
+.hb-card-list li .title {
+  font-size: 14px;
+  line-height: 34px;
+  color: #2d2d2d;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.hb-card-list li:hover .title {
+  color: #cf2d2b;
+}
+
+/* ---------------- 友情链接 ---------------- */
+.hb-links {
+  display: flex;
+  align-items: center;
+  padding: 0 15px;
+  line-height: 67px;
+  font-size: 14px;
+}
+.hb-links-label {
+  color: #f00;
+  margin-right: 8px;
+  flex: none;
+}
+.hb-links ul {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.hb-links ul li {
+  margin-right: 15px;
+}
+.hb-links ul li a {
+  color: #2d2d2d;
+}
+.hb-links ul li a:hover {
+  color: #f00;
+}
