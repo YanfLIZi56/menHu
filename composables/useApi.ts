@@ -244,7 +244,7 @@ export const useApi = () => {
 
     /** 首页版块（后台可配置）：一次返回骨架与已取好的条目 */
     async getHomePage(): Promise<{ blocks: HomeBlock[] }> {
-      const res = await $fetch<any>(url('/portal/home'))
+      const res = await $fetch<any>(url('/system/blockSet/portal/home'))
       const payload = pickData(res)
       // 兼容两种返回：{ blocks: [...] } 或直接 [...]（后端 /portal/home 目前是后者）
       const blocks = Array.isArray(payload)
